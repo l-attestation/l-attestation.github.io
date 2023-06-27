@@ -1,10 +1,92 @@
 ---
 title: "La signature des confinements latins"
-description: "Montrer la spécificité des pays du Sud de l'Europe"
+description: "Montrer la spécificité des pays du Sud de l'Europe à l'aide des données de Google Mobility"
 date: 2023-06-25
 categories: [FAQ] # self-defined categories
 citation: 
-  url: https://samanthacsik.github.io/posts/2022-10-24-quarto-blogs/ 
+  url: https://samanthacsik.github.io/signature-confinements-latins/
 image: https://upload.wikimedia.org/wikipedia/commons/b/b4/Tolima_-_Champ_de_sorgho.JPG
 draft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
 ---
+
+## Charger les packages nécessaires
+
+```{r}
+#| message: false
+#| warning: false
+
+library(tidyverse)
+library(lubridate)
+library(countrycode)
+library(zoo)
+```
+
+
+## Choisir le thème des graphiques
+
+```{r}
+theme_set(theme_minimal() +
+            theme(plot.title = element_text(face = "bold")))
+```
+
+
+## Récupérer les données
+
+La manière la plus simple de récupérer les données de mobilité est de passer par le package {tidycovid19}
+
+```{r}
+google_mobility_country_path = here::here("data", "google_mobility_country.rds")
+# tidycovid19::download_google_cmr_data(type = "country", cached = T) |> 
+#   write_rds(file = google_mobility_country_path)
+google_mobility_country = read_rds(google_mobility_country_path)
+```
+
+## À quoi ressemblent-elles ?
+
+```{r}
+glimpse(google_mobility_country)
+```
+
+## Choisir nos bornes temporelles
+
+```{r}
+date_beginn = ymd(20200301)
+date_end = ymd(20200601)
+```
+
+## Filtrer et agréger
+
+```{r}
+google_mobility_country |> 
+  filter(between(date, date_beginn, date_end)) |> 
+  group_by(iso3c) |> 
+  summarise(across(4:9, ~ mean(.x, na.rm = T)))
+```
+
+## Cartographier
+
+## Sélectionner 6 pays européens
+
+```{r}
+selection_pays_europe = c("France", "Espagne", "Italie", "Pays-Bas", "Allemagne", "Danemark")
+```
+
+## Les comparer
+
+```{r}
+google_mobility_country |> 
+  filter(between(date, date_beginn, date_end)) |>
+  mutate(pays = countrycode(iso3c, origin = "iso3c", destination = "country.name.fr"),
+         pays = fct_relevel(pays, selection_pays_europe),
+         parks_roll7 = rollmean(parks, k = 7, fill = NA)) %>%
+  filter(pays %in% selection_pays_europe) %>%
+  ggplot(aes(x = date, y = parks_roll7)) +
+  geom_line() +
+  facet_wrap(~ pays) +
+  labs(title = "La signature des confinements latins",
+       subtitle = "Un effondrement brutal et prolongé des sorties d'aération",
+       x = "",
+       y = "Fréquentation des espaces verts par rapport à janvier\n(Moyenne glissante sur 7 jours)",
+       caption = "Données : Google Mobility Reports")
+```
+

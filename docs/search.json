@@ -42,11 +42,60 @@
     "text": "CitationBibTeX@online{boulakia2023,\n  author = {Boulakia, Théo and Mariot, Nicolas},\n  title = {Où est-on le mieux protégé en Europe\\,?},\n  date = {2023-06-25},\n  url = {https://samanthacsik.github.io/posts/2022-10-24-quarto-blogs/},\n  langid = {fr}\n}\nVeuillez citer ce travail comme suit :\nBoulakia, Théo, and Nicolas Mariot. 2023. “Où est-on le mieux\nprotégé en Europe ?” June 25, 2023. https://samanthacsik.github.io/posts/2022-10-24-quarto-blogs/."
   },
   {
-    "objectID": "exercices/signature-confinements-latins/index.html",
-    "href": "exercices/signature-confinements-latins/index.html",
+    "objectID": "exercices/signature-confinements-latins/index.html#choisir-le-thème-des-graphiques",
+    "href": "exercices/signature-confinements-latins/index.html#choisir-le-thème-des-graphiques",
     "title": "La signature des confinements latins",
-    "section": "",
-    "text": "CitationBibTeX@online{boulakia2023,\n  author = {Boulakia, Théo and Mariot, Nicolas},\n  title = {La signature des confinements latins},\n  date = {2023-06-25},\n  url = {https://samanthacsik.github.io/posts/2022-10-24-quarto-blogs/},\n  langid = {fr}\n}\nVeuillez citer ce travail comme suit :\nBoulakia, Théo, and Nicolas Mariot. 2023. “La signature des\nconfinements latins.” June 25, 2023. https://samanthacsik.github.io/posts/2022-10-24-quarto-blogs/."
+    "section": "Choisir le thème des graphiques",
+    "text": "Choisir le thème des graphiques\n\ntheme_set(theme_minimal() +\n            theme(plot.title = element_text(face = \"bold\")))"
+  },
+  {
+    "objectID": "exercices/signature-confinements-latins/index.html#récupérer-les-données",
+    "href": "exercices/signature-confinements-latins/index.html#récupérer-les-données",
+    "title": "La signature des confinements latins",
+    "section": "Récupérer les données",
+    "text": "Récupérer les données\nLa manière la plus simple de récupérer les données de mobilité est de passer par le package {tidycovid19}\n\ngoogle_mobility_country_path = here::here(\"data\", \"google_mobility_country.rds\")\n# tidycovid19::download_google_cmr_data(type = \"country\", cached = T) |&gt; \n#   write_rds(file = google_mobility_country_path)\ngoogle_mobility_country = read_rds(google_mobility_country_path)"
+  },
+  {
+    "objectID": "exercices/signature-confinements-latins/index.html#à-quoi-ressemblent-elles",
+    "href": "exercices/signature-confinements-latins/index.html#à-quoi-ressemblent-elles",
+    "title": "La signature des confinements latins",
+    "section": "À quoi ressemblent-elles ?",
+    "text": "À quoi ressemblent-elles ?\n\nglimpse(google_mobility_country)\n\nRows: 130,824\nColumns: 10\n$ iso3c             &lt;chr&gt; \"ARE\", \"ARE\", \"ARE\", \"ARE\", \"ARE\", \"ARE\", \"ARE\", \"AR…\n$ date              &lt;date&gt; 2020-02-15, 2020-02-16, 2020-02-17, 2020-02-18, 202…\n$ place_id          &lt;chr&gt; \"ChIJvRKrsd9IXj4RpwoIwFYv0zM\", \"ChIJvRKrsd9IXj4RpwoI…\n$ retail_recreation &lt;dbl&gt; 0, 1, -1, -2, -2, -2, -3, -2, -1, -3, -3, -2, 1, 1, …\n$ grocery_pharmacy  &lt;dbl&gt; 4, 4, 1, 1, 0, 1, 2, 2, 3, 0, 2, 1, 5, 5, 7, 10, 7, …\n$ parks             &lt;dbl&gt; 5, 4, 5, 5, 4, 6, 6, 4, 3, 5, 3, -3, -1, -1, -1, 2, …\n$ transit_stations  &lt;dbl&gt; 0, 1, 1, 0, -1, 1, 0, -2, -1, -1, -2, -2, -1, -1, -1…\n$ workplaces        &lt;dbl&gt; 2, 2, 2, 2, 2, 1, -1, 3, 4, 3, 3, 3, 3, 1, 5, 4, 4, …\n$ residential       &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1…\n$ timestamp         &lt;dttm&gt; 2022-11-05 09:21:06, 2022-11-05 09:21:06, 2022-11-0…"
+  },
+  {
+    "objectID": "exercices/signature-confinements-latins/index.html#choisir-nos-bornes-temporelles",
+    "href": "exercices/signature-confinements-latins/index.html#choisir-nos-bornes-temporelles",
+    "title": "La signature des confinements latins",
+    "section": "Choisir nos bornes temporelles",
+    "text": "Choisir nos bornes temporelles\n\ndate_beginn = ymd(20200301)\ndate_end = ymd(20200601)"
+  },
+  {
+    "objectID": "exercices/signature-confinements-latins/index.html#filtrer-et-agréger",
+    "href": "exercices/signature-confinements-latins/index.html#filtrer-et-agréger",
+    "title": "La signature des confinements latins",
+    "section": "Filtrer et agréger",
+    "text": "Filtrer et agréger\n\ngoogle_mobility_country |&gt; \n  filter(between(date, date_beginn, date_end)) |&gt; \n  group_by(iso3c) |&gt; \n  summarise(across(4:9, ~ mean(.x, na.rm = T)))\n\n# A tibble: 135 × 7\n   iso3c grocery_pharmacy    parks transit_stations workplaces residential\n   &lt;chr&gt;            &lt;dbl&gt;    &lt;dbl&gt;            &lt;dbl&gt;      &lt;dbl&gt;       &lt;dbl&gt;\n 1 ABW             -20.1  -32.2               -51.3     -43.9        19.8 \n 2 AFG             -13.0   -9.92              -30.9     -21.1         9.22\n 3 AGO             -16.3  -21.5               -41.6     -22.5        16.7 \n 4 ARE             -19.3  -54.6               -56.5     -35.4        21.3 \n 5 ARG             -28.0  -73.5               -51.9     -36.8        19.7 \n 6 ATG             -24.4  -28.6               -51.1     -41.6        16.9 \n 7 AUS              -1.32 -24.6               -42.6     -22.8        12.1 \n 8 AUT             -18.7   -8.76              -46.3     -37.5        13.4 \n 9 BEL             -16.6   -3.46              -49.1     -43.0        18.1 \n10 BEN              -3.51   0.0215            -13.9      -6.25        6.43\n# ℹ 125 more rows\n# ℹ 1 more variable: timestamp &lt;dttm&gt;"
+  },
+  {
+    "objectID": "exercices/signature-confinements-latins/index.html#cartographier",
+    "href": "exercices/signature-confinements-latins/index.html#cartographier",
+    "title": "La signature des confinements latins",
+    "section": "Cartographier",
+    "text": "Cartographier"
+  },
+  {
+    "objectID": "exercices/signature-confinements-latins/index.html#sélectionner-une-poignée-de-pays-européens",
+    "href": "exercices/signature-confinements-latins/index.html#sélectionner-une-poignée-de-pays-européens",
+    "title": "La signature des confinements latins",
+    "section": "Sélectionner une poignée de pays européens",
+    "text": "Sélectionner une poignée de pays européens\n\nselection_pays_europe = c(\"France\", \"Espagne\", \"Italie\", \"Pays-Bas\", \"Allemagne\", \"Danemark\")"
+  },
+  {
+    "objectID": "exercices/signature-confinements-latins/index.html#comparer-une-poignée-de-pays-européens",
+    "href": "exercices/signature-confinements-latins/index.html#comparer-une-poignée-de-pays-européens",
+    "title": "La signature des confinements latins",
+    "section": "Comparer une poignée de pays européens",
+    "text": "Comparer une poignée de pays européens\n\ngoogle_mobility_country |&gt; \n  filter(between(date, date_beginn, date_end)) |&gt;\n  mutate(pays = countrycode(iso3c, origin = \"iso3c\", destination = \"country.name.fr\"),\n         pays = fct_relevel(pays, selection_pays_europe),\n         parks_roll7 = rollmean(parks, k = 7, fill = NA)) %&gt;%\n  filter(pays %in% selection_pays_europe) %&gt;%\n  ggplot(aes(x = date, y = parks_roll7)) +\n  geom_line() +\n  facet_wrap(~ pays) +\n  labs(title = \"La signature des confinements latins\",\n       subtitle = \"Un effondrement brutal et prolongé des sorties d'aération\",\n       x = \"\",\n       y = \"Fréquentation des espaces verts par rapport à janvier\\n(Moyenne glissante sur 7 jours)\",\n       caption = \"Données : Google Mobility Reports\")"
   },
   {
     "objectID": "exercices/mots-des-confines/index.html",
@@ -137,6 +186,41 @@
     "href": "exercices.html",
     "title": "Exercices",
     "section": "",
-    "text": "Parisiens, ouvrez l’oeil !\n\n\n\nInquiètement\n\n\n\nCartographier les caméras de surveillance à Paris\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nOù est-on le mieux protégé en Europe ?\n\n\n\nFAQ\n\n\n\nCalculer la concentration policière dans chaque pays\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLa signature des confinements latins\n\n\n\nFAQ\n\n\n\nMontrer la spécificité des pays du Sud de l’Europe\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nÀ quoi pense-t-on quand on s’enferme ?\n\n\n\nLignes de conduite\n\n\n\nReprésenter graphiquement des associations d’idées\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDes verbalisations très inégalement distribuées\n\n\n\nLa Police des sorties\n\n\n\nCartographier la prévalence de la verbalisation\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nUn indicateur de sévérité prêt à l’emploi\n\n\n\nFAQ\n\n\n\nQue montre le Stringency Index de l’Oxford Covid 19 Government Response Tracker ?\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLa France des polices municipales\n\n\n\nLa police des sorties\n\n\n\nCartographier les initiatives sécuritaires locales\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\nAucun article correspondant"
+    "text": "Parisiens, ouvrez l’oeil !\n\n\n\nInquiètement\n\n\n\nCartographier les caméras de surveillance à Paris\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nOù est-on le mieux protégé en Europe ?\n\n\n\nFAQ\n\n\n\nCalculer la concentration policière dans chaque pays\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLa signature des confinements latins\n\n\n\nFAQ\n\n\n\nMontrer la spécificité des pays du Sud de l’Europe à l’aide des données de Google Mobility\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nÀ quoi pense-t-on quand on s’enferme ?\n\n\n\nLignes de conduite\n\n\n\nReprésenter graphiquement des associations d’idées\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDes verbalisations très inégalement distribuées\n\n\n\nLa Police des sorties\n\n\n\nCartographier la prévalence de la verbalisation\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nUn indicateur de sévérité prêt à l’emploi\n\n\n\nFAQ\n\n\n\nQue montre le Stringency Index de l’Oxford Covid 19 Government Response Tracker ?\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLa France des polices municipales\n\n\n\nLa police des sorties\n\n\n\nCartographier les initiatives sécuritaires locales\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\nAucun article correspondant"
+  },
+  {
+    "objectID": "exercices/signature-confinements-latins/index.html",
+    "href": "exercices/signature-confinements-latins/index.html",
+    "title": "La signature des confinements latins",
+    "section": "",
+    "text": "library(tidyverse)\nlibrary(lubridate)\nlibrary(countrycode)\nlibrary(zoo)"
+  },
+  {
+    "objectID": "exercices/signature-confinements-latins/index.html#charger-les-packages-nécessaires",
+    "href": "exercices/signature-confinements-latins/index.html#charger-les-packages-nécessaires",
+    "title": "La signature des confinements latins",
+    "section": "",
+    "text": "library(tidyverse)\nlibrary(lubridate)\nlibrary(countrycode)\nlibrary(zoo)"
+  },
+  {
+    "objectID": "exercices/signature-confinements-latins/index.html#comparer-6-pays-européens",
+    "href": "exercices/signature-confinements-latins/index.html#comparer-6-pays-européens",
+    "title": "La signature des confinements latins",
+    "section": "Comparer 6 pays européens",
+    "text": "Comparer 6 pays européens\n\ngoogle_mobility_country |&gt; \n  filter(between(date, date_beginn, date_end)) |&gt;\n  mutate(pays = countrycode(iso3c, origin = \"iso3c\", destination = \"country.name.fr\"),\n         pays = fct_relevel(pays, selection_pays_europe),\n         parks_roll7 = rollmean(parks, k = 7, fill = NA)) %&gt;%\n  filter(pays %in% selection_pays_europe) %&gt;%\n  ggplot(aes(x = date, y = parks_roll7)) +\n  geom_line() +\n  facet_wrap(~ pays) +\n  labs(title = \"La signature des confinements latins\",\n       subtitle = \"Un effondrement brutal et prolongé des sorties d'aération\",\n       x = \"\",\n       y = \"Fréquentation des espaces verts par rapport à janvier\\n(Moyenne glissante sur 7 jours)\",\n       caption = \"Données : Google Mobility Reports\")"
+  },
+  {
+    "objectID": "exercices/signature-confinements-latins/index.html#sélectionner-6-pays-européens",
+    "href": "exercices/signature-confinements-latins/index.html#sélectionner-6-pays-européens",
+    "title": "La signature des confinements latins",
+    "section": "Sélectionner 6 pays européens",
+    "text": "Sélectionner 6 pays européens\n\nselection_pays_europe = c(\"France\", \"Espagne\", \"Italie\", \"Pays-Bas\", \"Allemagne\", \"Danemark\")"
+  },
+  {
+    "objectID": "exercices/signature-confinements-latins/index.html#les-comparer",
+    "href": "exercices/signature-confinements-latins/index.html#les-comparer",
+    "title": "La signature des confinements latins",
+    "section": "Les comparer",
+    "text": "Les comparer\n\ngoogle_mobility_country |&gt; \n  filter(between(date, date_beginn, date_end)) |&gt;\n  mutate(pays = countrycode(iso3c, origin = \"iso3c\", destination = \"country.name.fr\"),\n         pays = fct_relevel(pays, selection_pays_europe),\n         parks_roll7 = rollmean(parks, k = 7, fill = NA)) %&gt;%\n  filter(pays %in% selection_pays_europe) %&gt;%\n  ggplot(aes(x = date, y = parks_roll7)) +\n  geom_line() +\n  facet_wrap(~ pays) +\n  labs(title = \"La signature des confinements latins\",\n       subtitle = \"Un effondrement brutal et prolongé des sorties d'aération\",\n       x = \"\",\n       y = \"Fréquentation des espaces verts par rapport à janvier\\n(Moyenne glissante sur 7 jours)\",\n       caption = \"Données : Google Mobility Reports\")"
   }
 ]
