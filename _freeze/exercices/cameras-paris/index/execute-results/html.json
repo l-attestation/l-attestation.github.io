@@ -1,0 +1,16 @@
+{
+  "hash": "21059b5418dd6a39239ba0e5b9d24422",
+  "result": {
+    "markdown": "---\ntitle: \"Parisiens, ouvrez l'oeil !\"\ndescription: \"Cartographier les caméras de surveillance à Paris\"\ndate: 2023-06-25\ncategories: [Inquiètement] # self-defined categories\ncitation: \n  url: https://l-attestation.github.io/cameras-paris/ \nimage: https://upload.wikimedia.org/wikipedia/commons/b/b4/Tolima_-_Champ_de_sorgho.JPG\ndraft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!\n---\n\n\n## Télécharger les données\n\nCes données ont été publiées par le Ministère de l'Intérieur, et sont librement téléchargeables sur le site [data.gouv.fr](https://www.data.gouv.fr/fr/datasets/videoprotection-implantation-des-cameras-kml-ods/) *.*\n\n\n::: {.cell}\n\n```{.r .cell-code}\ncameras_paris_path = here::here(\"data\", \"cameras-paris.kml\")\n# download.file(url = \"https://www.data.gouv.fr/fr/datasets/r/73b97c76-0f79-451b-9576-ccc61af7dfcf\",\n#               destfile = cameras_paris_path)\n```\n:::\n\n\n## Les lire\n\n\n::: {.cell}\n\n```{.r .cell-code}\ncameras_paris = sf::st_read(cameras_paris_path, quiet = T) |> \n  janitor::clean_names()\n```\n:::\n\n\n## Vérification\n\n\n::: {.cell}\n\n```{.r .cell-code}\ncameras_paris |> \n  dplyr::mutate(mise_en_se = lubridate::dmy(mise_en_se)) |> \n  dplyr::pull(mise_en_se) |> \n  max(na.rm = T)\n```\n\n::: {.cell-output .cell-output-stdout}\n```\n[1] \"2018-11-13\"\n```\n:::\n:::\n\n\nLa camera la plus récente du jeu de données a été mise en service en novembre 2018. Au printemps 2020, il y en avait certainement beaucoup plus.\n\n## Les visualiser\n\n\n::: {.cell}\n\n```{.r .cell-code}\ncameras_paris |> \n  ggplot2::ggplot() +\n  # ggspatial::layer_spatial(paris_sf, fill = \"white\") +\n  ggplot2::geom_sf(size = 1, alpha = 0.7) +\n  ggspatial::annotation_north_arrow(style = ggspatial::north_arrow_nautical()) +\n  ggplot2::labs(title = \"Une partie des caméras de surveillance actives à Paris au printemps 2020\",\n       subtitle = \"Il y en a partout, sauf dans les parcs. Actuellement on en compte beaucoup plus.\",\n       caption = \"Données : Ministère de l'Intérieur (dernière mise à jour en novembre 2018)\") +\n  ggthemes::theme_map(base_family = \"Courier\") +\n  ggplot2::theme(plot.title = ggplot2::element_text(face = \"bold\"))\n```\n\n::: {.cell-output-display}\n![](index_files/figure-html/unnamed-chunk-4-1.png){width=672}\n:::\n:::\n",
+    "supporting": [
+      "index_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

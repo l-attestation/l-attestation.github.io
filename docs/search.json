@@ -4,7 +4,35 @@
     "href": "exercices/cameras-paris/index.html",
     "title": "Parisiens, ouvrez l’oeil !",
     "section": "",
-    "text": "CitationBibTeX@online{boulakia2023,\n  author = {Boulakia, Théo and Mariot, Nicolas},\n  title = {Parisiens, ouvrez l’oeil\\,!},\n  date = {2023-06-25},\n  url = {https://samanthacsik.github.io/posts/2022-10-24-quarto-blogs/},\n  langid = {fr}\n}\nVeuillez citer ce travail comme suit :\nBoulakia, Théo, and Nicolas Mariot. 2023. “Parisiens, ouvrez\nl’oeil !” June 25, 2023. https://samanthacsik.github.io/posts/2022-10-24-quarto-blogs/."
+    "text": "Ces données ont été publiées par le Ministère de l’Intérieur, et sont librement téléchargeables sur le site data.gouv.fr .\n\ncameras_paris_path = here::here(\"data\", \"cameras-paris.kml\")\n# download.file(url = \"https://www.data.gouv.fr/fr/datasets/r/73b97c76-0f79-451b-9576-ccc61af7dfcf\",\n#               destfile = cameras_paris_path)"
+  },
+  {
+    "objectID": "exercices/cameras-paris/index.html#télécharger-les-données",
+    "href": "exercices/cameras-paris/index.html#télécharger-les-données",
+    "title": "Parisiens, ouvrez l’oeil !",
+    "section": "",
+    "text": "Ces données ont été publiées par le Ministère de l’Intérieur, et sont librement téléchargeables sur le site data.gouv.fr .\n\ncameras_paris_path = here::here(\"data\", \"cameras-paris.kml\")\n# download.file(url = \"https://www.data.gouv.fr/fr/datasets/r/73b97c76-0f79-451b-9576-ccc61af7dfcf\",\n#               destfile = cameras_paris_path)"
+  },
+  {
+    "objectID": "exercices/cameras-paris/index.html#les-lire",
+    "href": "exercices/cameras-paris/index.html#les-lire",
+    "title": "Parisiens, ouvrez l’oeil !",
+    "section": "Les lire",
+    "text": "Les lire\n\ncameras_paris = sf::st_read(cameras_paris_path, quiet = T) |&gt; \n  janitor::clean_names()"
+  },
+  {
+    "objectID": "exercices/cameras-paris/index.html#vérification",
+    "href": "exercices/cameras-paris/index.html#vérification",
+    "title": "Parisiens, ouvrez l’oeil !",
+    "section": "Vérification",
+    "text": "Vérification\n\ncameras_paris |&gt; \n  dplyr::mutate(mise_en_se = lubridate::dmy(mise_en_se)) |&gt; \n  dplyr::pull(mise_en_se) |&gt; \n  max(na.rm = T)\n\n[1] \"2018-11-13\"\n\n\nLa camera la plus récente du jeu de données a été mise en service en novembre 2018. Au printemps 2020, il y en avait certainement beaucoup plus."
+  },
+  {
+    "objectID": "exercices/cameras-paris/index.html#les-visualiser",
+    "href": "exercices/cameras-paris/index.html#les-visualiser",
+    "title": "Parisiens, ouvrez l’oeil !",
+    "section": "Les visualiser",
+    "text": "Les visualiser\n\ncameras_paris |&gt; \n  ggplot2::ggplot() +\n  # ggspatial::layer_spatial(paris_sf, fill = \"white\") +\n  ggplot2::geom_sf(size = 1, alpha = 0.7) +\n  ggspatial::annotation_north_arrow(style = ggspatial::north_arrow_nautical()) +\n  ggplot2::labs(title = \"Une partie des caméras de surveillance actives à Paris au printemps 2020\",\n       subtitle = \"Il y en a partout, sauf dans les parcs. Actuellement on en compte beaucoup plus.\",\n       caption = \"Données : Ministère de l'Intérieur (dernière mise à jour en novembre 2018)\") +\n  ggthemes::theme_map(base_family = \"Courier\") +\n  ggplot2::theme(plot.title = ggplot2::element_text(face = \"bold\"))"
   },
   {
     "objectID": "exercices/policiers-europe/index.html",
