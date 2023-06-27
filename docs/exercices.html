@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>L’Attestation</title>
+<title>L’Attestation - Exercices</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,26 +20,7 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -49,9 +30,12 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-listing/list.min.js"></script>
+<script src="site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
@@ -76,12 +60,43 @@ div.csl-indent {
     "search-submit-button-title": "Envoyer"
   }
 }</script>
+<script>
 
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    const listingTargetEl = window.document.querySelector('#listing-listing .list');
+    if (!listingTargetEl) {
+      // No listing discovered, do not attach.
+      return; 
+    }
+
+    const options = {
+      valueNames: ['listing-title','listing-author','listing-date','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      
+      searchColumns: ["listing-title","listing-author","listing-date","listing-image","listing-description","listing-categories"],
+    };
+
+    window['quarto-listings'] = window['quarto-listings'] || {};
+    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
+
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  });
+
+  window.addEventListener('hashchange',() => {
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  })
+  </script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -99,7 +114,7 @@ div.csl-indent {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" rel="" target="" aria-current="page">
+    <a class="nav-link" href="./index.html" rel="" target="">
  <span class="menu-text">Accueil</span></a>
   </li>  
   <li class="nav-item">
@@ -134,7 +149,7 @@ div.csl-indent {
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="./exercices.html" rel="" target="">
+    <a class="nav-link active" href="./exercices.html" rel="" target="" aria-current="page">
  <span class="menu-text">Exercices</span></a>
   </li>  
 </ul>
@@ -148,44 +163,250 @@ div.csl-indent {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        
+    <h5 class="quarto-listing-category-title">Catégories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">Tous <span class="quarto-category-count">(7)</span></div><div class="category" data-category="FAQ">FAQ <span class="quarto-category-count">(3)</span></div><div class="category" data-category="Inquiètement">Inquiètement <span class="quarto-category-count">(1)</span></div><div class="category" data-category="La Police des sorties">La Police des sorties <span class="quarto-category-count">(1)</span></div><div class="category" data-category="La police des sorties">La police des sorties <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Lignes de conduite">Lignes de conduite <span class="quarto-category-count">(1)</span></div></div></div>
 <!-- main -->
-<div class="quarto-about-broadside column-page">
-  <div class="about-main">
-    <div class="about-entity" style="background-image: url('https://static.fnac-static.com/multimedia/Images/FR/NR/62/ba/4f/5225058/1540-1.jpg')"></div>
-    <div class="about-contents"><main class="content" id="quarto-document-content">
-<p><strong>Vous êtes sur le site de <em>L’Attestation. Une expérience d’obéissance de masse (printemps 2020)</em>, co-écrit par <a href="https://tblk.github.io">Théo Boulakia</a> et <a href="http://nicolas.mariot.cnrs.free.fr/">Nicolas Mariot</a>.</strong></p>
-<p>Nous y présentons nos sources, nos méthodes et nos outils.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Quelques précédents
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Cet “atelier” de la recherche répète l’opération de méthode déjà effectuée dans le cadre de précédentes enquêtes. Voir “Retour sur enquête” dans <span class="citation" data-cites="mariot2010">Mariot et Zalc (<a href="#ref-mariot2010" role="doc-biblioref">2010</a>)</span>, p.&nbsp;241-260, la postface “Échafaudages” dans <span class="citation" data-cites="mariot2013">Mariot (<a href="#ref-mariot2013" role="doc-biblioref">2013</a>)</span>, p.&nbsp;387-437 ou encore “Les dessous du récit” dans <span class="citation" data-cites="mariot2017">Mariot (<a href="#ref-mariot2017" role="doc-biblioref">2017</a>)</span>, p.&nbsp;367-388.</p>
-</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Exercices</h1>
 </div>
 
 
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">Les références</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
-<div id="ref-mariot2013" class="csl-entry" role="listitem">
-Mariot, Nicolas. 2013. <em>Tous unis dans la tranchée ? : 1914-1918, les intellectuels rencontrent le peuple</em>. Paris: Seuil.
-</div>
-<div id="ref-mariot2017" class="csl-entry" role="listitem">
-———. 2017. <em>Histoire d’un sacrifice : Robert, Alice et la guerre 1914-1917</em>. Paris: Seuil.
-</div>
-<div id="ref-mariot2010" class="csl-entry" role="listitem">
-Mariot, Nicolas, et Claire Zalc. 2010. <em>Face à la persécution : 991 Juifs dans la guerre</em>. Paris: Odile Jacob.
-</div>
-</div></section></div></main></div>
+<div class="quarto-title-meta">
+
+    
+  
+    
   </div>
+  
+
+</header>
+
+
+
+
+
+<div class="quarto-listing quarto-listing-container-grid" id="listing-listing">
+<div class="list grid quarto-listing-cols-3">
+<div class="g-col-1" data-index="0" data-categories="Inquiètement" data-listing-date-sort="1687644000000" data-listing-file-modified-sort="1687878062524" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1">
+<a href="./exercices/cameras-paris/index.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="https://upload.wikimedia.org/wikipedia/commons/b/b4/Tolima_-_Champ_de_sorgho.JPG" class="thumbnail-image card-img" style="height: 150px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Parisiens, ouvrez l’oeil !
+</h5>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('Inquiètement'); return false;">
+Inquiètement
 </div>
- <!-- /main -->
+</div>
+<div class="card-text listing-description">
+Cartographier les caméras de surveillance à Paris
+</div>
+<div class="card-attribution card-text-small justify">
+<div class="listing-author">
+Théo Boulakia, Nicolas Mariot
+</div>
+<div class="listing-date">
+25 juin 2023
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="g-col-1" data-index="1" data-categories="FAQ" data-listing-date-sort="1687644000000" data-listing-file-modified-sort="1687877877841" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1">
+<a href="./exercices/policiers-europe/index.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="https://upload.wikimedia.org/wikipedia/commons/b/b4/Tolima_-_Champ_de_sorgho.JPG" class="thumbnail-image card-img" style="height: 150px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Où est-on le mieux protégé en Europe ?
+</h5>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('FAQ'); return false;">
+FAQ
+</div>
+</div>
+<div class="card-text listing-description">
+Calculer la concentration policière dans chaque pays
+</div>
+<div class="card-attribution card-text-small justify">
+<div class="listing-author">
+Théo Boulakia, Nicolas Mariot
+</div>
+<div class="listing-date">
+25 juin 2023
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="g-col-1" data-index="2" data-categories="FAQ" data-listing-date-sort="1687644000000" data-listing-file-modified-sort="1687877385306" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1">
+<a href="./exercices/signature-confinements-latins/index.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="https://upload.wikimedia.org/wikipedia/commons/b/b4/Tolima_-_Champ_de_sorgho.JPG" class="thumbnail-image card-img" style="height: 150px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+La signature des confinements latins
+</h5>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('FAQ'); return false;">
+FAQ
+</div>
+</div>
+<div class="card-text listing-description">
+Montrer la spécificité des pays du Sud de l’Europe
+</div>
+<div class="card-attribution card-text-small justify">
+<div class="listing-author">
+Théo Boulakia, Nicolas Mariot
+</div>
+<div class="listing-date">
+25 juin 2023
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="g-col-1" data-index="3" data-categories="Lignes de conduite" data-listing-date-sort="1687644000000" data-listing-file-modified-sort="1687877448203" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1">
+<a href="./exercices/mots-des-confines/index.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="https://upload.wikimedia.org/wikipedia/commons/b/b4/Tolima_-_Champ_de_sorgho.JPG" class="thumbnail-image card-img" style="height: 150px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+À quoi pense-t-on quand on s’enferme ?
+</h5>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('Lignes de conduite'); return false;">
+Lignes de conduite
+</div>
+</div>
+<div class="card-text listing-description">
+Représenter graphiquement des associations d’idées
+</div>
+<div class="card-attribution card-text-small justify">
+<div class="listing-author">
+Théo Boulakia, Nicolas Mariot
+</div>
+<div class="listing-date">
+25 juin 2023
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="g-col-1" data-index="4" data-categories="La Police des sorties" data-listing-date-sort="1687644000000" data-listing-file-modified-sort="1687877910461" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1">
+<a href="./exercices/verbalisations-departement/index.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="https://upload.wikimedia.org/wikipedia/commons/b/b4/Tolima_-_Champ_de_sorgho.JPG" class="thumbnail-image card-img" style="height: 150px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Des verbalisations très inégalement distribuées
+</h5>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('La Police des sorties'); return false;">
+La Police des sorties
+</div>
+</div>
+<div class="card-text listing-description">
+Cartographier la prévalence de la verbalisation
+</div>
+<div class="card-attribution card-text-small justify">
+<div class="listing-author">
+Théo Boulakia, Nicolas Mariot
+</div>
+<div class="listing-date">
+25 juin 2023
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="g-col-1" data-index="5" data-categories="FAQ" data-listing-date-sort="1687644000000" data-listing-file-modified-sort="1687877917377" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1">
+<a href="./exercices/stringency-index/index.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="https://upload.wikimedia.org/wikipedia/commons/b/b4/Tolima_-_Champ_de_sorgho.JPG" class="thumbnail-image card-img" style="height: 150px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Un indicateur de sévérité prêt à l’emploi
+</h5>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('FAQ'); return false;">
+FAQ
+</div>
+</div>
+<div class="card-text listing-description">
+Que montre le Stringency Index de l’Oxford Covid 19 Government Response Tracker ?
+</div>
+<div class="card-attribution card-text-small justify">
+<div class="listing-author">
+Théo Boulakia, Nicolas Mariot
+</div>
+<div class="listing-date">
+25 juin 2023
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="g-col-1" data-index="6" data-categories="La police des sorties" data-listing-date-sort="1687644000000" data-listing-file-modified-sort="1687877593607" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1">
+<a href="./exercices/polices-municipales/index.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="https://upload.wikimedia.org/wikipedia/commons/b/b4/Tolima_-_Champ_de_sorgho.JPG" class="thumbnail-image card-img" style="height: 150px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+La France des polices municipales
+</h5>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('La police des sorties'); return false;">
+La police des sorties
+</div>
+</div>
+<div class="card-text listing-description">
+Cartographier les initiatives sécuritaires locales
+</div>
+<div class="card-attribution card-text-small justify">
+<div class="listing-author">
+Théo Boulakia, Nicolas Mariot
+</div>
+<div class="listing-date">
+25 juin 2023
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+</div>
+<div class="listing-no-matching d-none">
+Aucun article correspondant
+</div>
+</div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -206,6 +427,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
   toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
   const isCodeAnnotation = (el) => {
     for (const clz of el.classList) {
       if (clz.startsWith('code-annotation-')) {                     

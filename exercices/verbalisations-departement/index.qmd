@@ -1,0 +1,10 @@
+---
+title: "Des verbalisations très inégalement distribuées"
+description: "Cartographier la prévalence de la verbalisation"
+date: 2023-06-25
+categories: [La Police des sorties] # self-defined categories
+citation: 
+  url: https://samanthacsik.github.io/posts/2022-10-24-quarto-blogs/ 
+image: https://upload.wikimedia.org/wikipedia/commons/b/b4/Tolima_-_Champ_de_sorgho.JPG
+draft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
+---

@@ -1,0 +1,7 @@
+---
+title: Page non trouvée
+---
+
+La page que vous cherchez n'existe plus (sans doute a-t-elle été déplacée ou renommée).
+
+[Allez à l'accueil](https://tblk.github.io/)

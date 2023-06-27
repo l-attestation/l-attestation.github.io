@@ -1,0 +1,10 @@
+---
+title: "À quoi pense-t-on quand on s'enferme ?"
+description: "Représenter graphiquement des associations d'idées"
+date: 2023-06-25
+categories: [Lignes de conduite]
+citation: 
+  url: https://l-attestation.github.io/mots-des-confines/
+image: https://upload.wikimedia.org/wikipedia/commons/b/b4/Tolima_-_Champ_de_sorgho.JPG
+draft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
+---

@@ -1,0 +1,10 @@
+---
+title: "Un indicateur de sévérité prêt à l'emploi"
+description: "Que montre le Stringency Index de l'Oxford Covid 19 Government Response Tracker ?"
+date: 2023-06-25
+categories: [FAQ] # self-defined categories
+citation: 
+  url: https://samanthacsik.github.io/posts/2022-10-24-quarto-blogs/ 
+image: https://upload.wikimedia.org/wikipedia/commons/b/b4/Tolima_-_Champ_de_sorgho.JPG
+draft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
+---

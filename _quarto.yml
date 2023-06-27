@@ -4,17 +4,28 @@ project:
 
 website:
   title: "L'Attestation"
+  site-url: "https://l-attestation.github.io/"
   navbar:
     left:
       - href: index.qmd
-        text: Home
-      - about.qmd
+        text: Accueil
+      - silence.qmd
+      - text: "Sources"
+        menu: 
+        - vico.qmd
+        - histoires.qmd
+        - trackers.qmd
+        - mobility.qmd
+        - surveillance.qmd
+      - exercices.qmd
 
 format:
   html:
     theme: cosmo
     css: styles.css
     toc: true
-
+    
+bibliography: references.json
+lang: fr
 
 

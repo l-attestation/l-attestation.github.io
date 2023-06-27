@@ -1,7 +1,16 @@
 ---
-title: "l-attestation.github.io"
+about:
+  image: "https://static.fnac-static.com/multimedia/Images/FR/NR/62/ba/4f/5225058/1540-1.jpg"
+  template: broadside
 ---
 
-This is a Quarto website.
+**Vous êtes sur le site de *L'Attestation. Une expérience d'obéissance de masse (printemps 2020)*, co-écrit par [Théo Boulakia](https://tblk.github.io) et [Nicolas Mariot](http://nicolas.mariot.cnrs.free.fr/).**
 
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+Nous y présentons nos sources, nos méthodes et nos outils. 
+
+::: {.callout-note}
+## Quelques précédents
+
+Cet "atelier" de la recherche répète l'opération de méthode déjà effectuée dans le cadre de précédentes enquêtes. Voir "Retour sur enquête" dans @mariot2010, p. 241-260, la postface "Échafaudages" dans @mariot2013, p. 387-437 ou encore "Les dessous du récit" dans @mariot2017, p. 367-388.
+
+:::
