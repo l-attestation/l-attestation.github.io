@@ -1,5 +1,6 @@
 ---
 title: Exercices
+sidebar: false
 listing: 
   contents: exercices # all Quarto docs in the `posts` directory
   type: grid # or `default` or `table`; each type has its own set of yaml options

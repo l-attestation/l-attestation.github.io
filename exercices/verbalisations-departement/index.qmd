@@ -1,6 +1,9 @@
 ---
 title: "Des verbalisations très inégalement distribuées"
 description: "Cartographier la prévalence de la verbalisation"
+execute:
+  warning: false
+  message: false
 date: 2023-06-25
 categories: [La Police des sorties] # self-defined categories
 citation: 
@@ -8,3 +11,30 @@ citation:
 image: https://upload.wikimedia.org/wikipedia/commons/b/b4/Tolima_-_Champ_de_sorgho.JPG
 draft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
 ---
+
+## Packages nécessaires
+
+```{r}
+library(here)
+library(readxl)
+library(tidyverse)
+library(janitor)
+library(tmap)
+```
+
+
+## D'où proviennent les données ?
+
+Pour que ces chiffres soient rendus publics, il a fallu l'opiniâtreté d'un journaliste indépendant, Alexdandre Léchenet. Celui-ci a saisi la Commission d'Accès aux Documents administratifs, afin de forcer le ministère de l'Intérieur à les dévoiler. Il le raconte dans [ce billet de blog](http://blog.alphoenix.net/2021/07/21/confinement-plus-damendes-dans-les-alpes-maritimes-et-a-paris/).
+
+## Les télécharger
+
+```{r}
+verbalisations_departement_path = here("data", "verbalisations_departement.xlsx")
+# download.file(url = "http://blog.alphoenix.net/wp-content/uploads/2021/07/RES_DIF_COVID19_CONFINEMENT_MARS-MAI2020_parDep_20210506.xlsx",
+#               destfile = verbalisations_departement_path)
+verbalisations_departement = read_excel(verbalisations_departement_path, skip = 2) |> 
+  rename(code_departement = "Département d'infraction",
+         verbalisations = "Nombre de dossiers d'infraction")
+```
+
