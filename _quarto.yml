@@ -24,15 +24,8 @@ website:
     - title: "Sources"
       style: docked
       background: light
-      contents:
-        - sources.qmd
-        - vico.qmd
-        - histoires.qmd
-        - trackers.qmd
-        - mobility.qmd
-        - surveillance.qmd
+      contents: sources
     
-        
 format:
   html:
     theme: cosmo

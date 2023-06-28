@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://l-attestation.github.io/biblio.html</loc>
-    <lastmod>2023-06-28T14:04:31.890Z</lastmod>
+    <lastmod>2023-06-28T14:28:43.559Z</lastmod>
   </url>
   <url>
     <loc>https://l-attestation.github.io/exercices/cameras-paris/index.html</loc>
@@ -42,11 +42,11 @@
   </url>
   <url>
     <loc>https://l-attestation.github.io/silence.html</loc>
-    <lastmod>2023-06-28T14:17:53.284Z</lastmod>
+    <lastmod>2023-06-28T14:31:59.769Z</lastmod>
   </url>
   <url>
     <loc>https://l-attestation.github.io/sources.html</loc>
-    <lastmod>2023-06-28T14:18:10.757Z</lastmod>
+    <lastmod>2023-06-28T14:32:06.941Z</lastmod>
   </url>
   <url>
     <loc>https://l-attestation.github.io/histoires.html</loc>
@@ -54,7 +54,7 @@
   </url>
   <url>
     <loc>https://l-attestation.github.io/index.html</loc>
-    <lastmod>2023-06-28T14:05:26.917Z</lastmod>
+    <lastmod>2023-06-28T14:28:36.471Z</lastmod>
   </url>
   <url>
     <loc>https://l-attestation.github.io/mobility.html</loc>
@@ -66,6 +66,22 @@
   </url>
   <url>
     <loc>https://l-attestation.github.io/exercices.html</loc>
-    <lastmod>2023-06-28T14:16:04.807Z</lastmod>
+    <lastmod>2023-06-28T14:28:41.491Z</lastmod>
+  </url>
+  <url>
+    <loc>https://l-attestation.github.io/sources/surveillance.html</loc>
+    <lastmod>2023-06-28T14:32:10.497Z</lastmod>
+  </url>
+  <url>
+    <loc>https://l-attestation.github.io/sources/vico.html</loc>
+    <lastmod>2023-06-28T14:32:25.122Z</lastmod>
+  </url>
+  <url>
+    <loc>https://l-attestation.github.io/sources/histoires.html</loc>
+    <lastmod>2023-06-28T14:32:09.777Z</lastmod>
+  </url>
+  <url>
+    <loc>https://l-attestation.github.io/sources/trackers.html</loc>
+    <lastmod>2023-06-28T14:32:19.022Z</lastmod>
   </url>
 </urlset>

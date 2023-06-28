@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>L’Attestation - Exercices</title>
+<title>L’Attestation - Histoires de confinement</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,27 +20,45 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../sources/surveillance.html" rel="next">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -60,40 +78,9 @@ ul.task-list li input[type="checkbox"] {
     "search-submit-button-title": "Envoyer"
   }
 }</script>
-<script>
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
 
-    const options = {
-      valueNames: ['listing-title','listing-author','listing-date','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-title","listing-author","listing-date","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../styles.css">
 </head>
 
 <body class="nav-sidebar docked nav-fixed">
@@ -103,7 +90,7 @@ ul.task-list li input[type="checkbox"] {
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">L’Attestation</span>
     </a>
   </div>
@@ -114,23 +101,23 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html" rel="" target="">
+    <a class="nav-link" href="../index.html" rel="" target="">
  <span class="menu-text">Accueil</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./silence.html" rel="" target="">
+    <a class="nav-link" href="../silence.html" rel="" target="">
  <span class="menu-text">Silence</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./sources.html" rel="" target="">
+    <a class="nav-link" href="../sources.html" rel="" target="">
  <span class="menu-text">Sources</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./exercices.html" rel="" target="" aria-current="page">
+    <a class="nav-link" href="../exercices.html" rel="" target="">
  <span class="menu-text">Exercices</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./biblio.html" rel="" target="">
+    <a class="nav-link" href="../biblio.html" rel="" target="">
  <span class="menu-text">Bibliographie</span></a>
   </li>  
 </ul>
@@ -144,7 +131,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Exercices</li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../sources/histoires.html">Sources</a></li><li class="breadcrumb-item"><a href="../sources/histoires.html">Histoires de confinement</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
     </div>
@@ -167,25 +154,25 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./sources/histoires.html" class="sidebar-item-text sidebar-link">
+  <a href="../sources/histoires.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Histoires de confinement</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./sources/surveillance.html" class="sidebar-item-text sidebar-link">
+  <a href="../sources/surveillance.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Chiffres de la surveillance</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./sources/trackers.html" class="sidebar-item-text sidebar-link">
+  <a href="../sources/trackers.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Policy trackers</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./sources/vico.html" class="sidebar-item-text sidebar-link">
+  <a href="../sources/vico.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">La Vie en confinement</span></a>
   </div>
 </li>
@@ -198,13 +185,13 @@ ul.task-list li input[type="checkbox"] {
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         
-    <h5 class="quarto-listing-category-title">Catégories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">Tous <span class="quarto-category-count">(7)</span></div><div class="category" data-category="FAQ">FAQ <span class="quarto-category-count">(3)</span></div><div class="category" data-category="Inquiètement">Inquiètement <span class="quarto-category-count">(1)</span></div><div class="category" data-category="La Police des sorties">La Police des sorties <span class="quarto-category-count">(1)</span></div><div class="category" data-category="La police des sorties">La police des sorties <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Lignes de conduite">Lignes de conduite <span class="quarto-category-count">(1)</span></div></div></div>
+    </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Exercices</h1>
+<h1 class="title">Histoires de confinement</h1>
 </div>
 
 
@@ -219,227 +206,31 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
+<p>Le versant « national » de l’enquête repose enfin sur un matériau extrêmement riche et assez inhabituel, constitué de plus de 250 « histoires du confinement » tirées de la presse locale et de la communication des forces de l’ordre. Souvent, la frontière entre ces deux sources est assez ténue. Pour qu’il n’y ait pas de méprise, signalons d’emblée qu’aucune de ces histoires ne se déroule entre quatre murs. Toutes se passent dans l’étrange dehors du printemps 2020, dans les rues, sur les routes, et plus souvent encore dans les forêts, les parcs, sur les plages, parfois dans des grottes ou des refuges de haute montagne. Elles racontent le quadrillage du terrain par les forces de l’ordre, les verbalisations contestables, ou encore la « traque » des contrevenants, selon le mot fréquemment employé aussi bien par les policiers et gendarmes que par les reporters locaux. Elles font émerger la minorité nécessairement discrète des « réfractaires au confinement », celles et ceux qui ont continué à fréquenter les zones interdites malgré la présence policière. Après de premiers coups de sonde fructueux, l’investigation a pris un tour systématique, ce qu’internet rend désormais possible&nbsp;: armés de quelques mots clés (« confinement », « contrôles », mais aussi « barbecue » ou « drones »), nous avons interrogé un moteur de recherche pour chaque département métropolitain, et pour la période allant du 16 mars au 30 mai 2020. Ces histoires, qui pour la plupart ne dépassent pas 500 mots, ont tout de petites fables de circonstance, mettant en scène les dangers que présentent les transgressions du confinement.</p>
+<p>Elles renseignent sur au moins trois choses qui nous intéressent au premier chef. Ce sont d’abord les moyens mis en œuvre pour la surveillance de la population. Grâce à elles, nous avons pu documenter l’usage systématique des drones, des hélicoptères et des caméras de surveillance. Ensuite, elles montrent qu’un certain nombre de personnes ont continué à braver les interdits tout au long du confinement. Enfin, elles documentent la politique de communication des autorités et ses relais médiatiques. C’est naturellement le cas lorsque les policiers et gendarmes font leur propre publicité, ou lorsque tel maire vante l’action de sa police municipale. Souvent, il s’agit d’informer en même temps que d’inquiéter en répétant la leçon, comme dans les Pyrénées-Orientales où la gendarmerie publie sur sa page <em>Facebook</em>, le 24 mars, une carte de son quadrillage du territoire – les points de contrôle fixes – accompagnée du commentaire suivant&nbsp;: « Le groupement de gendarmerie départementale des Pyrénées-Orientales est plus que jamais mobilisé, PARTOUT et TOUT LE TEMPS, pour vous protéger, pour assurer l’intégrité des biens et pour vérifier que vous RESTEZ CHEZ VOUS <span class="citation" data-cites="t.2020">(<a href="#ref-t.2020" role="doc-biblioref">T. 2020</a>)</span> ». Parfois, les forces de l’ordre préfèrent simplement mettre en scène leur quotidien, comme dans la série « Bleu » dont les gendarmes de Dordogne diffusent le premier épisode le 4 avril sur leur chaîne Youtube<span class="citation" data-cites="g.2020b">(<a href="#ref-g.2020b" role="doc-biblioref">G. 2020</a>)</span>. Ailleurs encore, elles commentent leurs succès sur les réseaux sociaux, voire profitent des drones et hélicoptères utilisés au quotidien pour filmer les beautés de la France (vide) vue du ciel – voir par exemple le film réalisé par la Préfecture de Police pour Paris<span class="citation" data-cites="bxr.2020">(<a href="#ref-bxr.2020" role="doc-biblioref">Bx, R. 2020</a>)</span>. Très souvent, elles ont pu alors s’appuyer sur la presse locale pour relayer leur message, tout particulièrement dans le cadre d’innombrables publireportages dans lesquels le journaliste « <em>embeded</em> » les montrait au travail, sur terre ou dans les airs, en train de surveiller et de contrôler celles et ceux qui s’aventuraient encore dans l’espace public. L’article publié dans le <em>Berry Républicain</em> le 2 avril est en ce sens exemplaire. Le localier est invité à assister au premier déploiement de drone dans le ciel de la Préfecture du Cher, en présence de la directrice départementale de la sécurité publique. Sous l’ensemble des images et de la vidéo qui illustrent l’article, le « crédit photographique » indique : « SRPJ Orléans »<span class="citation" data-cites="letreulle2020">(<a href="#ref-letreulle2020" role="doc-biblioref">Letreulle 2020</a>)</span>.</p>
+<p>Comme on a pu le constater dans les pages qui précèdent, nombre de quotidiens ou d’hebdomadaires, qu’ils soient nationaux ou régionaux, ne se sont guère écartés de cette ligne de promotion du travail de l’État. A de rares exceptions près (celles d’organes qu’on qualifie, souvent avec une connotation péjorative, de « militants » : <em>Reporterre</em>, <em>Bastamag</em>, <em>Rue89</em><span class="citation" data-cites="gerardin2020">(<a href="#ref-gerardin2020" role="doc-biblioref">Gérardin 2020</a>)</span> ou le service « CheckNews » de <em>Libération</em> par exemple), ils se sont en quelque sorte auto-institués, à l’instar de très nombreuses municipalités, comme relais et bras droit des autorités pour diffuser et rappeler les mesures prises dans le cadre de l’état d’urgence. Une des manifestations les plus frappantes de la couverture médiatique des événements du printemps 2020 tient ainsi à la récurrence de ces reportages réalisés aux côtés des forces de l’ordre.</p>
+<p>Ce caractère particulier des sources n’est pas sans intérêt pour qui souhaite comprendre les ressorts du conformisme. De façon quasi unanime, les journaux ont servi de caisse de résonance aux «&nbsp;points presse&nbsp;» officiels, n’interrogeant que très rarement les choix et dispositifs mis en place. D’aucun mentionneront ici, en contrepoint, les quelques articles critiquant l’enlèvement des bancs publics à Béziers ou l’appel aux chasseurs du préfet de Seine et Marne. Mais outre que ces exemples restaient justement présentés comme des cas hors norme, déviants (là ils exagèrent), ils laissent dans l’ombre toutes les fois où des propos étonnants tenus par des préfets, des directeurs de la sécurité publique ou des maires – on en a lu de nombreux exemples – ont été relayés tels quels, sans commentaires. En se rangeant parmi les acteurs de la lutte contre la pandémie, les organes de presse n’ont pas peu contribué à rendre invisible sinon indicible toute parole qui viendrait discuter les choix officiels. Ce faisant, ils ont, eux aussi, pris une part non négligeable dans la fabrique du conformisme.</p>
 
 
 
 
-<div class="quarto-listing quarto-listing-container-grid" id="listing-listing">
-<div class="list grid quarto-listing-cols-3">
-<div class="g-col-1" data-index="0" data-categories="Inquiètement" data-listing-date-sort="1687644000000" data-listing-file-modified-sort="1687881683026" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1">
-<a href="./exercices/cameras-paris/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img src="https://upload.wikimedia.org/wikipedia/commons/b/b4/Tolima_-_Champ_de_sorgho.JPG" class="thumbnail-image card-img" style="height: 150px;">
-</p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-Parisiens, ouvrez l’oeil !
-</h5>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('Inquiètement'); return false;">
-Inquiètement
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Retour au sommet</a><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">Les références</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-bxr.2020" class="csl-entry" role="listitem">
+Bx, R. 2020. <span>«&nbsp;Confinement : les images saisissantes d’un Paris désert vu du ciel&nbsp;»</span>. <em>leparisien.fr</em>, 27 mars 2020. <a href="https://www.leparisien.fr/paris-75/confinement-les-images-saisissantes-d-un-paris-desert-vu-du-ciel-27-03-2020-8289327.php">https://www.leparisien.fr/paris-75/confinement-les-images-saisissantes-d-un-paris-desert-vu-du-ciel-27-03-2020-8289327.php</a>.
 </div>
+<div id="ref-g.2020b" class="csl-entry" role="listitem">
+G., N. 2020. <span>«&nbsp;Coronavirus. « Bleu », la série des gendarmes de Dordogne pour raconter leur quotidien sur Facebook&nbsp;»</span>. <em>Ouest-France.fr</em>, 6 avril 2020. <a href="https://www.ouest-france.fr/sante/virus/coronavirus/coronavirus-bleu-la-serie-des-gendarmes-de-dordogne-pour-raconter-leur-quotidien-sur-facebook-6801204">https://www.ouest-france.fr/sante/virus/coronavirus/coronavirus-bleu-la-serie-des-gendarmes-de-dordogne-pour-raconter-leur-quotidien-sur-facebook-6801204</a>.
 </div>
-<div class="card-text listing-description">
-Cartographier les caméras de surveillance à Paris
+<div id="ref-gerardin2020" class="csl-entry" role="listitem">
+Gérardin, Francis. 2020. <span>«&nbsp;<span>“La pilule, une nécessité ?”</span> Dans la jungle des interprétations des contrôles du confinement&nbsp;»</span>. <em>Rue89 Strasbourg</em>, 3 mai 2020. <a href="https://www.rue89strasbourg.com/verbalisations-rupture-confinement-abus-174674">https://www.rue89strasbourg.com/verbalisations-rupture-confinement-abus-174674</a>.
 </div>
-<div class="card-attribution card-text-small justify">
-<div class="listing-author">
-Théo Boulakia, Nicolas Mariot
+<div id="ref-letreulle2020" class="csl-entry" role="listitem">
+Letreulle, Emmanuel. 2020. <span>«&nbsp;Coronavirus - La police de Bourges a recours à un drone pour vérifier le respect des règles de confinement [vidéo]&nbsp;»</span>. <em>www.leberry.fr</em>, 2 avril 2020. <a href="https://www.leberry.fr/bourges-18000/actualites/la-police-de-bourges-a-recours-a-un-drone-pour-verifier-le-respect-des-regles-de-confinement-video_13773011/">https://www.leberry.fr/bourges-18000/actualites/la-police-de-bourges-a-recours-a-un-drone-pour-verifier-le-respect-des-regles-de-confinement-video_13773011/</a>.
 </div>
-<div class="listing-date">
-25 juin 2023
+<div id="ref-t.2020" class="csl-entry" role="listitem">
+T., M. 2020. <span>«&nbsp;Coronavirus - P.-O. : la gendarmerie <span>“partout, tout le temps”</span> sur les points de contrôle&nbsp;»</span>. <em>lindependant.fr</em>, 24 mars 2020. <a href="https://www.lindependant.fr/2020/03/24/coronavirus-p-o-la-gendarmerie-revele-lemplacement-de-ses-points-de-controle,8816443.php">https://www.lindependant.fr/2020/03/24/coronavirus-p-o-la-gendarmerie-revele-lemplacement-de-ses-points-de-controle,8816443.php</a>.
 </div>
-</div>
-</div>
-</div>
-</a>
-</div>
-<div class="g-col-1" data-index="1" data-categories="FAQ" data-listing-date-sort="1687644000000" data-listing-file-modified-sort="1687877877841" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1">
-<a href="./exercices/policiers-europe/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img src="https://upload.wikimedia.org/wikipedia/commons/b/b4/Tolima_-_Champ_de_sorgho.JPG" class="thumbnail-image card-img" style="height: 150px;">
-</p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-Où est-on le mieux protégé en Europe ?
-</h5>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('FAQ'); return false;">
-FAQ
-</div>
-</div>
-<div class="card-text listing-description">
-Calculer la concentration policière dans chaque pays
-</div>
-<div class="card-attribution card-text-small justify">
-<div class="listing-author">
-Théo Boulakia, Nicolas Mariot
-</div>
-<div class="listing-date">
-25 juin 2023
-</div>
-</div>
-</div>
-</div>
-</a>
-</div>
-<div class="g-col-1" data-index="2" data-categories="FAQ" data-listing-date-sort="1687644000000" data-listing-file-modified-sort="1687884303222" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2">
-<a href="./exercices/signature-confinements-latins/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img src="https://upload.wikimedia.org/wikipedia/commons/b/b4/Tolima_-_Champ_de_sorgho.JPG" class="thumbnail-image card-img" style="height: 150px;">
-</p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-La signature des confinements latins
-</h5>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('FAQ'); return false;">
-FAQ
-</div>
-</div>
-<div class="card-text listing-description">
-Montrer la spécificité des pays du Sud de l’Europe à l’aide des données de Google Mobility
-</div>
-<div class="card-attribution card-text-small justify">
-<div class="listing-author">
-Théo Boulakia, Nicolas Mariot
-</div>
-<div class="listing-date">
-25 juin 2023
-</div>
-</div>
-</div>
-</div>
-</a>
-</div>
-<div class="g-col-1" data-index="3" data-categories="Lignes de conduite" data-listing-date-sort="1687644000000" data-listing-file-modified-sort="1687877448203" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1">
-<a href="./exercices/mots-des-confines/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img src="https://upload.wikimedia.org/wikipedia/commons/b/b4/Tolima_-_Champ_de_sorgho.JPG" class="thumbnail-image card-img" style="height: 150px;">
-</p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-À quoi pense-t-on quand on s’enferme ?
-</h5>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('Lignes de conduite'); return false;">
-Lignes de conduite
-</div>
-</div>
-<div class="card-text listing-description">
-Représenter graphiquement des associations d’idées
-</div>
-<div class="card-attribution card-text-small justify">
-<div class="listing-author">
-Théo Boulakia, Nicolas Mariot
-</div>
-<div class="listing-date">
-25 juin 2023
-</div>
-</div>
-</div>
-</div>
-</a>
-</div>
-<div class="g-col-1" data-index="4" data-categories="La Police des sorties" data-listing-date-sort="1687644000000" data-listing-file-modified-sort="1687877910461" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1">
-<a href="./exercices/verbalisations-departement/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img src="https://upload.wikimedia.org/wikipedia/commons/b/b4/Tolima_-_Champ_de_sorgho.JPG" class="thumbnail-image card-img" style="height: 150px;">
-</p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-Des verbalisations très inégalement distribuées
-</h5>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('La Police des sorties'); return false;">
-La Police des sorties
-</div>
-</div>
-<div class="card-text listing-description">
-Cartographier la prévalence de la verbalisation
-</div>
-<div class="card-attribution card-text-small justify">
-<div class="listing-author">
-Théo Boulakia, Nicolas Mariot
-</div>
-<div class="listing-date">
-25 juin 2023
-</div>
-</div>
-</div>
-</div>
-</a>
-</div>
-<div class="g-col-1" data-index="5" data-categories="FAQ" data-listing-date-sort="1687644000000" data-listing-file-modified-sort="1687877917377" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1">
-<a href="./exercices/stringency-index/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img src="https://upload.wikimedia.org/wikipedia/commons/b/b4/Tolima_-_Champ_de_sorgho.JPG" class="thumbnail-image card-img" style="height: 150px;">
-</p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-Un indicateur de sévérité prêt à l’emploi
-</h5>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('FAQ'); return false;">
-FAQ
-</div>
-</div>
-<div class="card-text listing-description">
-Que montre le Stringency Index de l’Oxford Covid 19 Government Response Tracker ?
-</div>
-<div class="card-attribution card-text-small justify">
-<div class="listing-author">
-Théo Boulakia, Nicolas Mariot
-</div>
-<div class="listing-date">
-25 juin 2023
-</div>
-</div>
-</div>
-</div>
-</a>
-</div>
-<div class="g-col-1" data-index="6" data-categories="La police des sorties" data-listing-date-sort="1687644000000" data-listing-file-modified-sort="1687877593607" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1">
-<a href="./exercices/polices-municipales/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img src="https://upload.wikimedia.org/wikipedia/commons/b/b4/Tolima_-_Champ_de_sorgho.JPG" class="thumbnail-image card-img" style="height: 150px;">
-</p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-La France des polices municipales
-</h5>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('La police des sorties'); return false;">
-La police des sorties
-</div>
-</div>
-<div class="card-text listing-description">
-Cartographier les initiatives sécuritaires locales
-</div>
-<div class="card-attribution card-text-small justify">
-<div class="listing-author">
-Théo Boulakia, Nicolas Mariot
-</div>
-<div class="listing-date">
-25 juin 2023
-</div>
-</div>
-</div>
-</div>
-</a>
-</div>
-</div>
-<div class="listing-no-matching d-none">
-Aucun article correspondant
-</div>
-</div><a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Retour au sommet</a></main> <!-- /main -->
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -673,6 +464,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../sources/surveillance.html" class="pagination-link">
+        <span class="nav-page-text">Chiffres de la surveillance</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
 </div> <!-- /content -->
 
 
