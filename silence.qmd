@@ -1,5 +1,6 @@
 ---
 title: "Silence"
+sidebar: false
 ---
 
 Il est possible que l'écho médiatique d'accompagnement et de promotion des politiques publiques du confinement ait son pendant du côté politique et universitaire, mais cette fois sous la forme du silence. Dès les premiers temps de l'enquête, nous avons été frappés par le peu d'intérêt apparent des chercheuses et chercheurs pour la dimension policière des mesures prises, en France comme ailleurs dans le monde. Une fois l'enfermement du printemps 2020 derrière nous, la situation n'a guère évolué : dans nombre de pays, et particulièrement là où les confinements furent durs, les tentatives, autant journalistiques qu'universitaires, pour dresser un panorama ou tirer un bilan de l'expérience de mise en cause des libertés sont rares sinon absentes.

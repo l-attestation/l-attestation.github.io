@@ -1,4 +1,5 @@
 ---
+sidebar: false
 about:
   image: "https://static.fnac-static.com/multimedia/Images/FR/NR/62/ba/4f/5225058/1540-1.jpg"
   template: broadside
