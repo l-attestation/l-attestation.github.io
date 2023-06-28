@@ -2,8 +2,10 @@
 author:
   - name: Théo Boulakia
   - name: Nicolas Mariot
-
 freeze: false # https://quarto.org/docs/projects/code-execution.html#freeze
 title-block-banner: true # https://quarto.org/docs/authoring/title-blocks.html
-
+execute: 
+  warning: false
+  message: false
+sidebar: false
 lang: fr
