@@ -8,3 +8,42 @@ citation:
 image: https://upload.wikimedia.org/wikipedia/commons/b/b4/Tolima_-_Champ_de_sorgho.JPG
 draft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
 ---
+
+# Charger les principaux packages
+
+```{r}
+library(here)
+library(tidyverse)
+library(janitor)
+library(lubridate)
+library(countrycode)
+```
+
+# Récupérer les données
+
+```{r}
+oxcgrt_path = here("data", "oxcgrt.rds")
+
+# read_csv("https://raw.githubusercontent.com/OxCGRT/covid-policy-tracker/master/data/OxCGRT_nat_latest.csv",
+#                   col_select = c(CountryName,
+#                                  Date,
+#                                  starts_with("C6"),
+#                                  StringencyIndex_Average)) |>
+#   write_rds(oxcgrt_path)
+
+oxcgrt = read_rds(oxcgrt_path) |> 
+  clean_names() %>%
+  mutate(date = ymd(date),
+         wb = countrycode(country_name, origin = "country.name", destination = "wb"),
+         national_or_subnational_saho = case_when(c6m_stay_at_home_requirements %in% 0:1 ~ 0,
+                                                  c6m_stay_at_home_requirements == 2 ~ 1,
+                                                  c6m_stay_at_home_requirements == 3 ~ 2),
+         national_saho = national_or_subnational_saho *  c6m_flag) %>%
+  select(wb,
+         date,
+         stringency_index_average,
+         national_or_subnational_saho,
+         national_saho)
+
+```
+

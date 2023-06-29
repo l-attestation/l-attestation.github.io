@@ -60,7 +60,7 @@
     "href": "exercices/policiers-europe/index.html#les-inspecter",
     "title": "Où est-on le mieux protégé en Europe ?",
     "section": "Les inspecter",
-    "text": "Les inspecter\n\nslice_sample(crim_just_job, n = 20) |&gt; \n  as_huxtable() |&gt; \n  set_number_format(NA) |&gt; \n  huxtable::theme_grey()\n\n\n\n\nisco08\nsex\nunit\ngeo\ntime\nvalues\n\n\nProfessional judges\nTotal\nNumber\nMalta\n2014-01-01\n41   \n\n\nPolice officers\nMales\nNumber\nSerbia\n2009-01-01\n29410   \n\n\nPersonnel in adult prison\nTotal\nPer hundred thousand inhabitants\nGreece\n2016-01-01\n41.37\n\n\nPolice officers\nTotal\nNumber\nNorthern Ireland (UK)\n2011-01-01\n7855   \n\n\nProfessional judges\nFemales\nNumber\nLatvia\n2010-01-01\n331   \n\n\nProfessional judges\nTotal\nPer hundred thousand inhabitants\nIreland\n2019-01-01\n3.41\n\n\nProfessional judges\nMales\nNumber\nCroatia\n2017-01-01\n526   \n\n\nPersonnel in adult prison\nMales\nNumber\nItaly\n2021-01-01\n32599   \n\n\nPersonnel in adult prison\nFemales\nPer hundred thousand inhabitants\nPortugal\n2013-01-01\n23.82\n\n\nPersonnel in juvenile prison\nFemales\nNumber\nFrance\n2014-01-01\n107   \n\n\nPersonnel in adult prison\nMales\nNumber\nPoland\n2014-01-01\n13701   \n\n\nPersonnel in adult prison\nFemales\nNumber\nItaly\n2010-01-01\n7101   \n\n\nPersonnel in adult prison\nTotal\nNumber\nPortugal\n2021-01-01\n6502   \n\n\nProfessional judges\nFemales\nNumber\nEngland and Wales\n2016-01-01\n1696   \n\n\nPolice officers\nTotal\nNumber\nNorth Macedonia\n2013-01-01\n9276   \n\n\nPersonnel in juvenile prison\nMales\nNumber\nLithuania\n2011-01-01\n112   \n\n\nPersonnel in adult prison\nFemales\nPer hundred thousand inhabitants\nNorway\n2016-01-01\n81.75\n\n\nProfessional judges\nTotal\nNumber\nGreece\n2015-01-01\n4121   \n\n\nPersonnel in juvenile prison\nMales\nNumber\nNorthern Ireland (UK)\n2016-01-01\n0   \n\n\nProfessional judges\nMales\nNumber\nLithuania\n2010-01-01\n331"
+    "text": "Les inspecter\n\nslice_sample(crim_just_job, n = 20) |&gt; \n  as_huxtable() |&gt; \n  set_number_format(NA) |&gt; \n  huxtable::theme_grey()\n\n\n\n\nisco08\nsex\nunit\ngeo\ntime\nvalues\n\n\nPersonnel in adult prison\nMales\nPer hundred thousand inhabitants\nBulgaria\n2017-01-01\n61.88\n\n\nPolice officers\nTotal\nPer hundred thousand inhabitants\nIceland\n2018-01-01\n175.92\n\n\nPersonnel in juvenile prison\nFemales\nPer hundred thousand inhabitants\nTürkiye\n2017-01-01\n0.08\n\n\nPersonnel in adult prison\nMales\nPer hundred thousand inhabitants\nNorthern Ireland (UK)\n2008-01-01\n147.93\n\n\nPersonnel in juvenile prison\nTotal\nNumber\nCroatia\n2015-01-01\n102   \n\n\nPolice officers\nMales\nNumber\nKosovo (under United Nations Security Council Resolution 1244/99)\n2018-01-01\n7411   \n\n\nProfessional judges\nMales\nPer hundred thousand inhabitants\nSlovenia\n2015-01-01\n19.37\n\n\nProfessional judges\nFemales\nPer hundred thousand inhabitants\nCyprus\n2011-01-01\n9.51\n\n\nPersonnel in adult prison\nTotal\nNumber\nMontenegro\n2014-01-01\n484   \n\n\nPolice officers\nFemales\nNumber\nNorway\n2013-01-01\n2060   \n\n\nProfessional judges\nTotal\nNumber\nSpain\n2019-01-01\n2929   \n\n\nPersonnel in adult prison\nMales\nNumber\nDenmark\n2013-01-01\n2669   \n\n\nPersonnel in juvenile prison\nTotal\nPer hundred thousand inhabitants\nFrance\n2008-01-01\n0.51\n\n\nPolice officers\nFemales\nNumber\nSweden\n2011-01-01\n4397   \n\n\nPersonnel in adult prison\nTotal\nPer hundred thousand inhabitants\nAlbania\n2021-01-01\n149.31\n\n\nPersonnel in adult prison\nFemales\nNumber\nSlovakia\n2010-01-01\n1047   \n\n\nPersonnel in juvenile prison\nMales\nNumber\nNorthern Ireland (UK)\n2016-01-01\n0   \n\n\nPolice officers\nTotal\nPer hundred thousand inhabitants\nTürkiye\n2017-01-01\n489.68\n\n\nPolice officers\nFemales\nNumber\nRomania\n2014-01-01\n7370   \n\n\nPersonnel in adult prison\nTotal\nPer hundred thousand inhabitants\nSpain\n2010-01-01\n65.65"
   },
   {
     "objectID": "exercices/policiers-europe/index.html#les-recoder",
@@ -158,7 +158,49 @@
     "href": "exercices/mots-des-confines/index.html",
     "title": "À quoi pense-t-on quand on s’enferme ?",
     "section": "",
-    "text": "CitationBibTeX@online{boulakia2023,\n  author = {Boulakia, Théo and Mariot, Nicolas},\n  title = {À quoi pense-t-on quand on s’enferme\\,?},\n  date = {2023-06-25},\n  url = {https://l-attestation.github.io/mots-des-confines/},\n  langid = {fr}\n}\nVeuillez citer ce travail comme suit :\nBoulakia, Théo, and Nicolas Mariot. 2023. “À quoi pense-t-on quand\non s’enferme ?” June 25, 2023. https://l-attestation.github.io/mots-des-confines/."
+    "text": "library(tidyverse)\nlibrary(huxtable)\nlibrary(tidytext)\nlibrary(widyr)\nlibrary(tidygraph)\nlibrary(ggraph)\nlibrary(igraph)"
+  },
+  {
+    "objectID": "exercices/mots-des-confines/index.html#charger-les-principaux-packages",
+    "href": "exercices/mots-des-confines/index.html#charger-les-principaux-packages",
+    "title": "À quoi pense-t-on quand on s’enferme ?",
+    "section": "",
+    "text": "library(tidyverse)\nlibrary(huxtable)\nlibrary(tidytext)\nlibrary(widyr)\nlibrary(tidygraph)\nlibrary(ggraph)\nlibrary(igraph)"
+  },
+  {
+    "objectID": "exercices/mots-des-confines/index.html#récupérer-les-données",
+    "href": "exercices/mots-des-confines/index.html#récupérer-les-données",
+    "title": "À quoi pense-t-on quand on s’enferme ?",
+    "section": "Récupérer les données",
+    "text": "Récupérer les données\n\n\n\n\n\n\nImportant\n\n\n\nLa base de données issue de l’Enquête La Vie en confinement contient des informations personnelles, bien que non identifiantes. Elle n’est donc pas librement accessible en ligne. Pour savoir comment y accéder, reportez-vous à cette page du site de l’enquête.\n\n\nUne seule variable parmi les centaines que compte la base nous intéresse ici, c’est celle qui stocke les comentaires libres que les gens ont fait à la fin du questionnaire."
+  },
+  {
+    "objectID": "exercices/mots-des-confines/index.html#recoder",
+    "href": "exercices/mots-des-confines/index.html#recoder",
+    "title": "À quoi pense-t-on quand on s’enferme ?",
+    "section": "Recoder",
+    "text": "Recoder\nLe recodage consiste en deux opérations :\n\nSegmenter chacun des 3000 commentaires en mots\nRapporter chaque mot à un lemme, afin que (par exemple), “je sors” et “nous sortons” soient tous deux associés au lemme sortir.\n\n\n\n\n\n\n\nAstuce\n\n\n\nL’outil qu’il nous faut ici est la fonction udpipe::udpipe_annotate.\n\n\nLes calculs prennent un certain temps, voici à quoi ressemble le résultat en cache :\n\ntargets::tar_load(commentaires_annotate, store = \"~/vico/_targets\")\n\ncommentaires_annotate |&gt; \n  head(n = 10) |&gt; \n  as_hux() |&gt; \n  set_number_format(NA) |&gt; \n  theme_green()\n\n\n\n\ndoc_id\nparagraph_id\nsentence_id\nsentence\ntoken_id\ntoken\nlemma\nupos\nxpos\nfeats\nhead_token_id\ndep_rel\ndeps\nmisc\n\n\n51\n1\n1\nImpossible de mentionner correctement quand on a plusieurs métiers.\n1\nImpossible\nimpossible\nADJ\n\nGender=Masc|Number=Sing\n\n\n\n\n\n\n51\n1\n1\nImpossible de mentionner correctement quand on a plusieurs métiers.\n2\nde\nde\nADP\n\n\n\n\n\n\n\n\n51\n1\n1\nImpossible de mentionner correctement quand on a plusieurs métiers.\n3\nmentionner\nmentionner\nVERB\n\nVerbForm=Inf\n\n\n\n\n\n\n51\n1\n1\nImpossible de mentionner correctement quand on a plusieurs métiers.\n4\ncorrectement\ncorrectement\nADV\n\n\n\n\n\n\n\n\n51\n1\n1\nImpossible de mentionner correctement quand on a plusieurs métiers.\n5\nquand\nquand\nSCONJ\n\n\n\n\n\n\n\n\n51\n1\n1\nImpossible de mentionner correctement quand on a plusieurs métiers.\n6\non\non\nPRON\n\nGender=Masc|Number=Sing|Person=3\n\n\n\n\n\n\n51\n1\n1\nImpossible de mentionner correctement quand on a plusieurs métiers.\n7\na\navoir\nVERB\n\nMood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin\n\n\n\n\n\n\n51\n1\n1\nImpossible de mentionner correctement quand on a plusieurs métiers.\n8\nplusieurs\nplusieurs\nDET\n\nGender=Masc|Number=Plur\n\n\n\n\n\n\n51\n1\n1\nImpossible de mentionner correctement quand on a plusieurs métiers.\n9\nmétiers\nmétier\nNOUN\n\nGender=Masc|Number=Plur\n\n\n\nSpaceAfter=No\n\n\n51\n1\n1\nImpossible de mentionner correctement quand on a plusieurs métiers.\n10\n.\n.\nPUNCT\n\n\n\n\n\nSpacesAfter=\\s\\n"
+  },
+  {
+    "objectID": "exercices/mots-des-confines/index.html#choisir-les-mots-qui-nous-intéressent",
+    "href": "exercices/mots-des-confines/index.html#choisir-les-mots-qui-nous-intéressent",
+    "title": "À quoi pense-t-on quand on s’enferme ?",
+    "section": "Choisir les mots qui nous intéressent",
+    "text": "Choisir les mots qui nous intéressent\n\nsortie_mots =  c(\"sortie\", \"sortir\", \"dehors\")"
+  },
+  {
+    "objectID": "exercices/mots-des-confines/index.html#calculer-les-corrélations",
+    "href": "exercices/mots-des-confines/index.html#calculer-les-corrélations",
+    "title": "À quoi pense-t-on quand on s’enferme ?",
+    "section": "Calculer les corrélations",
+    "text": "Calculer les corrélations\n\nsortie_correlations = commentaires_annotate %&gt;%\n  unite(col = id_unique_sentence, doc_id, sentence_id, remove = FALSE) %&gt;%\n  group_by(lemma) %&gt;%\n  filter(n() &gt;= 10) %&gt;%\n  pairwise_cor(lemma, id_unique_sentence, sort = TRUE) %&gt;%\n  mutate(cor_sortie = if_else(\n    (item1 %in% sortie_mots | item2 %in% sortie_mots) &\n      correlation &gt; 0.06,\n    TRUE,\n    FALSE))"
+  },
+  {
+    "objectID": "exercices/mots-des-confines/index.html#les-représenter",
+    "href": "exercices/mots-des-confines/index.html#les-représenter",
+    "title": "À quoi pense-t-on quand on s’enferme ?",
+    "section": "Les représenter",
+    "text": "Les représenter\n\nsortie_correlations %&gt;%\n  filter(cor_sortie == TRUE) %&gt;%\n  graph_from_data_frame() %&gt;%\n  ggraph(layout = \"fr\") +\n  geom_edge_diagonal(aes(edge_alpha = correlation), show.legend = FALSE) +\n  geom_node_point(color = \"grey\", size = 5) +\n  geom_node_text(aes(label = name), family = \"Helvetica\", repel = TRUE) +\n  labs(title = \"Mots associés à *sortir*, *dehors* et *sortie*\",\n       subtitle = str_wrap(\"Aucun n'est relatif à la peur de la contamination, beaucoup aux interdictions et à la frustration qu'elles suscitent\", 80),\n       caption = \"Données : 3000 commentaires libres des répondants à l'enquête VICO\") +\n  theme_void() +\n  theme(plot.title = ggtext::element_markdown(face = \"bold\"))"
   },
   {
     "objectID": "exercices/verbalisations-departement/index.html",
@@ -235,7 +277,7 @@
     "href": "exercices/stringency-index/index.html",
     "title": "Un indicateur de sévérité prêt à l’emploi",
     "section": "",
-    "text": "CitationBibTeX@online{boulakia2023,\n  author = {Boulakia, Théo and Mariot, Nicolas},\n  title = {Un indicateur de sévérité prêt à l’emploi},\n  date = {2023-06-25},\n  url = {https://samanthacsik.github.io/posts/2022-10-24-quarto-blogs/},\n  langid = {fr}\n}\nVeuillez citer ce travail comme suit :\nBoulakia, Théo, and Nicolas Mariot. 2023. “Un indicateur de\nsévérité prêt à l’emploi.” June 25, 2023. https://samanthacsik.github.io/posts/2022-10-24-quarto-blogs/."
+    "text": "Charger les principaux packages\n\nlibrary(here)\nlibrary(tidyverse)\nlibrary(janitor)\nlibrary(lubridate)\nlibrary(countrycode)\n\n\n\nRécupérer les données\n\noxcgrt_path = here(\"data\", \"oxcgrt.rds\")\n\n# read_csv(\"https://raw.githubusercontent.com/OxCGRT/covid-policy-tracker/master/data/OxCGRT_nat_latest.csv\",\n#                   col_select = c(CountryName,\n#                                  Date,\n#                                  starts_with(\"C6\"),\n#                                  StringencyIndex_Average)) |&gt;\n#   write_rds(oxcgrt_path)\n\noxcgrt = read_rds(oxcgrt_path) |&gt; \n  clean_names() %&gt;%\n  mutate(date = ymd(date),\n         wb = countrycode(country_name, origin = \"country.name\", destination = \"wb\"),\n         national_or_subnational_saho = case_when(c6m_stay_at_home_requirements %in% 0:1 ~ 0,\n                                                  c6m_stay_at_home_requirements == 2 ~ 1,\n                                                  c6m_stay_at_home_requirements == 3 ~ 2),\n         national_saho = national_or_subnational_saho *  c6m_flag) %&gt;%\n  select(wb,\n         date,\n         stringency_index_average,\n         national_or_subnational_saho,\n         national_saho)\n\n\n\n\n\nCitationBibTeX@online{boulakia2023,\n  author = {Boulakia, Théo and Mariot, Nicolas},\n  title = {Un indicateur de sévérité prêt à l’emploi},\n  date = {2023-06-25},\n  url = {https://samanthacsik.github.io/posts/2022-10-24-quarto-blogs/},\n  langid = {fr}\n}\nVeuillez citer ce travail comme suit :\nBoulakia, Théo, and Nicolas Mariot. 2023. “Un indicateur de\nsévérité prêt à l’emploi.” June 25, 2023. https://samanthacsik.github.io/posts/2022-10-24-quarto-blogs/."
   },
   {
     "objectID": "exercices/polices-municipales/index.html",
