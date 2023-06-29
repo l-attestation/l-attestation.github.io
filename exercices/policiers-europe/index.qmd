@@ -4,7 +4,123 @@ description: "Calculer la concentration policière dans chaque pays"
 date: 2023-06-25
 categories: [FAQ] # self-defined categories
 citation: 
-  url: https://samanthacsik.github.io/posts/2022-10-24-quarto-blogs/ 
+  url: https://l-attestation.github.io/exercices/policiers-europe/
 image: https://upload.wikimedia.org/wikipedia/commons/b/b4/Tolima_-_Champ_de_sorgho.JPG
 draft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
 ---
+
+# Charger les principaux packages
+
+```{r}
+library(here)
+library(tidyverse)
+library(janitor)
+library(countrycode)
+```
+
+## Récupérer les données
+
+::: {.callout-tip}
+Pour récupérer des données sur les pays européens, le package eurostat est votre ami.
+Parcourez le catalogue avec la fonction `eurostat::get_eurostat_toc()`
+:::
+
+
+```{r}
+crim_just_job_path = here("data", "crim_just_job.rds")
+
+# eurostat::get_eurostat("crim_just_job", type = "label", cache_dir = here("data")) |> 
+#   write_rds(crim_just_job_path)
+
+crim_just_job = read_rds(crim_just_job_path)
+```
+
+## Les inspecter
+
+```{r}
+slice_sample(crim_just_job, n = 20) |> 
+  huxtable::as_huxtable() |> 
+  huxtable::theme_grey()
+```
+
+## Les recoder
+
+::: {.callout-tip}
+Dès que vous devez manipuler des noms et codes de pays, pensez au package countrycode.
+:::
+
+```{r}
+police_europe = crim_just_job  |> 
+  pivot_wider(names_from = c(sex, isco08, unit), values_from = "values",
+              names_repair = make_clean_names) |>
+  complete(geo, time) |>
+  mutate(geo = if_else(geo %in% c("Scotland", "England and Wales", "Northern Ireland (UK)"),
+                       "United Kingdom", geo)) |>
+  group_by(geo, time) |>
+  summarise(across(ends_with("number"), ~ sum(.x, na.rm = F)), .groups = "drop") |>
+  mutate(geo = str_replace(geo, "Türkiye", "Turkey"),
+         geo = if_else(str_detect(geo, "Germany"), "Germany", geo),
+         geo = if_else(str_detect(geo, "Kosovo"), "Republic of Kosovo", geo),
+         year = year(time),
+         wb = countrycode(geo, origin = "country.name", destination = "wb")) |>
+  select(wb, year,
+         ends_with("number") &
+           contains("police"))
+```
+
+Maintenant elles ressemblent à ceci :
+
+```{r}
+slice_sample(police_europe, n = 20) |> 
+  huxtable::as_huxtable() |> 
+  huxtable::theme_grey()
+```
+
+## Calculer le nombre de policiers par habitant
+
+Ce calcul a déjà été effectué par les auteurs de la base téléchargée. Toutefois, un examen attentif des données montre quelques choix un peu curieux, et nous incite à le refaire nous-même, par précaution.
+
+::: {.callout-tip}
+Le package wbstats donne accès aux données de la Banque mondiale, parmi lesquelles le nombre d'habitant, le PIB par tête, etc.
+:::
+
+```{r}
+wb_path = here("data", "wb.rds")
+
+# wbstats::wb_data(country = "countries_only",
+#                       indicator = c("gdp_per_capita" = "NY.GDP.PCAP.CD",
+#                                     "population" = "SP.POP.TOTL"),
+#                       mrv = 7,
+#                       gapfill = TRUE) |> 
+#   write_rds(wb_path)
+
+wb = read_rds(wb_path) |> 
+  mutate(country = str_replace(country, "Turkiye", "Turkey"),
+         wb = countrycode(country, origin = "country.name", destination = "wb")) %>%
+  rename(year = date) %>%
+  select(-iso2c, -iso3c, -country)
+
+police_europe_pcm = wb |> 
+  left_join(police_europe) |> 
+  mutate(policiers_pcm = total_police_officers_number / population * 100000) |> 
+  group_by(wb) |> 
+  summarise(policiers_pcm = mean(policiers_pcm, na.rm = TRUE)) |> 
+  filter(!is.nan(policiers_pcm))
+```
+
+## Palmarès
+
+```{r}
+police_europe_pcm |> 
+  mutate(pays = countrycode(wb, origin = "wb", destination = "country.name.fr"),
+         pays = if_else(wb == "MNE", "Monténégro", pays),
+         pays = if_else(wb == "MKD", "Macédoine du Nord", pays),
+         pays = fct_reorder(pays, policiers_pcm)) |> 
+  ggplot(aes(x = policiers_pcm, y = pays)) +
+  geom_bar(stat = "identity") +
+  labs(x = "Policiers pour 100 000 habitants",
+       y = "",
+       title = "Les Européens mieux protégés (?) au Sud et à l'Est") +
+  theme_minimal()
+```
+
