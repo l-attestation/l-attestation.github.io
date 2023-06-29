@@ -9,15 +9,10 @@ image: https://upload.wikimedia.org/wikipedia/commons/b/b4/Tolima_-_Champ_de_sor
 draft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
 ---
 
-# Charger les packages nécessaires
+# Charger les principaux packages
 
 ```{r}
-library(here)
 library(tidyverse)
-library(sf)
-library(janitor)
-library(lubridate)
-library(zoo)
 library(ggspatial)
 library(ggthemes)
 ```
@@ -28,7 +23,7 @@ library(ggthemes)
 Ces données ont été publiées par le Ministère de l'Intérieur, et sont librement téléchargeables sur le site [data.gouv.fr](https://www.data.gouv.fr/fr/datasets/videoprotection-implantation-des-cameras-kml-ods/) *.*
 
 ```{r}
-cameras_paris_path = here("data", "cameras-paris.kml")
+cameras_paris_path = here::here("data", "cameras-paris.kml")
 # download.file(url = "https://www.data.gouv.fr/fr/datasets/r/73b97c76-0f79-451b-9576-ccc61af7dfcf",
 #               destfile = cameras_paris_path)
 ```
@@ -36,9 +31,9 @@ cameras_paris_path = here("data", "cameras-paris.kml")
 ## Les lire
 
 ```{r}
-cameras_paris = st_read(cameras_paris_path, quiet = T) |> 
-  clean_names() |> 
-  mutate(mise_en_se = dmy(mise_en_se))
+cameras_paris = sf::st_read(cameras_paris_path, quiet = T) |> 
+  janitor::clean_names() |> 
+  mutate(mise_en_se = lubridate::dmy(mise_en_se))
 ```
 
 ## Vérification
@@ -53,13 +48,12 @@ La camera la plus récente du jeu de données a été mise en service en novembr
 
 ```{r}
 cameras_paris |> 
-  ggplot2::ggplot() +
-  # ggspatial::layer_spatial(paris_sf, fill = "white") +
-  ggplot2::geom_sf(size = 1, alpha = 0.7) +
+  ggplot() +
+  geom_sf(size = 1, alpha = 0.7) +
   ggspatial::annotation_north_arrow(style = ggspatial::north_arrow_nautical()) +
-  ggplot2::labs(title = "Une partie des caméras de surveillance actives à Paris au printemps 2020",
+  labs(title = "Une partie des caméras de surveillance actives à Paris au printemps 2020",
        subtitle = "Il y en a partout, sauf dans les parcs. Actuellement on en compte beaucoup plus.",
        caption = "Données : Ministère de l'Intérieur (dernière mise à jour en novembre 2018)") +
   ggthemes::theme_map(base_family = "Courier") +
-  ggplot2::theme(plot.title = ggplot2::element_text(face = "bold"))
+  theme(plot.title = element_text(face = "bold"))
 ```

@@ -4,21 +4,21 @@
     "href": "exercices/cameras-paris/index.html",
     "title": "Parisiens, ouvrez l’oeil !",
     "section": "",
-    "text": "library(here)\nlibrary(tidyverse)\nlibrary(sf)\nlibrary(janitor)\nlibrary(lubridate)\nlibrary(zoo)\nlibrary(ggspatial)\nlibrary(ggthemes)\n\n\n\nCes données ont été publiées par le Ministère de l’Intérieur, et sont librement téléchargeables sur le site data.gouv.fr .\n\ncameras_paris_path = here(\"data\", \"cameras-paris.kml\")\n# download.file(url = \"https://www.data.gouv.fr/fr/datasets/r/73b97c76-0f79-451b-9576-ccc61af7dfcf\",\n#               destfile = cameras_paris_path)\n\n\n\n\n\ncameras_paris = st_read(cameras_paris_path, quiet = T) |&gt; \n  clean_names() |&gt; \n  mutate(mise_en_se = dmy(mise_en_se))\n\n\n\n\n\nmax(cameras_paris$mise_en_se, na.rm = T)\n\n[1] \"2018-11-13\"\n\n\nLa camera la plus récente du jeu de données a été mise en service en novembre 2018. Au printemps 2020, il y en avait certainement beaucoup plus.\n\n\n\n\ncameras_paris |&gt; \n  ggplot2::ggplot() +\n  # ggspatial::layer_spatial(paris_sf, fill = \"white\") +\n  ggplot2::geom_sf(size = 1, alpha = 0.7) +\n  ggspatial::annotation_north_arrow(style = ggspatial::north_arrow_nautical()) +\n  ggplot2::labs(title = \"Une partie des caméras de surveillance actives à Paris au printemps 2020\",\n       subtitle = \"Il y en a partout, sauf dans les parcs. Actuellement on en compte beaucoup plus.\",\n       caption = \"Données : Ministère de l'Intérieur (dernière mise à jour en novembre 2018)\") +\n  ggthemes::theme_map(base_family = \"Courier\") +\n  ggplot2::theme(plot.title = ggplot2::element_text(face = \"bold\"))"
+    "text": "library(tidyverse)\nlibrary(ggspatial)\nlibrary(ggthemes)\n\n\n\nCes données ont été publiées par le Ministère de l’Intérieur, et sont librement téléchargeables sur le site data.gouv.fr .\n\ncameras_paris_path = here::here(\"data\", \"cameras-paris.kml\")\n# download.file(url = \"https://www.data.gouv.fr/fr/datasets/r/73b97c76-0f79-451b-9576-ccc61af7dfcf\",\n#               destfile = cameras_paris_path)\n\n\n\n\n\ncameras_paris = sf::st_read(cameras_paris_path, quiet = T) |&gt; \n  janitor::clean_names() |&gt; \n  mutate(mise_en_se = lubridate::dmy(mise_en_se))\n\n\n\n\n\nmax(cameras_paris$mise_en_se, na.rm = T)\n\n[1] \"2018-11-13\"\n\n\nLa camera la plus récente du jeu de données a été mise en service en novembre 2018. Au printemps 2020, il y en avait certainement beaucoup plus.\n\n\n\n\ncameras_paris |&gt; \n  ggplot() +\n  geom_sf(size = 1, alpha = 0.7) +\n  ggspatial::annotation_north_arrow(style = ggspatial::north_arrow_nautical()) +\n  labs(title = \"Une partie des caméras de surveillance actives à Paris au printemps 2020\",\n       subtitle = \"Il y en a partout, sauf dans les parcs. Actuellement on en compte beaucoup plus.\",\n       caption = \"Données : Ministère de l'Intérieur (dernière mise à jour en novembre 2018)\") +\n  ggthemes::theme_map(base_family = \"Courier\") +\n  theme(plot.title = element_text(face = \"bold\"))"
   },
   {
     "objectID": "exercices/cameras-paris/index.html#télécharger-les-données",
     "href": "exercices/cameras-paris/index.html#télécharger-les-données",
     "title": "Parisiens, ouvrez l’oeil !",
     "section": "",
-    "text": "Ces données ont été publiées par le Ministère de l’Intérieur, et sont librement téléchargeables sur le site data.gouv.fr .\n\ncameras_paris_path = here(\"data\", \"cameras-paris.kml\")\n# download.file(url = \"https://www.data.gouv.fr/fr/datasets/r/73b97c76-0f79-451b-9576-ccc61af7dfcf\",\n#               destfile = cameras_paris_path)"
+    "text": "Ces données ont été publiées par le Ministère de l’Intérieur, et sont librement téléchargeables sur le site data.gouv.fr .\n\ncameras_paris_path = here::here(\"data\", \"cameras-paris.kml\")\n# download.file(url = \"https://www.data.gouv.fr/fr/datasets/r/73b97c76-0f79-451b-9576-ccc61af7dfcf\",\n#               destfile = cameras_paris_path)"
   },
   {
     "objectID": "exercices/cameras-paris/index.html#les-lire",
     "href": "exercices/cameras-paris/index.html#les-lire",
     "title": "Parisiens, ouvrez l’oeil !",
     "section": "",
-    "text": "cameras_paris = st_read(cameras_paris_path, quiet = T) |&gt; \n  clean_names() |&gt; \n  mutate(mise_en_se = dmy(mise_en_se))"
+    "text": "cameras_paris = sf::st_read(cameras_paris_path, quiet = T) |&gt; \n  janitor::clean_names() |&gt; \n  mutate(mise_en_se = lubridate::dmy(mise_en_se))"
   },
   {
     "objectID": "exercices/cameras-paris/index.html#vérification",
@@ -32,7 +32,7 @@
     "href": "exercices/cameras-paris/index.html#les-visualiser",
     "title": "Parisiens, ouvrez l’oeil !",
     "section": "",
-    "text": "cameras_paris |&gt; \n  ggplot2::ggplot() +\n  # ggspatial::layer_spatial(paris_sf, fill = \"white\") +\n  ggplot2::geom_sf(size = 1, alpha = 0.7) +\n  ggspatial::annotation_north_arrow(style = ggspatial::north_arrow_nautical()) +\n  ggplot2::labs(title = \"Une partie des caméras de surveillance actives à Paris au printemps 2020\",\n       subtitle = \"Il y en a partout, sauf dans les parcs. Actuellement on en compte beaucoup plus.\",\n       caption = \"Données : Ministère de l'Intérieur (dernière mise à jour en novembre 2018)\") +\n  ggthemes::theme_map(base_family = \"Courier\") +\n  ggplot2::theme(plot.title = ggplot2::element_text(face = \"bold\"))"
+    "text": "cameras_paris |&gt; \n  ggplot() +\n  geom_sf(size = 1, alpha = 0.7) +\n  ggspatial::annotation_north_arrow(style = ggspatial::north_arrow_nautical()) +\n  labs(title = \"Une partie des caméras de surveillance actives à Paris au printemps 2020\",\n       subtitle = \"Il y en a partout, sauf dans les parcs. Actuellement on en compte beaucoup plus.\",\n       caption = \"Données : Ministère de l'Intérieur (dernière mise à jour en novembre 2018)\") +\n  ggthemes::theme_map(base_family = \"Courier\") +\n  theme(plot.title = element_text(face = \"bold\"))"
   },
   {
     "objectID": "exercices/policiers-europe/index.html",
@@ -123,14 +123,14 @@
     "href": "exercices/verbalisations-departement/index.html",
     "title": "Des verbalisations très inégalement distribuées",
     "section": "",
-    "text": "library(here)\nlibrary(readxl)\nlibrary(tidyverse)\nlibrary(janitor)\nlibrary(tmap)"
+    "text": "library(here)\nlibrary(readxl)\nlibrary(tidyverse)\nlibrary(sf)\nlibrary(janitor)\nlibrary(tmap)"
   },
   {
     "objectID": "exercices/verbalisations-departement/index.html#packages-nécessaires",
     "href": "exercices/verbalisations-departement/index.html#packages-nécessaires",
     "title": "Des verbalisations très inégalement distribuées",
     "section": "",
-    "text": "library(here)\nlibrary(readxl)\nlibrary(tidyverse)\nlibrary(janitor)\nlibrary(tmap)"
+    "text": "library(here)\nlibrary(readxl)\nlibrary(tidyverse)\nlibrary(sf)\nlibrary(janitor)\nlibrary(tmap)"
   },
   {
     "objectID": "exercices/verbalisations-departement/index.html#doù-proviennent-les-données",
@@ -145,6 +145,48 @@
     "title": "Des verbalisations très inégalement distribuées",
     "section": "Les télécharger",
     "text": "Les télécharger\n\nverbalisations_departement_path = here(\"data\", \"verbalisations_departement.xlsx\")\n# download.file(url = \"http://blog.alphoenix.net/wp-content/uploads/2021/07/RES_DIF_COVID19_CONFINEMENT_MARS-MAI2020_parDep_20210506.xlsx\",\n#               destfile = verbalisations_departement_path)\nverbalisations_departement = read_excel(verbalisations_departement_path, skip = 2) |&gt; \n  rename(code_departement = \"Département d'infraction\",\n         verbalisations = \"Nombre de dossiers d'infraction\")"
+  },
+  {
+    "objectID": "exercices/verbalisations-departement/index.html#calculer-le-nombre-dadultes-par-département",
+    "href": "exercices/verbalisations-departement/index.html#calculer-le-nombre-dadultes-par-département",
+    "title": "Des verbalisations très inégalement distribuées",
+    "section": "Calculer le nombre d’adultes par département",
+    "text": "Calculer le nombre d’adultes par département\nLes chiffres bruts des verbalisations ne suffisent pas, il faut les rapporter à la population de chaque département. Et plus précisément, à la population adulte. Pour deux raisons :\n\nLes forces de l’ordre n’ont sans doute pas verbalisé beaucoup d’enfants.\nMême si elles l’ont fait, ce ne sont pas les enfants qui ont payé les amendes, mais bien leurs parents.\n\nL’INSEE met à disposition des estimations de population par département, sexe et âge de 1975 à l’année courante. Ces données sont téléchargeables sur cette page\n\npopulation_departement_path = here(\"data\", \"population_departement.xls\")\n\n# download.file(\"https://www.insee.fr/fr/statistiques/fichier/1893198/estim-pop-dep-sexe-aq-1975-2023.xls\",\n#               population_departement_path)\n\npopulation_departement = read_excel(population_departement_path,\n                                    sheet = \"2020\",\n                                    range = \"A5:W109\") |&gt;\n  rename(code_departement = \"...1\",\n         nom_departement = \"...2\",\n         population_totale = Total) |&gt; \n  rowwise() |&gt; \n  mutate(population_plus_de_15_ans = sum(c_across(\"15 à 19 ans\":\"95 ans et plus\"))) |&gt;\n  ungroup() |&gt; \n  select(code_departement, nom_departement, population_plus_de_15_ans, population_totale) |&gt; \n  filter(!str_detect(code_departement, \"France\"),\n         !str_detect(code_departement, \"DOM\"))"
+  },
+  {
+    "objectID": "exercices/verbalisations-departement/index.html#rapporter-les-verbalisations-au-nombre-dadultes",
+    "href": "exercices/verbalisations-departement/index.html#rapporter-les-verbalisations-au-nombre-dadultes",
+    "title": "Des verbalisations très inégalement distribuées",
+    "section": "Rapporter les verbalisations au nombre d’adultes",
+    "text": "Rapporter les verbalisations au nombre d’adultes\n\ndepartements = population_departement |&gt;\n  left_join(verbalisations_departement, by = \"code_departement\") |&gt; \n  mutate(verbalisations_pmla = verbalisations / population_plus_de_15_ans * 1000)"
+  },
+  {
+    "objectID": "exercices/verbalisations-departement/index.html#visualiser-le-palmarès",
+    "href": "exercices/verbalisations-departement/index.html#visualiser-le-palmarès",
+    "title": "Des verbalisations très inégalement distribuées",
+    "section": "Visualiser le palmarès",
+    "text": "Visualiser le palmarès\n\ndepartements |&gt; \n  slice_max(order_by = verbalisations_pmla, n = 10) |&gt; \n  mutate(nom_departement = fct_reorder(nom_departement, verbalisations_pmla)) |&gt;\n  ggplot(aes(x = verbalisations_pmla, y = nom_departement)) +\n  geom_bar(stat = \"identity\") +\n  labs(x = \"Verbalisations pour 1000 adultes\",\n       y = \"\",\n       title = \"Palmarès des départements les plus verbalisés\") +\n  theme_minimal()"
+  },
+  {
+    "objectID": "exercices/verbalisations-departement/index.html#récupérer-la-couche-cartographique",
+    "href": "exercices/verbalisations-departement/index.html#récupérer-la-couche-cartographique",
+    "title": "Des verbalisations très inégalement distribuées",
+    "section": "Récupérer la couche cartographique",
+    "text": "Récupérer la couche cartographique\n\n\n\n\n\n\nAstuce\n\n\n\nPour récupérer les couches cartographiques correspondant à des communes, des départements (y compris d’Outre-Mer) et des régions françaises, votre ami est le package CARTElette. Il peut être installé depuis Github.\n\n\n\n# CARTElette::charger_carte(destfile = here(\"data\"),\n#                           COG = 2020,\n#                           nivsupra = \"DEP\")\ndepartements_sf = st_read(here(\"data\", \"DEP_2020_CARTElette.shp\"), quiet = T) |&gt; \n  rename(code_departement = \"DEP\",\n         nom_departement = \"nom\")\n\noutre_mer = c(\"Guyane\", \"Martinique\", \"Guadeloupe\", \"La Réunion\", \"Mayotte\")\noutre_mer_sf = departements_sf |&gt; filter(nom_departement %in% outre_mer)"
+  },
+  {
+    "objectID": "exercices/verbalisations-departement/index.html#discrétiser",
+    "href": "exercices/verbalisations-departement/index.html#discrétiser",
+    "title": "Des verbalisations très inégalement distribuées",
+    "section": "Discrétiser",
+    "text": "Discrétiser\n\nverbalisations_pmla_breaks = mapsf::mf_get_breaks(departements$verbalisations_pmla,\n                                                  nbreaks =  4,\n                                                  breaks = \"quantile\")"
+  },
+  {
+    "objectID": "exercices/verbalisations-departement/index.html#cartographier",
+    "href": "exercices/verbalisations-departement/index.html#cartographier",
+    "title": "Des verbalisations très inégalement distribuées",
+    "section": "Cartographier",
+    "text": "Cartographier\n\ndepartements_sf |&gt; \n  select(-nom_departement) |&gt; \n  left_join(departements, by = \"code_departement\") |&gt; \n  tm_shape() +\n  tm_polygons(\"verbalisations_pmla\",\n              palette = rcartocolor::carto_pal(n = 4, name = \"Sunset\"),\n              breaks = verbalisations_pmla_breaks,\n              title = \"Verbalisations\\npour\\n1000 adultes :\",\n              legend.format = list(digits = 0, text.separator = \"-\")) +\n  tm_shape(outre_mer_sf) +\n  tm_text(text = \"nom_departement\", size = .6) +\n  tm_compass(type = \"8star\",\n             position = c(\"RIGHT\", \"TOP\"),\n             size = 4) +\n  tm_credits(text = \"Données :\\nANTAI\\nDiscrétisation :\\nquartiles\",\n             position = c(\"right\", \"bottom\")) +\n  tm_layout(main.title = \"L'inégale distribution des amendes\",\n            main.title.position = \"center\",\n            main.title.fontface = \"bold\",\n            legend.position = c(\"LEFT\", \"BOTTOM\"),\n            legend.title.size = .8,\n            fontfamily = \"Helvetica\",\n            frame.lwd = 1)"
   },
   {
     "objectID": "exercices/stringency-index/index.html",

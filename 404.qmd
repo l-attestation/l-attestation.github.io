@@ -1,5 +1,6 @@
 ---
 title: Page non trouvée
+sidebar: false
 ---
 
 La page que vous cherchez n'existe plus (sans doute a-t-elle été déplacée ou renommée).
