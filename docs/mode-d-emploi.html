@@ -20,7 +20,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -116,7 +135,13 @@ ul.task-list li input[type="checkbox"] {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Sur cette page</h2>
+   
+  <ul>
+  <li><a href="#un-prestigieux-contre-exemple" id="toc-un-prestigieux-contre-exemple" class="nav-link active" data-scroll-target="#un-prestigieux-contre-exemple">Un prestigieux contre-exemple</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -138,10 +163,50 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Quelques précédents
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Cet “atelier” de la recherche répète l’opération de méthode déjà effectuée dans le cadre de précédentes enquêtes. Voir “Retour sur enquête” dans <span class="citation" data-cites="mariot2010">Mariot et Zalc (<a href="#ref-mariot2010" role="doc-biblioref">2010</a>)</span>, p.&nbsp;241-260, la postface “Échafaudages” dans <span class="citation" data-cites="mariot2013">Mariot (<a href="#ref-mariot2013" role="doc-biblioref">2013</a>)</span>, p.&nbsp;387-437 ou encore “Les dessous du récit” dans <span class="citation" data-cites="mariot2017">Mariot (<a href="#ref-mariot2017" role="doc-biblioref">2017</a>)</span>, p.&nbsp;367-388.</p>
+</div>
+</div>
+<section id="un-prestigieux-contre-exemple" class="level2">
+<h2 class="anchored" data-anchor-id="un-prestigieux-contre-exemple">Un prestigieux contre-exemple</h2>
+<blockquote class="blockquote">
+<p>I’m conscious that lots of people would like to see and run the pandemic simulation code we are using to model control measures against COVID-19. To explain the background - I wrote the code (thousands of lines of undocumented C) 13+ years ago to model flu pandemics <span class="citation" data-cites="ferguson2020a pouzat2022">(<a href="#ref-ferguson2020a" role="doc-biblioref">Neil Ferguson 2020</a> ; cité dans <a href="#ref-pouzat2022" role="doc-biblioref">Pouzat 2022</a>)</span>…</p>
+</blockquote>
+<p>Le 16 mars 2020, l’épidémiologiste Neil Ferguson et son équipe de l’<em>Imperial College</em> de Londres, publiaient – dans l’urgence – un rapport annonçant qu’en l’absence de mesures de confinement, le virus pourrait causer 510 000 morts au Royaume-Uni et 2.2 millions aux États-Unis <span class="citation" data-cites="ferguson2020">(<a href="#ref-ferguson2020" role="doc-biblioref">N. Ferguson et al. 2020</a>)</span>. Ce rapport a circulé bien au-delà du petit monde des spécialistes en santé publique, car on lui attribue notamment le revirement de Boris Johnson et la décision de confiner la Grande-Bretagne. L’étude s’appuyait, comme son principal auteur l’a reconnu, sur des milliers de lignes de code <em>C</em> non documentées, écrites dans les années 2000 pour modéliser des épidémies de grippe. Ces algorithmes n’ont été publiés qu’un an plus tard, en avril 2021, après avoir été réécrits <span class="citation" data-cites="pouzat2022">(<a href="#ref-pouzat2022" role="doc-biblioref">Pouzat 2022</a>)</span>.</p>
 
 
 
-</main> <!-- /main -->
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">Les références</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-ferguson2020a" class="csl-entry" role="listitem">
+Ferguson, Neil. 2020. <span>«&nbsp;neil_ferguson sur Twitter&nbsp;»</span>. <em>Twitter</em> (blog). 22 mars 2020. <a href="https://twitter.com/neil_ferguson/status/1241835454707699713">https://twitter.com/neil_ferguson/status/1241835454707699713</a>.
+</div>
+<div id="ref-ferguson2020" class="csl-entry" role="listitem">
+Ferguson, N, D Laydon, G Nedjati Gilani, N Imai, K Ainslie, M Baguelin, S Bhatia, et al. 2020. <span>«&nbsp;Report 9: Impact of Non-Pharmaceutical Interventions (NPIs) to Reduce COVID19 Mortality and Healthcare Demand&nbsp;»</span>. Imperial College London. <a href="https://doi.org/10.25561/77482">https://doi.org/10.25561/77482</a>.
+</div>
+<div id="ref-mariot2013" class="csl-entry" role="listitem">
+Mariot, Nicolas. 2013. <em>Tous unis dans la tranchée ? : 1914-1918, les intellectuels rencontrent le peuple</em>. Paris: Seuil.
+</div>
+<div id="ref-mariot2017" class="csl-entry" role="listitem">
+———. 2017. <em>Histoire d’un sacrifice : Robert, Alice et la guerre 1914-1917</em>. Paris: Seuil.
+</div>
+<div id="ref-mariot2010" class="csl-entry" role="listitem">
+Mariot, Nicolas, et Claire Zalc. 2010. <em>Face à la persécution : 991 Juifs dans la guerre</em>. Paris: Odile Jacob.
+</div>
+<div id="ref-pouzat2022" class="csl-entry" role="listitem">
+Pouzat, Christophe. 2022. <span>«&nbsp;Pourquoi devrions-nous arrêter d’embêter les gens avec la « recherche reproductible » et autres « bonnes pratiques » ?&nbsp;»</span> <em>Statistique et Société</em> 10 (1): 53‑57. <a href="http://statistique-et-societe.fr/article/view/844">http://statistique-et-societe.fr/article/view/844</a>.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

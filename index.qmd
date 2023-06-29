@@ -1,17 +1,12 @@
 ---
+title: "Vous êtes sur le site de L'Attestation"
+description: "Une expérience d'obéissance de masse, printemps 2020"
 sidebar: false
 about:
   image: "https://static.fnac-static.com/multimedia/Images/FR/NR/62/ba/4f/5225058/1540-1.jpg"
-  template: broadside
+  template: trestles
 ---
 
-**Vous êtes sur le site de *L'Attestation. Une expérience d'obéissance de masse (printemps 2020)*, co-écrit par [Théo Boulakia](https://tblk.github.io) et [Nicolas Mariot](http://nicolas.mariot.cnrs.free.fr/).**
+*Je soussigné(e) certifie que mon déplacement est lié au motif suivant...* Chacun d'entre nous se souvient de ces auto-attestations à remplir comme du confinement qui les accompagnait. Cet ouvrage a pour ambition de revenir sur ce moment littéralement extra-ordinaire au regard des questions qu'il a soulevées en matière de suspension des libertés et d'obéissance collective.
 
-Nous y présentons nos sources, nos méthodes et nos outils. 
-
-::: {.callout-note}
-## Quelques précédents
-
-Cet "atelier" de la recherche répète l'opération de méthode déjà effectuée dans le cadre de précédentes enquêtes. Voir "Retour sur enquête" dans @mariot2010, p. 241-260, la postface "Échafaudages" dans @mariot2013, p. 387-437 ou encore "Les dessous du récit" dans @mariot2017, p. 367-388.
-
-:::
+Ce site a été créé les auteurs, [Théo Boulakia](https://tblk.github.io) et [Nicolas Mariot](http://nicolas.mariot.cnrs.free.fr/) afin de présenter l'enquête, ses sources, ses méthodes et ses outils. Pour en savoir plus, rendez-vous sur la page [Mode d'emploi](https://l-attestation.github.io/mode-d-emploi).

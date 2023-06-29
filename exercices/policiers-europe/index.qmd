@@ -9,7 +9,7 @@ image: https://upload.wikimedia.org/wikipedia/commons/b/b4/Tolima_-_Champ_de_sor
 draft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
 ---
 
-# Charger les principaux packages
+## Charger les principaux packages
 
 ```{r}
 library(here)
