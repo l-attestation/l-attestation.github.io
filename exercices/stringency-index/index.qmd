@@ -4,8 +4,8 @@ description: "Que montre le Stringency Index de l'Oxford Covid 19 Government Res
 date: 2023-06-25
 categories: [FAQ] # self-defined categories
 citation: 
-  url: https://samanthacsik.github.io/posts/2022-10-24-quarto-blogs/ 
-image: https://upload.wikimedia.org/wikipedia/commons/b/b4/Tolima_-_Champ_de_sorgho.JPG
+  url: https://l-attestation.github.io/exercices/stringency-index/ 
+image: https://commons.wikimedia.org/wiki/File:Home_quarantine_stamp_BMC.jpg
 draft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
 ---
 
