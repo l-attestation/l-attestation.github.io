@@ -16,6 +16,7 @@ library(here)
 library(tidyverse)
 library(janitor)
 library(countrycode)
+library(huxtable)
 ```
 
 ## Récupérer les données
@@ -39,7 +40,8 @@ crim_just_job = read_rds(crim_just_job_path)
 
 ```{r}
 slice_sample(crim_just_job, n = 20) |> 
-  huxtable::as_huxtable() |> 
+  as_huxtable() |> 
+  set_number_format(NA) |> 
   huxtable::theme_grey()
 ```
 
@@ -71,9 +73,10 @@ police_europe = crim_just_job  |>
 Maintenant elles ressemblent à ceci :
 
 ```{r}
-slice_sample(police_europe, n = 20) |> 
-  huxtable::as_huxtable() |> 
-  huxtable::theme_grey()
+slice_head(police_europe, n = 20) |> 
+  as_huxtable() |> 
+  set_number_format(NA) |> 
+  huxtable::theme_bright()
 ```
 
 ## Calculer le nombre de policiers par habitant
