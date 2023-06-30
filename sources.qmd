@@ -1,5 +1,0 @@
----
-title: "Sources"
----
-
-Ici, nous présentons les sources.

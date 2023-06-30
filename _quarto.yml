@@ -10,23 +10,12 @@ website:
     left:
       - href: index.qmd
         text: Accueil
-      - text: "Mode d'emploi"
-        file: mode-d-emploi.qmd
-      - text: "Silence"
-        file: silence.qmd
-      - text: "Sources"
-        file: sources.qmd
-      - text: "Exercices"
-        file: exercices.qmd
-      - text: "Bibliographie"
-        file: biblio.qmd
+      - mode-d-emploi.qmd
+      - sources-francaises.qmd
+      - sources-internationales.qmd
+      - exercices.qmd
+      - bibliographie.qmd
 
-  sidebar: 
-    - title: "Sources"
-      style: docked
-      background: light
-      contents: sources
-    
 format:
   html:
     theme: cosmo

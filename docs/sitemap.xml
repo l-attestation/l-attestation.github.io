@@ -1,75 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://l-attestation.github.io/biblio.html</loc>
-    <lastmod>2023-06-29T15:26:52.518Z</lastmod>
+    <loc>https://l-attestation.github.io/sources-internationales.html</loc>
+    <lastmod>2023-06-30T15:11:38.625Z</lastmod>
   </url>
   <url>
     <loc>https://l-attestation.github.io/exercices/cameras-paris/index.html</loc>
-    <lastmod>2023-06-29T15:26:55.614Z</lastmod>
+    <lastmod>2023-06-30T15:11:41.629Z</lastmod>
   </url>
   <url>
     <loc>https://l-attestation.github.io/exercices/policiers-europe/index.html</loc>
-    <lastmod>2023-06-29T15:26:59.414Z</lastmod>
+    <lastmod>2023-06-30T15:11:45.393Z</lastmod>
   </url>
   <url>
     <loc>https://l-attestation.github.io/exercices/signature-confinements-latins/index.html</loc>
-    <lastmod>2023-06-29T15:27:02.706Z</lastmod>
+    <lastmod>2023-06-30T15:11:48.644Z</lastmod>
   </url>
   <url>
     <loc>https://l-attestation.github.io/exercices/mots-des-confines/index.html</loc>
-    <lastmod>2023-06-29T15:27:12.226Z</lastmod>
+    <lastmod>2023-06-30T15:11:58.120Z</lastmod>
   </url>
   <url>
     <loc>https://l-attestation.github.io/exercices/verbalisations-departement/index.html</loc>
-    <lastmod>2023-06-29T15:27:21.838Z</lastmod>
+    <lastmod>2023-06-30T15:12:08.148Z</lastmod>
   </url>
   <url>
     <loc>https://l-attestation.github.io/exercices/stringency-index/index.html</loc>
-    <lastmod>2023-06-29T15:27:24.766Z</lastmod>
+    <lastmod>2023-06-30T15:12:11.023Z</lastmod>
   </url>
   <url>
     <loc>https://l-attestation.github.io/exercices/polices-municipales/index.html</loc>
-    <lastmod>2023-06-29T15:27:50.522Z</lastmod>
+    <lastmod>2023-06-30T15:12:36.654Z</lastmod>
   </url>
   <url>
-    <loc>https://l-attestation.github.io/silence.html</loc>
-    <lastmod>2023-06-29T15:27:51.358Z</lastmod>
+    <loc>https://l-attestation.github.io/bibliographie.html</loc>
+    <lastmod>2023-06-30T15:12:37.462Z</lastmod>
   </url>
   <url>
-    <loc>https://l-attestation.github.io/sources.html</loc>
-    <lastmod>2023-06-29T15:27:51.682Z</lastmod>
+    <loc>https://l-attestation.github.io/sources-francaises.html</loc>
+    <lastmod>2023-06-30T15:12:38.438Z</lastmod>
   </url>
   <url>
     <loc>https://l-attestation.github.io/index.html</loc>
-    <lastmod>2023-06-29T15:27:52.398Z</lastmod>
-  </url>
-  <url>
-    <loc>https://l-attestation.github.io/sources/surveillance.html</loc>
-    <lastmod>2023-06-29T15:27:52.818Z</lastmod>
-  </url>
-  <url>
-    <loc>https://l-attestation.github.io/sources/vico.html</loc>
-    <lastmod>2023-06-29T15:27:53.278Z</lastmod>
-  </url>
-  <url>
-    <loc>https://l-attestation.github.io/sources/histoires.html</loc>
-    <lastmod>2023-06-29T15:27:53.782Z</lastmod>
-  </url>
-  <url>
-    <loc>https://l-attestation.github.io/sources/trackers.html</loc>
-    <lastmod>2023-06-29T15:27:54.406Z</lastmod>
+    <lastmod>2023-06-30T15:12:38.818Z</lastmod>
   </url>
   <url>
     <loc>https://l-attestation.github.io/mode-d-emploi.html</loc>
-    <lastmod>2023-06-29T15:27:54.818Z</lastmod>
+    <lastmod>2023-06-30T15:12:39.250Z</lastmod>
   </url>
   <url>
     <loc>https://l-attestation.github.io/mobility.html</loc>
-    <lastmod>2023-06-29T15:27:55.154Z</lastmod>
+    <lastmod>2023-06-30T15:12:39.602Z</lastmod>
   </url>
   <url>
     <loc>https://l-attestation.github.io/exercices.html</loc>
-    <lastmod>2023-06-29T15:27:56.142Z</lastmod>
+    <lastmod>2023-06-30T15:12:40.562Z</lastmod>
   </url>
 </urlset>
