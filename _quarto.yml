@@ -12,7 +12,7 @@ website:
         text: Accueil
       - mode-d-emploi.qmd
       - sources-francaises.qmd
-      - sources-internationales.qmd
+      - donnees-mondiales.qmd
       - exercices.qmd
       - bibliographie.qmd
 

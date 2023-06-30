@@ -1,5 +1,5 @@
 ---
-title: "Sources internationales"
+title: "Données mondiales"
 ---
 
 ## Policy trackers
@@ -25,7 +25,7 @@ Autrement dit, la cartographie mondiale des mesures liées à la pandémie repos
 
 Pour l'Europe, il existe une base de données qui colle parfaitement aux questions posées dans ce livre. Elle s'appelle *A Good Reason. A Chronicle of stay at home orders in Europe*. Elle n'a pas été développée par une équipe internationale de chercheurs, mais par un unique individu, Jean Merlin Von Agris, titulaire d'un Master en économie du développement, une trentaine d'années au moment des premiers confinements. Fermement opposé au principe de l'assignation à domicile, il commence, au cours de l'année 2020, à nourrir, de manière intermittente, une base de données systématique des *stay-at-home-orders* en Europe. Il se pose une question toute simple : où et quand fallait-il une « bonne raison » (*a good reason*) pour sortir de chez soi ? Petit à petit, le projet prend de l'ampleur, des centaines d'heures sont consacrées à éplucher la presse en ligne et les sites gouvernementaux, dans plusieurs langues. Une première version de la base est publiée au cours de l'année 2021, puis améliorée par la suite. Sous sa forme définitive, elle suit les politiques de confinement dans l'Europe continentale, c'est à dire pour 47 unités territoriales, incluant la Turquie, la Russie, l'Ukraine et la Biélorussie, du 1er janvier 2020 au 30 juin 2021. Pour donner une idée de sa précision, on y trouve plusieurs des couvre-feux mis en place par des municipalités en France au cours du printemps 2020, notamment dans le Nord de la France. Par ailleurs, le taux de convergence avec la base de 41 pays constituée par Jan Brauner et ses collègues[@brauner2021] est excellent. Néanmoins, jusqu'à ce que nous repérions la base dans le *Supertracker* maintenu par l'Université d'Oxford, aucun chercheur ne s'en était emparé, et à part quelques échanges avec l'équipe de l'*OxCGRT* pour corriger des erreurs mutuelles et une période de bénévolat pour *CoronaNet*, Von Agris était resté complètement ignoré du petit monde travaillant sur ces questions.  
 
-## Données de mobilité
+## Mobility data
 
 Les indicateurs journaliers de *Google* sur la fréquentation de différents espaces et l'évolution du temps passé au domicile, que nous avons utilisés à plusieurs reprises dans ce livre, mais encore ceux d'*Apple*, que nous avons très brièvement mobilisés pour construire, dans la *FAQ*, un indicateur synthétique d'enfermement, ne représentent qu'une partie des données de mobilité utilisables[@hu2021]. *Facebook*, *Baidu* (l'équivalent chinois de *Google*), ainsi que les opérateurs de téléphonie mobile, ont aussi fourni les leurs. Nous espérons que le large usage que nous en avons fait dans ce livre permettra, en creux et après beaucoup d'autres mises en garde, de réfléchir à leur potentielle dangerosité.
 

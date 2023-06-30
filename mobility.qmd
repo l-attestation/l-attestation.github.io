@@ -1,5 +1,0 @@
----
-title: "Données de mobilité"
----
-
-Les indicateurs journaliers de *Google* sur la fréquentation de différents espaces et l'évolution du temps passé au domicile, que nous avons utilisés à plusieurs reprises dans ce livre, mais encore ceux d'*Apple*, que nous avons très brièvement mobilisés pour construire, dans la *FAQ*, un indicateur synthétique d'enfermement, ne représentent qu'une partie des données de mobilité utilisables[@hu2021]. *Facebook*, *Baidu* (l'équivalent chinois de *Google*), ainsi que les opérateurs de téléphonie mobile, ont aussi fourni les leurs. Nous espérons que le large usage que nous en avons fait dans ce livre permettra, en creux et après beaucoup d'autres mises en garde, de réfléchir à leur potentielle dangerosité.
