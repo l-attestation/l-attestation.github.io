@@ -1,5 +1,5 @@
 ---
-title: "Vous êtes sur le site de L'Attestation"
+title: "L'Attestation"
 description: "Une expérience d'obéissance de masse, printemps 2020"
 sidebar: false
 about:

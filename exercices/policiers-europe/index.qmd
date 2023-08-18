@@ -1,17 +1,17 @@
 ---
-title: "Où est-on le mieux protégé en Europe ?"
-description: "Calculer la concentration policière dans chaque pays"
+title: "Où y a-t-il le plus de policiers en Europe"
+description: "Calculer la concentration policière dans chaque pays, grâce aux données d'eurostat et de la banque mondiale"
 date: 2023-06-25
-categories: [FAQ] # self-defined categories
+categories: [FAQ]
 citation: 
   url: https://l-attestation.github.io/exercices/policiers-europe/
 image: https://upload.wikimedia.org/wikipedia/commons/b/b4/Tolima_-_Champ_de_sorgho.JPG
-draft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
+draft: false
 ---
 
 ## Charger les principaux packages
 
-```{r}
+```{r packages}
 library(here)
 library(tidyverse)
 library(janitor)
@@ -26,19 +26,23 @@ Pour récupérer des données sur les pays européens, le package eurostat est v
 Parcourez le catalogue avec la fonction `eurostat::get_eurostat_toc()`
 :::
 
-
-```{r}
+```{r eurostat_path}
 crim_just_job_path = here("data", "crim_just_job.rds")
+```
 
-# eurostat::get_eurostat("crim_just_job", type = "label", cache_dir = here("data")) |> 
-#   write_rds(crim_just_job_path)
+```{r eurostat_download}
+eurostat::get_eurostat("crim_just_job", type = "label", cache_dir = here("data")) |>
+  write_rds(crim_just_job_path)
+```
 
+```{r eurostat_read}
 crim_just_job = read_rds(crim_just_job_path)
 ```
 
+
 ## Les inspecter
 
-```{r}
+```{r check_raw_eurostat}
 slice_sample(crim_just_job, n = 20) |> 
   as_huxtable() |> 
   set_number_format(NA) |> 
@@ -51,7 +55,7 @@ slice_sample(crim_just_job, n = 20) |>
 Dès que vous devez manipuler des noms et codes de pays, pensez au package countrycode.
 :::
 
-```{r}
+```{r recode_eurostat}
 police_europe = crim_just_job  |> 
   pivot_wider(names_from = c(sex, isco08, unit), values_from = "values",
               names_repair = make_clean_names) |>
@@ -72,7 +76,7 @@ police_europe = crim_just_job  |>
 
 Maintenant elles ressemblent à ceci :
 
-```{r}
+```{r check_eurostat_recoded}
 slice_head(police_europe, n = 20) |> 
   as_huxtable() |> 
   set_number_format(NA) |> 
@@ -87,22 +91,28 @@ Ce calcul a déjà été effectué par les auteurs de la base téléchargée. To
 Le package wbstats donne accès aux données de la Banque mondiale, parmi lesquelles le nombre d'habitant, le PIB par tête, etc.
 :::
 
-```{r}
+```{r path_wb}
 wb_path = here("data", "wb.rds")
+```
 
-# wbstats::wb_data(country = "countries_only",
-#                       indicator = c("gdp_per_capita" = "NY.GDP.PCAP.CD",
-#                                     "population" = "SP.POP.TOTL"),
-#                       mrv = 7,
-#                       gapfill = TRUE) |> 
-#   write_rds(wb_path)
+```{r download_wb}
+wbstats::wb_data(country = "countries_only",
+                      indicator = c("gdp_per_capita" = "NY.GDP.PCAP.CD",
+                                    "population" = "SP.POP.TOTL"),
+                      mrv = 7,
+                      gapfill = TRUE) |>
+  write_rds(wb_path)
+```
 
+```{r read_wb}
 wb = read_rds(wb_path) |> 
   mutate(country = str_replace(country, "Turkiye", "Turkey"),
          wb = countrycode(country, origin = "country.name", destination = "wb")) %>%
   rename(year = date) %>%
   select(-iso2c, -iso3c, -country)
+```
 
+```{r divide}
 police_europe_pcm = wb |> 
   left_join(police_europe) |> 
   mutate(policiers_pcm = total_police_officers_number / population * 100000) |> 
@@ -113,7 +123,7 @@ police_europe_pcm = wb |>
 
 ## Palmarès
 
-```{r}
+```{r plot_palmares}
 police_europe_pcm |> 
   mutate(pays = countrycode(wb, origin = "wb", destination = "country.name.fr"),
          pays = if_else(wb == "MNE", "Monténégro", pays),
@@ -126,4 +136,3 @@ police_europe_pcm |>
        title = "Les Européens mieux protégés (?) au Sud et à l'Est") +
   theme_minimal()
 ```
-

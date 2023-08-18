@@ -2,37 +2,41 @@
 title: "Un indicateur de sévérité prêt à l'emploi"
 description: "Que montre le Stringency Index de l'Oxford Covid 19 Government Response Tracker ?"
 date: 2023-06-25
-categories: [FAQ] # self-defined categories
+categories: [FAQ]
 citation: 
   url: https://l-attestation.github.io/exercices/stringency-index/ 
 image: https://upload.wikimedia.org/wikipedia/commons/b/b5/Home_quarantine_stamp_BMC.jpg
-draft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
+draft: false
 ---
 
 # Charger les principaux packages
 
-```{r}
+```{r packages}
 library(here)
 library(tidyverse)
-library(janitor)
 library(lubridate)
 library(countrycode)
 ```
 
 # Récupérer les données
 
-```{r}
+```{r path}
 oxcgrt_path = here("data", "oxcgrt.rds")
+```
 
-# read_csv("https://raw.githubusercontent.com/OxCGRT/covid-policy-tracker/master/data/OxCGRT_nat_latest.csv",
-#                   col_select = c(CountryName,
-#                                  Date,
-#                                  starts_with("C6"),
-#                                  StringencyIndex_Average)) |>
-#   write_rds(oxcgrt_path)
+```{r download}
+read_csv("https://raw.githubusercontent.com/OxCGRT/covid-policy-tracker/master/data/OxCGRT_nat_latest.csv",
+         col_select = c(CountryName,
+                        Date,
+                        starts_with("C6"),
+                        StringencyIndex_Average)) |>
+  write_rds(oxcgrt_path)
 
+```
+
+```{r read}
 oxcgrt = read_rds(oxcgrt_path) |> 
-  clean_names() %>%
+  janitor::clean_names() %>%
   mutate(date = ymd(date),
          wb = countrycode(country_name, origin = "country.name", destination = "wb"),
          national_or_subnational_saho = case_when(c6m_stay_at_home_requirements %in% 0:1 ~ 0,
@@ -44,6 +48,5 @@ oxcgrt = read_rds(oxcgrt_path) |>
          stringency_index_average,
          national_or_subnational_saho,
          national_saho)
-
 ```
 

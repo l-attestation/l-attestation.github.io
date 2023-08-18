@@ -5,16 +5,16 @@ execute:
   warning: false
   message: false
 date: 2023-06-25
-categories: [La Police des sorties] # self-defined categories
+categories: [La Police des sorties]
 citation: 
-  url: https://samanthacsik.github.io/posts/2022-10-24-quarto-blogs/ 
+  url: https://l-attestation.github.io/verbalisations-departement/  
 image: https://upload.wikimedia.org/wikipedia/commons/b/b4/Tolima_-_Champ_de_sorgho.JPG
-draft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
+draft: false
 ---
 
 ## Packages nécessaires
 
-```{r}
+```{r packages}
 library(here)
 library(readxl)
 library(tidyverse)
@@ -29,10 +29,16 @@ Pour que ces chiffres soient rendus publics, il a fallu l'opiniâtreté d'un jou
 
 ## Les télécharger
 
-```{r}
+```{r path_verbalisations}
 verbalisations_departement_path = here("data", "verbalisations_departement.xlsx")
-# download.file(url = "http://blog.alphoenix.net/wp-content/uploads/2021/07/RES_DIF_COVID19_CONFINEMENT_MARS-MAI2020_parDep_20210506.xlsx",
-#               destfile = verbalisations_departement_path)
+```
+
+```{r download_verbalisations}
+download.file(url = "http://blog.alphoenix.net/wp-content/uploads/2021/07/RES_DIF_COVID19_CONFINEMENT_MARS-MAI2020_parDep_20210506.xlsx",
+              destfile = verbalisations_departement_path)
+```
+
+```{r read_verbalisations}
 verbalisations_departement = read_excel(verbalisations_departement_path, skip = 2) |> 
   rename(code_departement = "Département d'infraction",
          verbalisations = "Nombre de dossiers d'infraction")
@@ -47,12 +53,17 @@ Les chiffres bruts des verbalisations ne suffisent pas, il faut les rapporter à
 
 L'INSEE met à disposition des estimations de population par département, sexe et âge de 1975 à l'année courante. Ces données sont téléchargeables sur [cette page](https://www.insee.fr/fr/statistiques/1893198)
 
-```{r}
+```{r path_adultes}
 population_departement_path = here("data", "population_departement.xls")
 
-# download.file("https://www.insee.fr/fr/statistiques/fichier/1893198/estim-pop-dep-sexe-aq-1975-2023.xls",
-#               population_departement_path)
+```
 
+```{r download_adultes}
+download.file("https://www.insee.fr/fr/statistiques/fichier/1893198/estim-pop-dep-sexe-aq-1975-2023.xls",
+              population_departement_path)
+```
+
+```{r read_adultes}
 population_departement = read_excel(population_departement_path,
                                     sheet = "2020",
                                     range = "A5:W109") |>
@@ -65,12 +76,11 @@ population_departement = read_excel(population_departement_path,
   select(code_departement, nom_departement, population_plus_de_15_ans, population_totale) |> 
   filter(!str_detect(code_departement, "France"),
          !str_detect(code_departement, "DOM"))
-
 ```
 
 ## Rapporter les verbalisations au nombre d'adultes
 
-```{r}
+```{r recode}
 departements = population_departement |>
   left_join(verbalisations_departement, by = "code_departement") |> 
   mutate(verbalisations_pmla = verbalisations / population_plus_de_15_ans * 1000)
@@ -78,7 +88,7 @@ departements = population_departement |>
 
 ## Visualiser le palmarès
 
-```{r}
+```{r plot_palmares}
 departements |> 
   slice_max(order_by = verbalisations_pmla, n = 10) |> 
   mutate(nom_departement = fct_reorder(nom_departement, verbalisations_pmla)) |>
@@ -97,10 +107,13 @@ departements |>
 Pour récupérer les couches cartographiques correspondant à des communes, des départements (y compris d'Outre-Mer) et des régions françaises, votre ami est le package CARTElette. Il peut être installé depuis Github.
 :::
 
-```{r}
-# CARTElette::charger_carte(destfile = here("data"),
-#                           COG = 2020,
-#                           nivsupra = "DEP")
+```{r get_sf}
+CARTElette::charger_carte(destfile = here("data"),
+                          COG = 2020,
+                          nivsupra = "DEP")
+```
+
+```{r read_sf}
 departements_sf = st_read(here("data", "DEP_2020_CARTElette.shp"), quiet = T) |> 
   rename(code_departement = "DEP",
          nom_departement = "nom")
@@ -112,7 +125,8 @@ outre_mer_sf = departements_sf |> filter(nom_departement %in% outre_mer)
 
 ## Discrétiser
 
-```{r}
+```{r get_breaks}
+
 verbalisations_pmla_breaks = mapsf::mf_get_breaks(departements$verbalisations_pmla,
                                                   nbreaks =  4,
                                                   breaks = "quantile")
@@ -120,7 +134,7 @@ verbalisations_pmla_breaks = mapsf::mf_get_breaks(departements$verbalisations_pm
 
 ## Cartographier
 
-```{r}
+```{r map}
 
 departements_sf |> 
   select(-nom_departement) |> 

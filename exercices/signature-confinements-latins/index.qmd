@@ -1,17 +1,17 @@
 ---
 title: "La signature des confinements latins"
-description: "Montrer la spécificité des pays du Sud de l'Europe à l'aide des données de Google Mobility"
+description: "Montrer la spécificité des pays du Sud de l'Europe à l'aide de Google Mobility"
 date: 2023-06-25
-categories: [FAQ] # self-defined categories
+categories: [FAQ]
 citation: 
-  url: https://samanthacsik.github.io/signature-confinements-latins/
+  url: https://l-attestation.github.io/signature-confinements-latins/
 image: https://upload.wikimedia.org/wikipedia/commons/b/b4/Tolima_-_Champ_de_sorgho.JPG
-draft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
+draft: false
 ---
 
 ## Charger les packages nécessaires
 
-```{r}
+```{r packages}
 #| message: false
 #| warning: false
 
@@ -24,7 +24,7 @@ library(zoo)
 
 ## Choisir le thème des graphiques
 
-```{r}
+```{r theme_graphiques}
 theme_set(theme_minimal() +
             theme(plot.title = element_text(face = "bold")))
 ```
@@ -32,7 +32,12 @@ theme_set(theme_minimal() +
 
 ## Récupérer les données
 
-La manière la plus simple de récupérer les données de mobilité est de passer par le package {tidycovid19}
+La manière la plus simple de récupérer les données de mobilité est de passer par le package {tidycovid19}, qui peut être installé ainsi :
+
+```{r}
+# remotes::install_github("joachim-gassen/tidycovid19")
+```
+
 
 ```{r}
 google_mobility_country_path = here::here("data", "google_mobility_country.rds")

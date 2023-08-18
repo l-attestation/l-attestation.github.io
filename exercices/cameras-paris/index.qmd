@@ -2,16 +2,16 @@
 title: "Parisiens, ouvrez l'oeil !"
 description: "Cartographier les caméras de surveillance à Paris"
 date: 2023-06-25
-categories: [Inquiètement] # self-defined categories
+categories: [Inquiètement]
 citation: 
   url: https://l-attestation.github.io/cameras-paris/ 
 image: https://upload.wikimedia.org/wikipedia/commons/b/b4/Tolima_-_Champ_de_sorgho.JPG
-draft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
+draft: false
 ---
 
 # Charger les principaux packages
 
-```{r}
+```{r packages}
 library(tidyverse)
 library(ggspatial)
 library(ggthemes)
@@ -22,15 +22,21 @@ library(ggthemes)
 
 Ces données ont été publiées par le Ministère de l'Intérieur, et sont librement téléchargeables sur le site [data.gouv.fr](https://www.data.gouv.fr/fr/datasets/videoprotection-implantation-des-cameras-kml-ods/) *.*
 
-```{r}
+```{r path}
 cameras_paris_path = here::here("data", "cameras-paris.kml")
-# download.file(url = "https://www.data.gouv.fr/fr/datasets/r/73b97c76-0f79-451b-9576-ccc61af7dfcf",
-#               destfile = cameras_paris_path)
 ```
+
+```{r download}
+#|eval: false
+cameras_paris_url = "https://www.data.gouv.fr/fr/datasets/r/73b97c76-0f79-451b-9576-ccc61af7dfcf"
+
+download.file(url = cameras_paris_url, destfile = cameras_paris_path)
+```
+
 
 ## Les lire
 
-```{r}
+```{r read}
 cameras_paris = sf::st_read(cameras_paris_path, quiet = T) |> 
   janitor::clean_names() |> 
   mutate(mise_en_se = lubridate::dmy(mise_en_se))
@@ -38,7 +44,7 @@ cameras_paris = sf::st_read(cameras_paris_path, quiet = T) |>
 
 ## Vérification
 
-```{r}
+```{r check}
 max(cameras_paris$mise_en_se, na.rm = T)
 ```
 
@@ -46,7 +52,7 @@ La camera la plus récente du jeu de données a été mise en service en novembr
 
 ## Les visualiser
 
-```{r}
+```{r plot}
 cameras_paris |> 
   ggplot() +
   geom_sf(size = 1, alpha = 0.7) +

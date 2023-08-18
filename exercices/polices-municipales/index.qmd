@@ -6,12 +6,12 @@ categories: [La police des sorties]
 citation: 
   url: https://l-attestation.github.io/exercices/polices-municipales/ 
 image: https://upload.wikimedia.org/wikipedia/commons/b/b4/Tolima_-_Champ_de_sorgho.JPG
-draft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
+draft: false
 ---
 
 ## Charger les principaux packages
 
-```{r}
+```{r packages}
 library(here)
 library(tidyverse)
 library(huxtable)
@@ -23,15 +23,19 @@ Les effectifs des polices municipales par communes pour les années 2012 à 2021
 
 Le code suivant télécharge le fichier de données dans un sous-dossier data (à ne faire qu'une fois, évidemment).
 
-```{r}
+```{r path}
 polices_municipales_path = here("data", "polices_municipales.ods")
-# download.file(url = "https://www.data.gouv.fr/fr/datasets/r/ad814337-074c-459b-add1-d78df9e6d85f",
-#               destfile = polices_municipales_path)
 ```
+
+```{r download}
+download.file(url = "https://www.data.gouv.fr/fr/datasets/r/ad814337-074c-459b-add1-d78df9e6d85f",
+              destfile = polices_municipales_path)
+```
+
 
 ## Les lire
 
-```{r}
+```{r read}
 polices_municipales = readODS::read_ods(polices_municipales_path, skip = 8, col_names = FALSE) |> 
   select(A, D, E, "F", G, H) |>
     rename(code_departement = A,
@@ -43,10 +47,10 @@ polices_municipales = readODS::read_ods(polices_municipales_path, skip = 8, col_
 ```
 
 ::: {.callout-caution}
-On croirait que le concepteur de ces données a pris un malin plaisir à les rendre **complètement inexploitables**. Il n'y a pas de code postal pour la commune. Et aucune cohérence dans la manière d'écrire leur nom. 
+On croirait que le concepteur de ces données a pris un malin plaisir à les rendre inexploitables. Il n'y a pas de code postal pour les communes. Et aucune cohérence dans la manière d'écrire leurs noms. 
 :::
 
-```{r}
+```{r check}
 polices_municipales |> 
   head(n = 20) |> 
   as_hux() |> 
