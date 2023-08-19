@@ -63,6 +63,55 @@
     "text": "Palmarès\n\nTableau\n\npolice_europe_pcm |&gt;\n  select(pays, policiers_pcm) |&gt; \n  rename(Pays = pays,\n         \"Policiers pour 100 000 habitants\" = policiers_pcm) |&gt; \n  as_huxtable() |&gt; \n  set_number_format(NA) |&gt; \n  huxtable::theme_blue()\n\n\n\n\nPays\nPoliciers pour 100 000 habitants\n\n\nMonténégro\n680\n\n\nTurquie\n530\n\n\nGrèce\n506\n\n\nCroatie\n504\n\n\nKosovo\n495\n\n\nMacédoine du Nord\n467\n\n\nBosnie-Herzégovine\n464\n\n\nMalte\n457\n\n\nPortugal\n446\n\n\nItalie\n422\n\n\nBulgarie\n415\n\n\nChypre\n401\n\n\nSlovaquie\n397\n\n\nHongrie\n392\n\n\nTchéquie\n379\n\n\nAlbanie\n374\n\n\nEspagne\n366\n\n\nIrlande\n351\n\n\nAutriche\n346\n\n\nSlovénie\n345\n\n\nBelgique\n339\n\n\nFrance\n321\n\n\nLuxembourg\n321\n\n\nLiechtenstein\n319\n\n\nLettonie\n301\n\n\nAllemagne\n299\n\n\nEstonie\n299\n\n\nPays-Bas\n293\n\n\nLituanie\n287\n\n\nPologne\n261\n\n\nRoumanie\n252\n\n\nRoyaume-Uni\n224\n\n\nSuède\n221\n\n\nSuisse\n217\n\n\nDanemark\n191\n\n\nIslande\n180\n\n\nFinlande\n135\n\n\n\n\n\n\n\n\n\nGraphique\n\npolice_europe_pcm |&gt; \n  mutate(pays = fct_reorder(pays, policiers_pcm)) |&gt; \n  ggplot(aes(x = policiers_pcm, y = pays)) +\n  geom_bar(stat = \"identity\") +\n  labs(x = \"Policiers pour 100 000 habitants\",\n       y = \"\",\n       title = \"Les Européens mieux protégés (?) au Sud et à l'Est\") +\n  theme_minimal()"
   },
   {
+    "objectID": "exercices/exces-mortalite/index.html",
+    "href": "exercices/exces-mortalite/index.html",
+    "title": "Quels ont été les pays les moins touchés par la pandémie ?",
+    "section": "",
+    "text": "library(here)\nlibrary(tidyverse)\nlibrary(lubridate)"
+  },
+  {
+    "objectID": "exercices/exces-mortalite/index.html#packages-nécessaires",
+    "href": "exercices/exces-mortalite/index.html#packages-nécessaires",
+    "title": "Quels ont été les pays les moins touchés par la pandémie ?",
+    "section": "",
+    "text": "library(here)\nlibrary(tidyverse)\nlibrary(lubridate)"
+  },
+  {
+    "objectID": "exercices/exces-mortalite/index.html#doù-proviennent-les-données",
+    "href": "exercices/exces-mortalite/index.html#doù-proviennent-les-données",
+    "title": "Quels ont été les pays les moins touchés par la pandémie ?",
+    "section": "D’où proviennent les données ?",
+    "text": "D’où proviennent les données ?"
+  },
+  {
+    "objectID": "exercices/exces-mortalite/index.html#les-télécharger",
+    "href": "exercices/exces-mortalite/index.html#les-télécharger",
+    "title": "Quels ont été les pays les moins touchés par la pandémie ?",
+    "section": "Les télécharger",
+    "text": "Les télécharger\n\nexcess_mortality_path = here(\"data\", \"excess_mortality.rds\")\n\n\nread_csv(\"https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/excess_mortality/excess_mortality.csv\") |&gt; \n  write_rds(excess_mortality_path)"
+  },
+  {
+    "objectID": "exercices/exces-mortalite/index.html#choisir-les-bornes-temporelles",
+    "href": "exercices/exces-mortalite/index.html#choisir-les-bornes-temporelles",
+    "title": "Quels ont été les pays les moins touchés par la pandémie ?",
+    "section": "Choisir les bornes temporelles",
+    "text": "Choisir les bornes temporelles\n\ndate_beginn = ymd(20200301)\ndate_end = ymd(20200601)"
+  },
+  {
+    "objectID": "exercices/exces-mortalite/index.html#filtrer-et-agréger",
+    "href": "exercices/exces-mortalite/index.html#filtrer-et-agréger",
+    "title": "Quels ont été les pays les moins touchés par la pandémie ?",
+    "section": "Filtrer et agréger",
+    "text": "Filtrer et agréger\n\nexcess_mortality = read_rds(excess_mortality_path) |&gt; \n  mutate(date = ymd(date)) |&gt; \n  select(location,\n         date,\n         projected_deaths_since_2020_all_ages,\n         excess_proj_all_ages) |&gt; \n  filter(between(date, date_beginn, date_end)) |&gt; \n  group_by(location) |&gt; \n  summarise(p_score = sum(excess_proj_all_ages, na.rm = T) / \n              sum(projected_deaths_since_2020_all_ages, na.rm = T) * 100)"
+  },
+  {
+    "objectID": "exercices/exces-mortalite/index.html#visualiser",
+    "href": "exercices/exces-mortalite/index.html#visualiser",
+    "title": "Quels ont été les pays les moins touchés par la pandémie ?",
+    "section": "Visualiser",
+    "text": "Visualiser"
+  },
+  {
     "objectID": "exercices/polices-municipales/index.html",
     "href": "exercices/polices-municipales/index.html",
     "title": "La France des polices municipales",
@@ -116,7 +165,7 @@
     "href": "exercices/verbalisations-departement/index.html#doù-proviennent-les-données",
     "title": "Des verbalisations très inégalement distribuées",
     "section": "D’où proviennent les données ?",
-    "text": "D’où proviennent les données ?\nPour que ces chiffres soient rendus publics, il a fallu l’opiniâtreté d’un journaliste indépendant, Alexdandre Léchenet. Celui-ci a saisi la Commission d’Accès aux Documents administratifs, afin de forcer le ministère de l’Intérieur à les dévoiler. Il le raconte dans ce billet de blog."
+    "text": "D’où proviennent les données ?\nPour que ces chiffres soient rendus publics, il a fallu l’opiniâtreté d’un journaliste indépendant, Alexandre Léchenet. Celui-ci a saisi la Commission d’Accès aux Documents administratifs, afin de forcer le ministère de l’Intérieur à les dévoiler. Il le raconte dans ce billet de blog."
   },
   {
     "objectID": "exercices/verbalisations-departement/index.html#les-télécharger",
@@ -270,7 +319,7 @@
     "href": "exercices.html",
     "title": "Exercices",
     "section": "",
-    "text": "Un indicateur de sévérité prêt à l’emploi\n\n\n\nFAQ\n\n\n\nQue montre le Stringency Index de l’Oxford Covid 19 Government Response Tracker ?\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nOù y a-t-il le plus de policiers en Europe ?\n\n\n\nFAQ\n\n\n\nCalculer la concentration policière dans chaque pays, grâce aux données d’eurostat et de la banque mondiale\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLa France des polices municipales\n\n\n\nLa Police des sorties\n\n\n\nCartographier les initiatives sécuritaires locales\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDes verbalisations très inégalement distribuées\n\n\n\nLa Police des sorties\n\n\n\nCartographier la prévalence de la verbalisation\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nParisiens, ouvrez l’oeil !\n\n\n\nInquiètement\n\n\n\nCartographier les caméras de surveillance à Paris\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLa signature des confinements latins\n\n\n\nFAQ\n\n\n\nMontrer la spécificité des pays du Sud de l’Europe à l’aide de Google Mobility\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\nAucun article correspondant"
+    "text": "Quels ont été les pays les moins touchés par la pandémie ?\n\n\n\nFAQ\n\n\n\nCalculer l’excès de mortalité sur différentes périodes\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n19 août 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nUn indicateur de sévérité prêt à l’emploi\n\n\n\nFAQ\n\n\n\nQue montre le Stringency Index de l’Oxford Covid 19 Government Response Tracker ?\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nOù y a-t-il le plus de policiers en Europe ?\n\n\n\nFAQ\n\n\n\nCalculer la concentration policière dans chaque pays, grâce aux données d’eurostat et de la banque mondiale\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLa France des polices municipales\n\n\n\nLa Police des sorties\n\n\n\nCartographier les initiatives sécuritaires locales\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDes verbalisations très inégalement distribuées\n\n\n\nLa Police des sorties\n\n\n\nCartographier la prévalence de la verbalisation\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nParisiens, ouvrez l’oeil !\n\n\n\nInquiètement\n\n\n\nCartographier les caméras de surveillance à Paris\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLa signature des confinements latins\n\n\n\nFAQ\n\n\n\nMontrer la spécificité des pays du Sud de l’Europe à l’aide de Google Mobility\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\nAucun article correspondant"
   },
   {
     "objectID": "sources-francaises.html",

@@ -1,0 +1,57 @@
+---
+title: "Quels ont été les pays les moins touchés par la pandémie ?"
+description: "Calculer l'excès de mortalité sur différentes périodes"
+date: today
+categories: [FAQ]
+citation: 
+  url: https://l-attestation.github.io/excercices/exces-mortalite/  
+image: https://upload.wikimedia.org/wikipedia/commons/b/b4/Tolima_-_Champ_de_sorgho.JPG
+draft: false
+---
+
+## Packages nécessaires
+
+```{r packages}
+library(here)
+library(tidyverse)
+library(lubridate)
+```
+
+## D'où proviennent les données ?
+
+## Les télécharger
+
+```{r path_excess_mortality}
+excess_mortality_path = here("data", "excess_mortality.rds")
+```
+
+```{r download_excess_mortality}
+#| eval: false
+read_csv("https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/excess_mortality/excess_mortality.csv") |> 
+  write_rds(excess_mortality_path)
+```
+
+## Choisir les bornes temporelles
+
+```{r}
+date_beginn = ymd(20200301)
+date_end = ymd(20200601)
+```
+
+## Filtrer et agréger
+
+```{r read_excess_mortality}
+excess_mortality = read_rds(excess_mortality_path) |> 
+  mutate(date = ymd(date)) |> 
+  select(location,
+         date,
+         projected_deaths_since_2020_all_ages,
+         excess_proj_all_ages) |> 
+  filter(between(date, date_beginn, date_end)) |> 
+  group_by(location) |> 
+  summarise(p_score = sum(excess_proj_all_ages, na.rm = T) / 
+              sum(projected_deaths_since_2020_all_ages, na.rm = T) * 100)
+```
+
+## Visualiser
+
