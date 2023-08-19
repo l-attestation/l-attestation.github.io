@@ -2,7 +2,7 @@
 title: "La France des polices municipales"
 description: "Cartographier les initiatives sécuritaires locales"
 date: 2023-06-25
-categories: [La police des sorties]
+categories: [La Police des sorties]
 citation: 
   url: https://l-attestation.github.io/exercices/polices-municipales/ 
 image: https://upload.wikimedia.org/wikipedia/commons/b/b4/Tolima_-_Champ_de_sorgho.JPG
