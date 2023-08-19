@@ -1,5 +1,5 @@
 ---
-title: "Où y a-t-il le plus de policiers en Europe"
+title: "Où y a-t-il le plus de policiers en Europe ?"
 description: "Calculer la concentration policière dans chaque pays, grâce aux données d'eurostat et de la banque mondiale"
 date: 2023-06-25
 categories: [FAQ]
@@ -21,9 +21,8 @@ library(huxtable)
 
 ## Récupérer les données
 
-::: {.callout-tip}
-Pour récupérer des données sur les pays européens, le package eurostat est votre ami.
-Parcourez le catalogue avec la fonction `eurostat::get_eurostat_toc()`
+::: callout-tip
+Pour récupérer des données sur les pays européens, le package [eurostat](https://ropengov.github.io/eurostat/articles/eurostat_tutorial.html) est votre ami. Parcourez le catalogue avec la fonction `eurostat::get_eurostat_toc()`
 :::
 
 ```{r eurostat_path}
@@ -40,7 +39,6 @@ eurostat::get_eurostat("crim_just_job", type = "label", cache_dir = here("data")
 crim_just_job = read_rds(crim_just_job_path)
 ```
 
-
 ## Les inspecter
 
 ```{r check_raw_eurostat}
@@ -52,8 +50,8 @@ slice_sample(crim_just_job, n = 20) |>
 
 ## Les recoder
 
-::: {.callout-tip}
-Dès que vous devez manipuler des noms et codes de pays, pensez au package countrycode.
+::: callout-tip
+Dès que vous devez manipuler des noms et codes de pays, pensez au package [countrycode](https://vincentarelbundock.github.io/countrycode/).
 :::
 
 ```{r recode_eurostat}
@@ -88,8 +86,8 @@ slice_head(police_europe, n = 20) |>
 
 Ce calcul a déjà été effectué par les auteurs de la base téléchargée. Toutefois, un examen attentif des données montre quelques choix un peu curieux, et nous incite à le refaire nous-même, par précaution.
 
-::: {.callout-tip}
-Le package wbstats donne accès aux données de la Banque mondiale, parmi lesquelles le nombre d'habitant, le PIB par tête, etc.
+::: callout-tip
+Le package [wbstats](https://cran.r-project.org/web/packages/wbstats/vignettes/wbstats.html) donne accès aux données de la Banque mondiale, parmi lesquelles le nombre d'habitant, le PIB par tête, etc.
 :::
 
 ```{r path_wb}

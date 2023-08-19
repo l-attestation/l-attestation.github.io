@@ -46,8 +46,8 @@ verbalisations_departement = read_excel(verbalisations_departement_path, skip = 
 
 Les chiffres bruts des verbalisations ne suffisent pas, il faut les rapporter à la population de chaque département. Et plus précisément, à la population *adulte*. Pour deux raisons :
 
-- Les forces de l'ordre n'ont sans doute pas verbalisé beaucoup d'enfants. 
-- Même si elles l'ont fait, ce ne sont pas les enfants qui ont payé les amendes, mais bien leurs parents.
+-   Les forces de l'ordre n'ont sans doute pas verbalisé beaucoup d'enfants.
+-   Même si elles l'ont fait, ce ne sont pas les enfants qui ont payé les amendes, mais bien leurs parents.
 
 L'INSEE met à disposition des estimations de population par département, sexe et âge de 1975 à l'année courante. Ces données sont téléchargeables sur [cette page](https://www.insee.fr/fr/statistiques/1893198)
 
@@ -102,18 +102,23 @@ departements |>
 
 ## Récupérer la couche cartographique
 
-::: {.callout-tip}
-Pour récupérer les couches cartographiques correspondant à des communes, des départements (y compris d'Outre-Mer) et des régions françaises, votre ami est le package CARTElette. Il peut être installé depuis Github.
+::: callout-tip
+Pour récupérer les couches cartographiques correspondant à des communes, des départements (y compris d'Outre-Mer) et des régions françaises, votre ami est le package [CARTElette](https://antuki.github.io/CARTElette/articles/CARTElette.html). Il peut être installé depuis Github.
 :::
 
-```{r get_sf}
+```{r installer_cartelette}
+#| eval: false
+remotes::install_github("antuki/CARTElette/CARTElette@RPackage")
+```
+
+```{r download_departements_sf}
 #| eval: false
 CARTElette::charger_carte(destfile = here("data"),
                           COG = 2020,
                           nivsupra = "DEP")
 ```
 
-```{r read_sf}
+```{r read_departements_sf}
 departements_sf = st_read(here("data", "DEP_2020_CARTElette.shp"), quiet = T) |> 
   rename(code_departement = "DEP",
          nom_departement = "nom")
@@ -160,4 +165,3 @@ departements_sf |>
             fontfamily = "Helvetica",
             frame.lwd = 1)
 ```
-
