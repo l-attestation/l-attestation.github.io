@@ -122,22 +122,29 @@ police_europe_pcm = wb |>
   mutate(pays = countrycode(wb, origin = "wb", destination = "country.name.fr"),
          pays = if_else(wb == "MNE", "Monténégro", pays),
          pays = if_else(wb == "MKD", "Macédoine du Nord", pays),
-         pays = fct_reorder(pays, policiers_pcm))
+         policiers_pcm = round(policiers_pcm)) |> 
+  arrange(desc(policiers_pcm))
 ```
 
-## Tableau
+## Palmarès
+
+### Tableau
 
 ```{r palmares_huxtable}
 police_europe_pcm |>
+  select(pays, policiers_pcm) |> 
+  rename(Pays = pays,
+         "Policiers pour 100 000 habitants" = policiers_pcm) |> 
   as_huxtable() |> 
   set_number_format(NA) |> 
-  huxtable::theme_compact()
+  huxtable::theme_blue()
 ```
 
-## Graphique
+### Graphique
 
 ```{r palmares_plot}
 police_europe_pcm |> 
+  mutate(pays = fct_reorder(pays, policiers_pcm)) |> 
   ggplot(aes(x = policiers_pcm, y = pays)) +
   geom_bar(stat = "identity") +
   labs(x = "Policiers pour 100 000 habitants",
