@@ -21,7 +21,6 @@ library(countrycode)
 library(zoo)
 ```
 
-
 ## Choisir le thème des graphiques
 
 ```{r theme_graphiques}
@@ -29,20 +28,30 @@ theme_set(theme_minimal() +
             theme(plot.title = element_text(face = "bold")))
 ```
 
-
 ## Récupérer les données
 
-La manière la plus simple de récupérer les données de mobilité est de passer par le package {tidycovid19}, qui peut être installé ainsi :
+La manière la plus simple de récupérer les données de mobilité est de passer par le package [tidycovid19](https://joachim-gassen.github.io/tidycovid19/), qui peut être installé ainsi :
 
-```{r}
+```{r install_tidycovid19}
 # remotes::install_github("joachim-gassen/tidycovid19")
 ```
 
+Si, votre connexion internet est médiocre, il se peut que le téléchargement du package échoue. Dans ce cas, avant l'installation, faites :
 
-```{r}
+```{r augment_timeout}
+# options(timeout = 600)
+```
+
+```{r path_google}
 google_mobility_country_path = here::here("data", "google_mobility_country.rds")
-# tidycovid19::download_google_cmr_data(type = "country", cached = T) |> 
-#   write_rds(file = google_mobility_country_path)
+```
+
+```{r download_google}
+tidycovid19::download_google_cmr_data(type = "country", cached = T) |>
+  write_rds(file = google_mobility_country_path)
+```
+
+```{r read_google}
 google_mobility_country = read_rds(google_mobility_country_path)
 ```
 
@@ -68,8 +77,6 @@ google_mobility_country |>
   summarise(across(4:9, ~ mean(.x, na.rm = T)))
 ```
 
-## Cartographier
-
 ## Sélectionner 6 pays européens
 
 ```{r}
@@ -94,4 +101,3 @@ google_mobility_country |>
        y = "Fréquentation des espaces verts par rapport à janvier\n(Moyenne glissante sur 7 jours)",
        caption = "Données : Google Mobility Reports")
 ```
-
