@@ -31,6 +31,7 @@ crim_just_job_path = here("data", "crim_just_job.rds")
 ```
 
 ```{r eurostat_download}
+#| eval: false
 eurostat::get_eurostat("crim_just_job", type = "label", cache_dir = here("data")) |>
   write_rds(crim_just_job_path)
 ```
@@ -96,6 +97,7 @@ wb_path = here("data", "wb.rds")
 ```
 
 ```{r download_wb}
+#| eval: false
 wbstats::wb_data(country = "countries_only",
                       indicator = c("gdp_per_capita" = "NY.GDP.PCAP.CD",
                                     "population" = "SP.POP.TOTL"),

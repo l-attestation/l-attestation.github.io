@@ -1,13 +1,10 @@
 ---
 title: "Des verbalisations très inégalement distribuées"
 description: "Cartographier la prévalence de la verbalisation"
-execute:
-  warning: false
-  message: false
 date: 2023-06-25
 categories: [La Police des sorties]
 citation: 
-  url: https://l-attestation.github.io/verbalisations-departement/  
+  url: https://l-attestation.github.io/excercices/verbalisations-departement/  
 image: https://upload.wikimedia.org/wikipedia/commons/b/b4/Tolima_-_Champ_de_sorgho.JPG
 draft: false
 ---
@@ -34,6 +31,7 @@ verbalisations_departement_path = here("data", "verbalisations_departement.xlsx"
 ```
 
 ```{r download_verbalisations}
+#| eval: false
 download.file(url = "http://blog.alphoenix.net/wp-content/uploads/2021/07/RES_DIF_COVID19_CONFINEMENT_MARS-MAI2020_parDep_20210506.xlsx",
               destfile = verbalisations_departement_path)
 ```
@@ -59,6 +57,7 @@ population_departement_path = here("data", "population_departement.xls")
 ```
 
 ```{r download_adultes}
+#| eval: false
 download.file("https://www.insee.fr/fr/statistiques/fichier/1893198/estim-pop-dep-sexe-aq-1975-2023.xls",
               population_departement_path)
 ```
@@ -108,6 +107,7 @@ Pour récupérer les couches cartographiques correspondant à des communes, des 
 :::
 
 ```{r get_sf}
+#| eval: false
 CARTElette::charger_carte(destfile = here("data"),
                           COG = 2020,
                           nivsupra = "DEP")

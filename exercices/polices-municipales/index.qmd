@@ -28,6 +28,7 @@ polices_municipales_path = here("data", "polices_municipales.ods")
 ```
 
 ```{r download}
+#| eval: false
 download.file(url = "https://www.data.gouv.fr/fr/datasets/r/ad814337-074c-459b-add1-d78df9e6d85f",
               destfile = polices_municipales_path)
 ```

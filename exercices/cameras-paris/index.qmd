@@ -4,7 +4,7 @@ description: "Cartographier les caméras de surveillance à Paris"
 date: 2023-06-25
 categories: [Inquiètement]
 citation: 
-  url: https://l-attestation.github.io/cameras-paris/ 
+  url: https://l-attestation.github.io/exercices/cameras-paris/ 
 image: https://upload.wikimedia.org/wikipedia/commons/b/b4/Tolima_-_Champ_de_sorgho.JPG
 draft: false
 ---
@@ -27,7 +27,7 @@ cameras_paris_path = here::here("data", "cameras-paris.kml")
 ```
 
 ```{r download}
-#|eval: false
+#| eval: false
 cameras_paris_url = "https://www.data.gouv.fr/fr/datasets/r/73b97c76-0f79-451b-9576-ccc61af7dfcf"
 
 download.file(url = cameras_paris_url, destfile = cameras_paris_path)

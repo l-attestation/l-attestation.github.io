@@ -4,7 +4,7 @@ description: "Montrer la spécificité des pays du Sud de l'Europe à l'aide de 
 date: 2023-06-25
 categories: [FAQ]
 citation: 
-  url: https://l-attestation.github.io/signature-confinements-latins/
+  url: https://l-attestation.github.io/exercices/signature-confinements-latins/
 image: https://upload.wikimedia.org/wikipedia/commons/b/b4/Tolima_-_Champ_de_sorgho.JPG
 draft: false
 ---
@@ -33,13 +33,15 @@ theme_set(theme_minimal() +
 La manière la plus simple de récupérer les données de mobilité est de passer par le package [tidycovid19](https://joachim-gassen.github.io/tidycovid19/), qui peut être installé ainsi :
 
 ```{r install_tidycovid19}
-# remotes::install_github("joachim-gassen/tidycovid19")
+#| eval: false
+remotes::install_github("joachim-gassen/tidycovid19")
 ```
 
 Si, votre connexion internet est médiocre, il se peut que le téléchargement du package échoue. Dans ce cas, avant l'installation, faites :
 
 ```{r augment_timeout}
-# options(timeout = 600)
+#| eval: false
+options(timeout = 600)
 ```
 
 ```{r path_google}
@@ -47,6 +49,7 @@ google_mobility_country_path = here::here("data", "google_mobility_country.rds")
 ```
 
 ```{r download_google}
+#| eval: false
 tidycovid19::download_google_cmr_data(type = "country", cached = T) |>
   write_rds(file = google_mobility_country_path)
 ```
@@ -57,20 +60,20 @@ google_mobility_country = read_rds(google_mobility_country_path)
 
 ## À quoi ressemblent-elles ?
 
-```{r}
+```{r glimpse_google}
 glimpse(google_mobility_country)
 ```
 
 ## Choisir nos bornes temporelles
 
-```{r}
+```{r choose_dates}
 date_beginn = ymd(20200301)
 date_end = ymd(20200601)
 ```
 
 ## Filtrer et agréger
 
-```{r}
+```{r filter_summarise_google}
 google_mobility_country |> 
   filter(between(date, date_beginn, date_end)) |> 
   group_by(iso3c) |> 
@@ -79,13 +82,13 @@ google_mobility_country |>
 
 ## Sélectionner 6 pays européens
 
-```{r}
+```{r choose_countries}
 selection_pays_europe = c("France", "Espagne", "Italie", "Pays-Bas", "Allemagne", "Danemark")
 ```
 
 ## Les comparer
 
-```{r}
+```{r plot_signature}
 google_mobility_country |> 
   filter(between(date, date_beginn, date_end)) |>
   mutate(pays = countrycode(iso3c, origin = "iso3c", destination = "country.name.fr"),

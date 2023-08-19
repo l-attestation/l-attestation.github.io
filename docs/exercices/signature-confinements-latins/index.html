@@ -231,11 +231,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="récupérer-les-données">Récupérer les données</h2>
 <p>La manière la plus simple de récupérer les données de mobilité est de passer par le package <a href="https://joachim-gassen.github.io/tidycovid19/">tidycovid19</a>, qui peut être installé ainsi :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># remotes::install_github("joachim-gassen/tidycovid19")</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"joachim-gassen/tidycovid19"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Si, votre connexion internet est médiocre, il se peut que le téléchargement du package échoue. Dans ce cas, avant l’installation, faites :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># options(timeout = 600)</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">timeout =</span> <span class="dv">600</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>google_mobility_country_path <span class="ot">=</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"google_mobility_country.rds"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -325,7 +325,7 @@ $ timestamp         &lt;dttm&gt; 2022-11-05 09:21:06, 2022-11-05 09:21:06, 2022-
 <span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Fréquentation des espaces verts par rapport à janvier</span><span class="sc">\n</span><span class="st">(Moyenne glissante sur 7 jours)"</span>,</span>
 <span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">"Données : Google Mobility Reports"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+<p><img src="index_files/figure-html/plot_signature-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 
@@ -336,12 +336,12 @@ $ timestamp         &lt;dttm&gt; 2022-11-05 09:21:06, 2022-11-05 09:21:06, 2022-
   author = {Boulakia, Théo and Mariot, Nicolas},
   title = {La signature des confinements latins},
   date = {2023-06-25},
-  url = {https://l-attestation.github.io/signature-confinements-latins/},
+  url = {https://l-attestation.github.io/exercices/signature-confinements-latins/},
   langid = {fr}
 }
 </code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">Veuillez citer ce travail comme suit&nbsp;:</div><div id="ref-boulakia2023" class="csl-entry quarto-appendix-citeas" role="listitem">
 Boulakia, Théo, and Nicolas Mariot. 2023. <span>“La signature des
-confinements latins.”</span> June 25, 2023. <a href="https://l-attestation.github.io/signature-confinements-latins/">https://l-attestation.github.io/signature-confinements-latins/</a>.
+confinements latins.”</span> June 25, 2023. <a href="https://l-attestation.github.io/exercices/signature-confinements-latins/">https://l-attestation.github.io/exercices/signature-confinements-latins/</a>.
 </div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
