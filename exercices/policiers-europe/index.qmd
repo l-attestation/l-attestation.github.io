@@ -97,10 +97,10 @@ wb_path = here("data", "wb.rds")
 ```{r download_wb}
 #| eval: false
 wbstats::wb_data(country = "countries_only",
-                      indicator = c("gdp_per_capita" = "NY.GDP.PCAP.CD",
-                                    "population" = "SP.POP.TOTL"),
-                      mrv = 7,
-                      gapfill = TRUE) |>
+                 indicator = c("gdp_per_capita" = "NY.GDP.PCAP.CD",
+                               "population" = "SP.POP.TOTL"),
+                 mrv = 7,
+                 gapfill = TRUE) |>
   write_rds(wb_path)
 ```
 
@@ -118,17 +118,26 @@ police_europe_pcm = wb |>
   mutate(policiers_pcm = total_police_officers_number / population * 100000) |> 
   group_by(wb) |> 
   summarise(policiers_pcm = mean(policiers_pcm, na.rm = TRUE)) |> 
-  filter(!is.nan(policiers_pcm))
-```
-
-## Palmarès
-
-```{r plot_palmares}
-police_europe_pcm |> 
+  filter(!is.nan(policiers_pcm)) |> 
   mutate(pays = countrycode(wb, origin = "wb", destination = "country.name.fr"),
          pays = if_else(wb == "MNE", "Monténégro", pays),
          pays = if_else(wb == "MKD", "Macédoine du Nord", pays),
-         pays = fct_reorder(pays, policiers_pcm)) |> 
+         pays = fct_reorder(pays, policiers_pcm))
+```
+
+## Tableau
+
+```{r palmares_huxtable}
+police_europe_pcm |>
+  as_huxtable() |> 
+  set_number_format(NA) |> 
+  huxtable::theme_compact()
+```
+
+## Graphique
+
+```{r palmares_plot}
+police_europe_pcm |> 
   ggplot(aes(x = policiers_pcm, y = pays)) +
   geom_bar(stat = "identity") +
   labs(x = "Policiers pour 100 000 habitants",
