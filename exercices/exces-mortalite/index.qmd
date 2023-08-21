@@ -1,5 +1,5 @@
 ---
-title: "Quels ont été les pays les moins touchés par la pandémie ?"
+title: "Quels ont été les pays les plus touchés par la pandémie ?"
 description: "Calculer l'excès de mortalité sur différentes périodes"
 date: today
 categories: [FAQ]
@@ -15,9 +15,12 @@ draft: false
 library(here)
 library(tidyverse)
 library(lubridate)
+library(huxtable)
 ```
 
 ## D'où proviennent les données ?
+
+Ces données ont été rassemblées sur le site [Our World in Data](https://ourworldindata.org/) [@matthieu2020]. Elles s'appuient sur le travail de nombreux chercheurs, notamment @karlinsky2021. Leur production est expliquée en détail sur [cette page](https://ourworldindata.org/excess-mortality-covid#).
 
 ## Les télécharger
 
@@ -31,14 +34,7 @@ read_csv("https://raw.githubusercontent.com/owid/covid-19-data/master/public/dat
   write_rds(excess_mortality_path)
 ```
 
-## Choisir les bornes temporelles
-
-```{r}
-date_beginn = ymd(20200301)
-date_end = ymd(20200601)
-```
-
-## Filtrer et agréger
+## Lire les données
 
 ```{r read_excess_mortality}
 excess_mortality = read_rds(excess_mortality_path) |> 
@@ -46,12 +42,67 @@ excess_mortality = read_rds(excess_mortality_path) |>
   select(location,
          date,
          projected_deaths_since_2020_all_ages,
-         excess_proj_all_ages) |> 
-  filter(between(date, date_beginn, date_end)) |> 
-  group_by(location) |> 
-  summarise(p_score = sum(excess_proj_all_ages, na.rm = T) / 
-              sum(projected_deaths_since_2020_all_ages, na.rm = T) * 100)
+         excess_proj_all_ages)
 ```
 
-## Visualiser
+## Vérifications
 
+Pour certains pays, la périodicité des données est hebdomadaire (ex : Australie, Autriche, Belgique, Colombie, Afrique du Sud, Espagne, Suisse). La mortalité observée est alors renseignée tous les dimanches à compter du 5 janvier 2020. Il y a donc 52 enregistrements pour chaque pays en 2020.
+
+Pour d'autre, la périodicité est mensuelle ( ex : Albanie, Biélorussie, Brésil, Philippines). La mortalité observée est renseignée le dernier jour de chaque mois, à compter du 31 janvier 2020. Il y a donc 12 enregistrements pour chaque pays en 2020, sauf pour le Salvador où il n'y en a que 8. Les dernières données disponibles pour ce pays sont celles du mois d'août 2020.
+
+```{r check}
+periodicity = excess_mortality |>
+  filter(year(date) == 2020,
+         !is.na(excess_proj_all_ages)) |> 
+  group_by(location) |> 
+  summarise(n = n(),
+            date_min = min(date),
+            date_max = max(date))
+```
+
+## Deux fonctions simple
+
+```{r function_summarise}
+summarise_excess_mortality = function(date_beginn, date_end) {
+  excess_mortality |> 
+    filter(between(date, date_beginn, date_end)) |> 
+    group_by(location) |> 
+    summarise(p_score = sum(excess_proj_all_ages, na.rm = T) / 
+                sum(projected_deaths_since_2020_all_ages, na.rm = T) * 100) 
+}
+```
+
+```{r function_huxtable}
+huxtable_excess_mortality = function(data) {
+  data |> 
+    arrange(desc(p_score)) |> 
+    mutate(p_score = round(p_score)) |> 
+    as_huxtable()
+}
+```
+
+
+## Classement du 1er mars au 1er juin
+
+```{r summarise_spring}
+excess_mortality_spring = summarise_excess_mortality(ymd(20200101), ymd(20200601))
+```
+
+```{r huxtable_spring}
+excess_mortality_spring |> 
+  huxtable_excess_mortality() |> 
+  theme_blue()
+```
+
+## Classement sur l'année 2020
+
+```{r summarise_2020}
+excess_mortality_2020 = summarise_excess_mortality(ymd(20200101), ymd(20201231))
+```
+
+```{r huxtable_2020}
+excess_mortality_2020 |> 
+  huxtable_excess_mortality() |> 
+  theme_green()
+```

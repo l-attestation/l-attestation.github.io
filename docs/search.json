@@ -65,51 +65,65 @@
   {
     "objectID": "exercices/exces-mortalite/index.html",
     "href": "exercices/exces-mortalite/index.html",
-    "title": "Quels ont été les pays les moins touchés par la pandémie ?",
+    "title": "Quels ont été les pays les plus touchés par la pandémie ?",
     "section": "",
-    "text": "library(here)\nlibrary(tidyverse)\nlibrary(lubridate)"
+    "text": "library(here)\nlibrary(tidyverse)\nlibrary(lubridate)\nlibrary(huxtable)"
   },
   {
     "objectID": "exercices/exces-mortalite/index.html#packages-nécessaires",
     "href": "exercices/exces-mortalite/index.html#packages-nécessaires",
-    "title": "Quels ont été les pays les moins touchés par la pandémie ?",
+    "title": "Quels ont été les pays les plus touchés par la pandémie ?",
     "section": "",
-    "text": "library(here)\nlibrary(tidyverse)\nlibrary(lubridate)"
+    "text": "library(here)\nlibrary(tidyverse)\nlibrary(lubridate)\nlibrary(huxtable)"
   },
   {
     "objectID": "exercices/exces-mortalite/index.html#doù-proviennent-les-données",
     "href": "exercices/exces-mortalite/index.html#doù-proviennent-les-données",
-    "title": "Quels ont été les pays les moins touchés par la pandémie ?",
+    "title": "Quels ont été les pays les plus touchés par la pandémie ?",
     "section": "D’où proviennent les données ?",
-    "text": "D’où proviennent les données ?"
+    "text": "D’où proviennent les données ?\nCes données ont été rassemblées sur le site Our World in Data (matthieu2020?). Elles s’appuient sur le travail de nombreux chercheurs, notamment Karlinsky et Kobak (2021). Leur production est expliquée en détail sur cette page."
   },
   {
     "objectID": "exercices/exces-mortalite/index.html#les-télécharger",
     "href": "exercices/exces-mortalite/index.html#les-télécharger",
-    "title": "Quels ont été les pays les moins touchés par la pandémie ?",
+    "title": "Quels ont été les pays les plus touchés par la pandémie ?",
     "section": "Les télécharger",
     "text": "Les télécharger\n\nexcess_mortality_path = here(\"data\", \"excess_mortality.rds\")\n\n\nread_csv(\"https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/excess_mortality/excess_mortality.csv\") |&gt; \n  write_rds(excess_mortality_path)"
   },
   {
-    "objectID": "exercices/exces-mortalite/index.html#choisir-les-bornes-temporelles",
-    "href": "exercices/exces-mortalite/index.html#choisir-les-bornes-temporelles",
-    "title": "Quels ont été les pays les moins touchés par la pandémie ?",
-    "section": "Choisir les bornes temporelles",
-    "text": "Choisir les bornes temporelles\n\ndate_beginn = ymd(20200301)\ndate_end = ymd(20200601)"
+    "objectID": "exercices/exces-mortalite/index.html#lire-les-données",
+    "href": "exercices/exces-mortalite/index.html#lire-les-données",
+    "title": "Quels ont été les pays les plus touchés par la pandémie ?",
+    "section": "Lire les données",
+    "text": "Lire les données\n\nexcess_mortality = read_rds(excess_mortality_path) |&gt; \n  mutate(date = ymd(date)) |&gt; \n  select(location,\n         date,\n         projected_deaths_since_2020_all_ages,\n         excess_proj_all_ages)"
   },
   {
-    "objectID": "exercices/exces-mortalite/index.html#filtrer-et-agréger",
-    "href": "exercices/exces-mortalite/index.html#filtrer-et-agréger",
-    "title": "Quels ont été les pays les moins touchés par la pandémie ?",
-    "section": "Filtrer et agréger",
-    "text": "Filtrer et agréger\n\nexcess_mortality = read_rds(excess_mortality_path) |&gt; \n  mutate(date = ymd(date)) |&gt; \n  select(location,\n         date,\n         projected_deaths_since_2020_all_ages,\n         excess_proj_all_ages) |&gt; \n  filter(between(date, date_beginn, date_end)) |&gt; \n  group_by(location) |&gt; \n  summarise(p_score = sum(excess_proj_all_ages, na.rm = T) / \n              sum(projected_deaths_since_2020_all_ages, na.rm = T) * 100)"
+    "objectID": "exercices/exces-mortalite/index.html#vérifications",
+    "href": "exercices/exces-mortalite/index.html#vérifications",
+    "title": "Quels ont été les pays les plus touchés par la pandémie ?",
+    "section": "Vérifications",
+    "text": "Vérifications\nPour certains pays, la périodicité des données est hebdomadaire (ex : Australie, Autriche, Belgique, Colombie, Afrique du Sud, Espagne, Suisse). La mortalité observée est alors renseignée tous les dimanches à compter du 5 janvier 2020. Il y a donc 52 enregistrements pour chaque pays en 2020.\nPour d’autre, la périodicité est mensuelle ( ex : Albanie, Biélorussie, Brésil, Philippines). La mortalité observée est renseignée le dernier jour de chaque mois, à compter du 31 janvier 2020. Il y a donc 12 enregistrements pour chaque pays en 2020, sauf pour le Salvador où il n’y en a que 8. Les dernières données disponibles pour ce pays sont celles du mois d’août 2020.\n\nperiodicity = excess_mortality |&gt;\n  filter(year(date) == 2020,\n         !is.na(excess_proj_all_ages)) |&gt; \n  group_by(location) |&gt; \n  summarise(n = n(),\n            date_min = min(date),\n            date_max = max(date))"
   },
   {
-    "objectID": "exercices/exces-mortalite/index.html#visualiser",
-    "href": "exercices/exces-mortalite/index.html#visualiser",
-    "title": "Quels ont été les pays les moins touchés par la pandémie ?",
-    "section": "Visualiser",
-    "text": "Visualiser"
+    "objectID": "exercices/exces-mortalite/index.html#deux-fonctions-simple",
+    "href": "exercices/exces-mortalite/index.html#deux-fonctions-simple",
+    "title": "Quels ont été les pays les plus touchés par la pandémie ?",
+    "section": "Deux fonctions simple",
+    "text": "Deux fonctions simple\n\nsummarise_excess_mortality = function(date_beginn, date_end) {\n  excess_mortality |&gt; \n    filter(between(date, date_beginn, date_end)) |&gt; \n    group_by(location) |&gt; \n    summarise(p_score = sum(excess_proj_all_ages, na.rm = T) / \n                sum(projected_deaths_since_2020_all_ages, na.rm = T) * 100) \n}\n\n\nhuxtable_excess_mortality = function(data) {\n  data |&gt; \n    arrange(desc(p_score)) |&gt; \n    mutate(p_score = round(p_score)) |&gt; \n    as_huxtable()\n}"
+  },
+  {
+    "objectID": "exercices/exces-mortalite/index.html#classement-du-1er-mars-au-1er-juin",
+    "href": "exercices/exces-mortalite/index.html#classement-du-1er-mars-au-1er-juin",
+    "title": "Quels ont été les pays les plus touchés par la pandémie ?",
+    "section": "Classement du 1er mars au 1er juin",
+    "text": "Classement du 1er mars au 1er juin\n\nexcess_mortality_spring = summarise_excess_mortality(ymd(20200101), ymd(20200601))\n\n\nexcess_mortality_spring |&gt; \n  huxtable_excess_mortality() |&gt; \n  theme_blue()\n\n\n\n\nlocation\np_score\n\n\nEcuador\n68\n\n\nAndorra\n47\n\n\nSan Marino\n37\n\n\nNicaragua\n35\n\n\nMayotte\n32\n\n\nPeru\n27\n\n\nKuwait\n24\n\n\nTajikistan\n23\n\n\nSpain\n23\n\n\nUnited Arab Emirates\n21\n\n\nUnited Kingdom\n21\n\n\nItaly\n15\n\n\nBelgium\n14\n\n\nMexico\n11\n\n\nSweden\n10\n\n\nUnited States\n10\n\n\nBrazil\n9\n\n\nIran\n9\n\n\nNetherlands\n9\n\n\nIreland\n9\n\n\nBermuda\n9\n\n\nSaint Vincent and the Grenadines\n8\n\n\nQatar\n7\n\n\nEgypt\n7\n\n\nFrance\n6\n\n\nChile\n6\n\n\nCyprus\n5\n\n\nSingapore\n4\n\n\nMaldives\n4\n\n\nCanada\n4\n\n\nAruba\n4\n\n\nJordan\n4\n\n\nIceland\n4\n\n\nMonaco\n4\n\n\nRussia\n3\n\n\nBrunei\n3\n\n\nParaguay\n3\n\n\nSwitzerland\n2\n\n\nGuadeloupe\n2\n\n\nArmenia\n2\n\n\nBelarus\n2\n\n\nCuba\n2\n\n\nBolivia\n1\n\n\nPortugal\n1\n\n\nAustralia\n1\n\n\nLebanon\n1\n\n\nPuerto Rico\n1\n\n\nLiechtenstein\n1\n\n\nGreece\n1\n\n\nAustria\n0\n\n\nIsrael\n0\n\n\nNorth Macedonia\n0\n\n\nAlbania\n0\n\n\nHong Kong\n0\n\n\nThailand\n0\n\n\nGeorgia\n0\n\n\nKosovo\n0\n\n\nAlgeria\n0\n\n\nLithuania\n-1\n\n\nSerbia\n-1\n\n\nSaint Kitts and Nevis\n-1\n\n\nFinland\n-1\n\n\nSouth Korea\n-1\n\n\nTurkey\n-1\n\n\nBhutan\n-1\n\n\nNorway\n-2\n\n\nNew Caledonia\n-2\n\n\nAzerbaijan\n-2\n\n\nAntigua and Barbuda\n-2\n\n\nColombia\n-2\n\n\nSlovakia\n-2\n\n\nGermany\n-3\n\n\nArgentina\n-3\n\n\nMalta\n-3\n\n\nNew Zealand\n-3\n\n\nCzechia\n-3\n\n\nSlovenia\n-3\n\n\nTaiwan\n-3\n\n\nUruguay\n-3\n\n\nPalestine\n-4\n\n\nEstonia\n-4\n\n\nJapan\n-4\n\n\nMauritius\n-4\n\n\nMoldova\n-4\n\n\nCape Verde\n-4\n\n\nPoland\n-4\n\n\nMartinique\n-4\n\n\nRomania\n-4\n\n\nDominican Republic\n-4\n\n\nSouth Africa\n-4\n\n\nDenmark\n-4\n\n\nUzbekistan\n-4\n\n\nCosta Rica\n-4\n\n\nFrench Polynesia\n-4\n\n\nCroatia\n-5\n\n\nBahamas\n-5\n\n\nLuxembourg\n-5\n\n\nHungary\n-5\n\n\nTunisia\n-5\n\n\nMalaysia\n-5\n\n\nReunion\n-5\n\n\nBelize\n-5\n\n\nBarbados\n-5\n\n\nMacao\n-6\n\n\nBulgaria\n-6\n\n\nUkraine\n-6\n\n\nLatvia\n-6\n\n\nBosnia and Herzegovina\n-6\n\n\nPhilippines\n-7\n\n\nJamaica\n-7\n\n\nSuriname\n-7\n\n\nOman\n-7\n\n\nKyrgyzstan\n-8\n\n\nTransnistria\n-8\n\n\nMontenegro\n-8\n\n\nGuatemala\n-9\n\n\nMongolia\n-10\n\n\nKazakhstan\n-11\n\n\nGibraltar\n-12\n\n\nPanama\n-12\n\n\nGreenland\n-18\n\n\nSeychelles\n-18\n\n\nEl Salvador\n-21\n\n\nFrench Guiana\n-24\n\n\nFaroe Islands\n-25\n\n\nEngland & Wales\nNaN\n\n\nNorthern Ireland\nNaN\n\n\nScotland\nNaN"
+  },
+  {
+    "objectID": "exercices/exces-mortalite/index.html#classement-sur-lannée-2020",
+    "href": "exercices/exces-mortalite/index.html#classement-sur-lannée-2020",
+    "title": "Quels ont été les pays les plus touchés par la pandémie ?",
+    "section": "Classement sur l’année 2020",
+    "text": "Classement sur l’année 2020\n\nexcess_mortality_2020 = summarise_excess_mortality(ymd(20200101), ymd(20201231))\n\n\nexcess_mortality_2020 |&gt; \n  huxtable_excess_mortality() |&gt; \n  theme_green()\n\n\n\n\nlocation\np_score\n\n\nEcuador\n53\n\n\nPeru\n50\n\n\nKuwait\n44\n\n\nBolivia\n42\n\n\nMexico\n40\n\n\nArmenia\n40\n\n\nKosovo\n34\n\n\nSan Marino\n32\n\n\nNicaragua\n32\n\n\nAzerbaijan\n31\n\n\nTajikistan\n30\n\n\nIran\n30\n\n\nNorth Macedonia\n28\n\n\nAndorra\n27\n\n\nAlgeria\n27\n\n\nAlbania\n27\n\n\nKyrgyzstan\n23\n\n\nKazakhstan\n23\n\n\nColombia\n21\n\n\nRussia\n21\n\n\nBelarus\n20\n\n\nEgypt\n19\n\n\nLiechtenstein\n19\n\n\nBosnia and Herzegovina\n18\n\n\nMayotte\n18\n\n\nQatar\n17\n\n\nSpain\n17\n\n\nJordan\n16\n\n\nBelgium\n16\n\n\nItaly\n16\n\n\nSerbia\n15\n\n\nUnited States\n15\n\n\nTurkey\n15\n\n\nLithuania\n15\n\n\nPanama\n14\n\n\nMoldova\n14\n\n\nMaldives\n14\n\n\nOman\n14\n\n\nBulgaria\n14\n\n\nBrazil\n14\n\n\nPoland\n14\n\n\nSlovenia\n14\n\n\nCzechia\n13\n\n\nLebanon\n13\n\n\nUnited Kingdom\n13\n\n\nGuatemala\n13\n\n\nRomania\n13\n\n\nChile\n12\n\n\nUnited Arab Emirates\n12\n\n\nUzbekistan\n12\n\n\nSwitzerland\n12\n\n\nGeorgia\n11\n\n\nEl Salvador\n11\n\n\nArgentina\n11\n\n\nBahamas\n10\n\n\nCroatia\n10\n\n\nPalestine\n9\n\n\nSouth Africa\n9\n\n\nAruba\n9\n\n\nAustria\n9\n\n\nSlovakia\n9\n\n\nNetherlands\n9\n\n\nPortugal\n8\n\n\nMontenegro\n8\n\n\nSweden\n8\n\n\nParaguay\n8\n\n\nMonaco\n8\n\n\nHungary\n8\n\n\nFrance\n8\n\n\nMalta\n7\n\n\nTransnistria\n7\n\n\nUkraine\n7\n\n\nCape Verde\n7\n\n\nBelize\n6\n\n\nPuerto Rico\n6\n\n\nIsrael\n6\n\n\nGuadeloupe\n6\n\n\nGreece\n5\n\n\nCyprus\n5\n\n\nDominican Republic\n5\n\n\nTunisia\n4\n\n\nCanada\n4\n\n\nIreland\n4\n\n\nCosta Rica\n4\n\n\nHong Kong\n3\n\n\nBermuda\n3\n\n\nSaint Kitts and Nevis\n3\n\n\nLuxembourg\n3\n\n\nGermany\n3\n\n\nLatvia\n2\n\n\nSuriname\n1\n\n\nSaint Vincent and the Grenadines\n1\n\n\nFinland\n1\n\n\nThailand\n1\n\n\nEstonia\n1\n\n\nIceland\n1\n\n\nCuba\n0\n\n\nMartinique\n0\n\n\nFrench Polynesia\n0\n\n\nSingapore\n0\n\n\nSouth Korea\n0\n\n\nJamaica\n0\n\n\nNorway\n0\n\n\nBrunei\n-1\n\n\nMacao\n-1\n\n\nDenmark\n-1\n\n\nPhilippines\n-2\n\n\nJapan\n-2\n\n\nReunion\n-2\n\n\nAustralia\n-2\n\n\nTaiwan\n-3\n\n\nMauritius\n-3\n\n\nBhutan\n-3\n\n\nBarbados\n-4\n\n\nGreenland\n-5\n\n\nNew Caledonia\n-6\n\n\nNew Zealand\n-6\n\n\nUruguay\n-7\n\n\nFrench Guiana\n-7\n\n\nMalaysia\n-8\n\n\nMongolia\n-9\n\n\nAntigua and Barbuda\n-9\n\n\nGibraltar\n-11\n\n\nFaroe Islands\n-14\n\n\nSeychelles\n-20\n\n\nEngland & Wales\nNaN\n\n\nNorthern Ireland\nNaN\n\n\nScotland\nNaN"
   },
   {
     "objectID": "exercices/polices-municipales/index.html",
@@ -319,7 +333,7 @@
     "href": "exercices.html",
     "title": "Exercices",
     "section": "",
-    "text": "Quels ont été les pays les moins touchés par la pandémie ?\n\n\n\nFAQ\n\n\n\nCalculer l’excès de mortalité sur différentes périodes\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n19 août 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nUn indicateur de sévérité prêt à l’emploi\n\n\n\nFAQ\n\n\n\nQue montre le Stringency Index de l’Oxford Covid 19 Government Response Tracker ?\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nOù y a-t-il le plus de policiers en Europe ?\n\n\n\nFAQ\n\n\n\nCalculer la concentration policière dans chaque pays, grâce aux données d’eurostat et de la banque mondiale\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLa France des polices municipales\n\n\n\nLa Police des sorties\n\n\n\nCartographier les initiatives sécuritaires locales\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDes verbalisations très inégalement distribuées\n\n\n\nLa Police des sorties\n\n\n\nCartographier la prévalence de la verbalisation\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nParisiens, ouvrez l’oeil !\n\n\n\nInquiètement\n\n\n\nCartographier les caméras de surveillance à Paris\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLa signature des confinements latins\n\n\n\nFAQ\n\n\n\nMontrer la spécificité des pays du Sud de l’Europe à l’aide de Google Mobility\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\nAucun article correspondant"
+    "text": "Quels ont été les pays les plus touchés par la pandémie ?\n\n\n\nFAQ\n\n\n\nCalculer l’excès de mortalité sur différentes périodes\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n21 août 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nUn indicateur de sévérité prêt à l’emploi\n\n\n\nFAQ\n\n\n\nQue montre le Stringency Index de l’Oxford Covid 19 Government Response Tracker ?\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nOù y a-t-il le plus de policiers en Europe ?\n\n\n\nFAQ\n\n\n\nCalculer la concentration policière dans chaque pays, grâce aux données d’eurostat et de la banque mondiale\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLa France des polices municipales\n\n\n\nLa Police des sorties\n\n\n\nCartographier les initiatives sécuritaires locales\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDes verbalisations très inégalement distribuées\n\n\n\nLa Police des sorties\n\n\n\nCartographier la prévalence de la verbalisation\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nParisiens, ouvrez l’oeil !\n\n\n\nInquiètement\n\n\n\nCartographier les caméras de surveillance à Paris\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLa signature des confinements latins\n\n\n\nFAQ\n\n\n\nMontrer la spécificité des pays du Sud de l’Europe à l’aide de Google Mobility\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\nAucun article correspondant"
   },
   {
     "objectID": "sources-francaises.html",
