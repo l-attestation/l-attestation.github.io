@@ -8,9 +8,9 @@
 
 <meta name="author" content="Théo Boulakia">
 <meta name="author" content="Nicolas Mariot">
-<meta name="description" content="Que montre le Stringency Index de l’Oxford Covid 19 Government Response Tracker ?">
+<meta name="description" content="Que montre l’Oxford Covid 19 Government Response Tracker ?">
 
-<title>L’Attestation - Un indicateur de sévérité prêt à l’emploi</title>
+<title>L’Attestation - Les pays les plus sévères du monde</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -152,10 +152,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Un indicateur de sévérité prêt à l’emploi</h1>
+      <h1 class="title">Les pays les plus sévères du monde</h1>
                   <div>
         <div class="description">
-          Que montre le Stringency Index de l’Oxford Covid 19 Government Response Tracker ?
+          Que montre l’Oxford Covid 19 Government Response Tracker ?
         </div>
       </div>
                           <div class="quarto-categories">
@@ -195,7 +195,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#charger-les-principaux-packages" id="toc-charger-les-principaux-packages" class="nav-link active" data-scroll-target="#charger-les-principaux-packages">Charger les principaux packages</a></li>
-  <li><a href="#récupérer-les-données" id="toc-récupérer-les-données" class="nav-link" data-scroll-target="#récupérer-les-données">Récupérer les données</a></li>
+  <li><a href="#récupérer-les-données" id="toc-récupérer-les-données" class="nav-link" data-scroll-target="#récupérer-les-données">Récupérer les données</a>
+  <ul class="collapse">
+  <li><a href="#comprendre-le-codage-des-stay-at-home-orders" id="toc-comprendre-le-codage-des-stay-at-home-orders" class="nav-link" data-scroll-target="#comprendre-le-codage-des-stay-at-home-orders">Comprendre le codage des <em>Stay-at-home-orders</em></a></li>
+  <li><a href="#choisir-les-bornes-temporelles" id="toc-choisir-les-bornes-temporelles" class="nav-link" data-scroll-target="#choisir-les-bornes-temporelles">Choisir les bornes temporelles</a></li>
+  <li><a href="#agréger" id="toc-agréger" class="nav-link" data-scroll-target="#agréger">Agréger</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -216,46 +221,90 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="récupérer-les-données" class="level1">
 <h1>Récupérer les données</h1>
+<p>Note : jusqu’à juin 2023, les données étaient mises à disposition dans ce repo Github : <a href="https://github.com/OxCGRT/covid-policy-tracker">covid-policy-tracker</a>. Depuis juin 2023, un nouveau repo abrite la version définitive des données : <a href="https://github.com/OxCGRT/covid-policy-dataset">covid-policy-dataset</a>. Lors de la rédaction du livre, nous avons utilisé le premier. <em>A priori</em>, cela n’entraîne aucune modification importante.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>oxcgrt_path <span class="ot">=</span> <span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"oxcgrt.rds"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">"https://raw.githubusercontent.com/OxCGRT/covid-policy-tracker/master/data/OxCGRT_nat_latest.csv"</span>,</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">col_select =</span> <span class="fu">c</span>(CountryName,</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>                        Date,</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">starts_with</span>(<span class="st">"C6"</span>),</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>                        StringencyIndex_Average)) <span class="sc">|&gt;</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">write_rds</span>(oxcgrt_path)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>new_repo <span class="ot">=</span> <span class="st">"https://raw.githubusercontent.com/OxCGRT/covid-policy-dataset/main/data/OxCGRT_compact_national_v1.csv"</span> <span class="co"># pour information</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>oxcgrt <span class="ot">=</span> <span class="fu">read_rds</span>(oxcgrt_path) <span class="sc">|&gt;</span> </span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  janitor<span class="sc">::</span><span class="fu">clean_names</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">date =</span> <span class="fu">ymd</span>(date),</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">wb =</span> <span class="fu">countrycode</span>(country_name, <span class="at">origin =</span> <span class="st">"country.name"</span>, <span class="at">destination =</span> <span class="st">"wb"</span>),</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">national_or_subnational_saho =</span> <span class="fu">case_when</span>(c6m_stay_at_home_requirements <span class="sc">%in%</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">1</span> <span class="sc">~</span> <span class="dv">0</span>,</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>                                                  c6m_stay_at_home_requirements <span class="sc">==</span> <span class="dv">2</span> <span class="sc">~</span> <span class="dv">1</span>,</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>                                                  c6m_stay_at_home_requirements <span class="sc">==</span> <span class="dv">3</span> <span class="sc">~</span> <span class="dv">2</span>),</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">national_saho =</span> national_or_subnational_saho <span class="sc">*</span>  c6m_flag) <span class="sc">%&gt;%</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(wb,</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>         date,</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>         stringency_index_average,</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>         national_or_subnational_saho,</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>         national_saho)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>old_repo <span class="ot">=</span> <span class="st">"https://raw.githubusercontent.com/OxCGRT/covid-policy-tracker/master/data/OxCGRT_nat_latest.csv"</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(old_repo,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">col_select =</span> <span class="fu">c</span>(CountryName,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>                        Date,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">starts_with</span>(<span class="st">"C6"</span>),</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>                        StringencyIndex_Average)) <span class="sc">|&gt;</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">write_rds</span>(oxcgrt_path)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>oxcgrt <span class="ot">=</span> <span class="fu">read_rds</span>(oxcgrt_path) <span class="sc">|&gt;</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  janitor<span class="sc">::</span><span class="fu">clean_names</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">date =</span> <span class="fu">ymd</span>(date),</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">national_or_subnational_saho =</span> <span class="fu">case_when</span>(c6m_stay_at_home_requirements <span class="sc">%in%</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">1</span> <span class="sc">~</span> <span class="dv">0</span>,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>                                                  c6m_stay_at_home_requirements <span class="sc">==</span> <span class="dv">2</span> <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>                                                  c6m_stay_at_home_requirements <span class="sc">==</span> <span class="dv">3</span> <span class="sc">~</span> <span class="dv">2</span>),</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">national_saho =</span> national_or_subnational_saho <span class="sc">*</span>  c6m_flag) <span class="sc">%&gt;%</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(country_name,</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>         date,</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>         stringency_index_average,</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>         national_or_subnational_saho,</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>         national_saho)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="comprendre-le-codage-des-stay-at-home-orders" class="level2">
+<h2 class="anchored" data-anchor-id="comprendre-le-codage-des-stay-at-home-orders">Comprendre le codage des <em>Stay-at-home-orders</em></h2>
+<p>Il s’agit de la variable <em>C6M_Stay at home requirements</em>, complétée par la variable <em>C6M_Flag</em>.</p>
+<p>D’après le <a href="https://github.com/OxCGRT/covid-policy-dataset/blob/main/documentation_and_codebook.md">dictionnaire des codes</a> :</p>
+<p><em>C6M_Stay at home requirements</em> prend les valeurs suivantes :</p>
+<ul>
+<li>0 : no measures</li>
+<li>1 : recommend not leaving house</li>
+<li>2 : require not leaving house with exceptions for daily exercise, grocery shopping, and ‘essential’ trips</li>
+<li>3 : require not leaving house with minimal exceptions (eg allowed to leave once a week, or only one person can leave at a time, etc)</li>
+<li>Blank : no data</li>
+</ul>
+<p>C6M_Flag précise l’extension géographique de ces mesures :</p>
+<ul>
+<li>0 : targeted</li>
+<li>1 : general</li>
+<li>Blank : no data</li>
+</ul>
+</section>
+<section id="choisir-les-bornes-temporelles" class="level2">
+<h2 class="anchored" data-anchor-id="choisir-les-bornes-temporelles">Choisir les bornes temporelles</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>date_beginn <span class="ot">=</span> <span class="fu">ymd</span>(<span class="dv">20200301</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>date_end <span class="ot">=</span> <span class="fu">ymd</span>(<span class="dv">20200601</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>date_end <span class="sc">-</span> date_beginn</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Time difference of 92 days</code></pre>
+</div>
+</div>
+</section>
+<section id="agréger" class="level2">
+<h2 class="anchored" data-anchor-id="agréger">Agréger</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>oxcgrt_spring_summary <span class="ot">=</span> oxcgrt <span class="sc">|&gt;</span> </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">between</span>(date, date_beginn, date_end)) <span class="sc">|&gt;</span> </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(country_name) <span class="sc">|&gt;</span> </span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">stringency_index_average =</span> <span class="fu">mean</span>(stringency_index_average, <span class="at">na.rm =</span> T),</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>            <span class="fu">across</span>(<span class="fu">ends_with</span>(<span class="st">"saho"</span>), <span class="sc">~</span> <span class="fu">sum</span>(.x, <span class="at">na.rm =</span> T)))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 
 </section>
+</section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{boulakia2023,
   author = {Boulakia, Théo and Mariot, Nicolas},
-  title = {Un indicateur de sévérité prêt à l’emploi},
+  title = {Les pays les plus sévères du monde},
   date = {2023-06-25},
   url = {https://l-attestation.github.io/exercices/stringency-index/},
   langid = {fr}
 }
 </code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">Veuillez citer ce travail comme suit&nbsp;:</div><div id="ref-boulakia2023" class="csl-entry quarto-appendix-citeas" role="listitem">
-Boulakia, Théo, and Nicolas Mariot. 2023. <span>“Un indicateur de
-sévérité prêt à l’emploi.”</span> June 25, 2023. <a href="https://l-attestation.github.io/exercices/stringency-index/">https://l-attestation.github.io/exercices/stringency-index/</a>.
+Boulakia, Théo, and Nicolas Mariot. 2023. <span>“Les pays les plus
+sévères du monde.”</span> June 25, 2023. <a href="https://l-attestation.github.io/exercices/stringency-index/">https://l-attestation.github.io/exercices/stringency-index/</a>.
 </div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {

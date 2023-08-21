@@ -9,9 +9,30 @@
   {
     "objectID": "exercices/stringency-index/index.html",
     "href": "exercices/stringency-index/index.html",
-    "title": "Un indicateur de sévérité prêt à l’emploi",
+    "title": "Les pays les plus sévères du monde",
     "section": "",
-    "text": "Charger les principaux packages\n\nlibrary(here)\nlibrary(tidyverse)\nlibrary(lubridate)\nlibrary(countrycode)\n\n\n\nRécupérer les données\n\noxcgrt_path = here(\"data\", \"oxcgrt.rds\")\n\n\nread_csv(\"https://raw.githubusercontent.com/OxCGRT/covid-policy-tracker/master/data/OxCGRT_nat_latest.csv\",\n         col_select = c(CountryName,\n                        Date,\n                        starts_with(\"C6\"),\n                        StringencyIndex_Average)) |&gt;\n  write_rds(oxcgrt_path)\n\n\noxcgrt = read_rds(oxcgrt_path) |&gt; \n  janitor::clean_names() %&gt;%\n  mutate(date = ymd(date),\n         wb = countrycode(country_name, origin = \"country.name\", destination = \"wb\"),\n         national_or_subnational_saho = case_when(c6m_stay_at_home_requirements %in% 0:1 ~ 0,\n                                                  c6m_stay_at_home_requirements == 2 ~ 1,\n                                                  c6m_stay_at_home_requirements == 3 ~ 2),\n         national_saho = national_or_subnational_saho *  c6m_flag) %&gt;%\n  select(wb,\n         date,\n         stringency_index_average,\n         national_or_subnational_saho,\n         national_saho)\n\n\n\n\n\nCitationBibTeX@online{boulakia2023,\n  author = {Boulakia, Théo and Mariot, Nicolas},\n  title = {Un indicateur de sévérité prêt à l’emploi},\n  date = {2023-06-25},\n  url = {https://l-attestation.github.io/exercices/stringency-index/},\n  langid = {fr}\n}\nVeuillez citer ce travail comme suit :\nBoulakia, Théo, and Nicolas Mariot. 2023. “Un indicateur de\nsévérité prêt à l’emploi.” June 25, 2023. https://l-attestation.github.io/exercices/stringency-index/."
+    "text": "library(here)\nlibrary(tidyverse)\nlibrary(lubridate)\nlibrary(countrycode)"
+  },
+  {
+    "objectID": "exercices/stringency-index/index.html#comprendre-le-codage-des-stay-at-home-orders",
+    "href": "exercices/stringency-index/index.html#comprendre-le-codage-des-stay-at-home-orders",
+    "title": "Les pays les plus sévères du monde",
+    "section": "Comprendre le codage des Stay-at-home-orders",
+    "text": "Comprendre le codage des Stay-at-home-orders\nIl s’agit de la variable C6M_Stay at home requirements, complétée par la variable C6M_Flag.\nD’après le dictionnaire des codes :\nC6M_Stay at home requirements prend les valeurs suivantes :\n\n0 : no measures\n1 : recommend not leaving house\n2 : require not leaving house with exceptions for daily exercise, grocery shopping, and ‘essential’ trips\n3 : require not leaving house with minimal exceptions (eg allowed to leave once a week, or only one person can leave at a time, etc)\nBlank : no data\n\nC6M_Flag précise l’extension géographique de ces mesures :\n\n0 : targeted\n1 : general\nBlank : no data"
+  },
+  {
+    "objectID": "exercices/stringency-index/index.html#choisir-les-bornes-temporelles",
+    "href": "exercices/stringency-index/index.html#choisir-les-bornes-temporelles",
+    "title": "Les pays les plus sévères du monde",
+    "section": "Choisir les bornes temporelles",
+    "text": "Choisir les bornes temporelles\n\ndate_beginn = ymd(20200301)\ndate_end = ymd(20200601)\ndate_end - date_beginn\n\nTime difference of 92 days"
+  },
+  {
+    "objectID": "exercices/stringency-index/index.html#agréger",
+    "href": "exercices/stringency-index/index.html#agréger",
+    "title": "Les pays les plus sévères du monde",
+    "section": "Agréger",
+    "text": "Agréger\n\noxcgrt_spring_summary = oxcgrt |&gt; \n  filter(between(date, date_beginn, date_end)) |&gt; \n  group_by(country_name) |&gt; \n  summarise(stringency_index_average = mean(stringency_index_average, na.rm = T),\n            across(ends_with(\"saho\"), ~ sum(.x, na.rm = T)))"
   },
   {
     "objectID": "exercices/policiers-europe/index.html",
@@ -333,7 +354,7 @@
     "href": "exercices.html",
     "title": "Exercices",
     "section": "",
-    "text": "Quels ont été les pays les plus touchés par la pandémie ?\n\n\n\nFAQ\n\n\n\nCalculer l’excès de mortalité sur différentes périodes\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n21 août 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nUn indicateur de sévérité prêt à l’emploi\n\n\n\nFAQ\n\n\n\nQue montre le Stringency Index de l’Oxford Covid 19 Government Response Tracker ?\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nOù y a-t-il le plus de policiers en Europe ?\n\n\n\nFAQ\n\n\n\nCalculer la concentration policière dans chaque pays, grâce aux données d’eurostat et de la banque mondiale\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLa France des polices municipales\n\n\n\nLa Police des sorties\n\n\n\nCartographier les initiatives sécuritaires locales\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDes verbalisations très inégalement distribuées\n\n\n\nLa Police des sorties\n\n\n\nCartographier la prévalence de la verbalisation\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nParisiens, ouvrez l’oeil !\n\n\n\nInquiètement\n\n\n\nCartographier les caméras de surveillance à Paris\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLa signature des confinements latins\n\n\n\nFAQ\n\n\n\nMontrer la spécificité des pays du Sud de l’Europe à l’aide de Google Mobility\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\nAucun article correspondant"
+    "text": "Quels ont été les pays les plus touchés par la pandémie ?\n\n\n\nFAQ\n\n\n\nCalculer l’excès de mortalité sur différentes périodes\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n21 août 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLes pays les plus sévères du monde\n\n\n\nFAQ\n\n\n\nQue montre l’Oxford Covid 19 Government Response Tracker ?\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nOù y a-t-il le plus de policiers en Europe ?\n\n\n\nFAQ\n\n\n\nCalculer la concentration policière dans chaque pays, grâce aux données d’eurostat et de la banque mondiale\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLa France des polices municipales\n\n\n\nLa Police des sorties\n\n\n\nCartographier les initiatives sécuritaires locales\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDes verbalisations très inégalement distribuées\n\n\n\nLa Police des sorties\n\n\n\nCartographier la prévalence de la verbalisation\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nParisiens, ouvrez l’oeil !\n\n\n\nInquiètement\n\n\n\nCartographier les caméras de surveillance à Paris\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLa signature des confinements latins\n\n\n\nFAQ\n\n\n\nMontrer la spécificité des pays du Sud de l’Europe à l’aide de Google Mobility\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\nAucun article correspondant"
   },
   {
     "objectID": "sources-francaises.html",
@@ -431,7 +452,7 @@
     "href": "mode-d-emploi.html#un-prestigieux-contre-exemple",
     "title": "Mode d’emploi",
     "section": "Un prestigieux contre-exemple",
-    "text": "Un prestigieux contre-exemple\n\nI’m conscious that lots of people would like to see and run the pandemic simulation code we are using to model control measures against COVID-19. To explain the background - I wrote the code (thousands of lines of undocumented C) 13+ years ago to model flu pandemics (N. Ferguson et al. 2020 ; cité dans Pouzat 2022)…\n\nLe 16 mars 2020, l’épidémiologiste Neil Ferguson et son équipe de l’Imperial College de Londres, publiaient – dans l’urgence – un rapport annonçant qu’en l’absence de mesures de confinement, le virus pourrait causer 510 000 morts au Royaume-Uni et 2.2 millions aux États-Unis (Neil Ferguson 2020). Ce rapport a circulé bien au-delà du petit monde des spécialistes en santé publique, car on lui attribue notamment le revirement de Boris Johnson et la décision de confiner la Grande-Bretagne. L’étude s’appuyait, comme son principal auteur l’a reconnu, sur des milliers de lignes de code C non documentées, écrites dans les années 2000 pour modéliser des épidémies de grippe. Ces algorithmes n’ont été publiés qu’un an plus tard, en avril 2021, après avoir été réécrits (Pouzat 2022)."
+    "text": "Un prestigieux contre-exemple\n\nI’m conscious that lots of people would like to see and run the pandemic simulation code we are using to model control measures against COVID-19. To explain the background - I wrote the code (thousands of lines of undocumented C) 13+ years ago to model flu pandemics (Ferguson 2020 ; cité dans Pouzat 2022)…\n\nLe 16 mars 2020, l’épidémiologiste Neil Ferguson et son équipe de l’Imperial College de Londres, publiaient – dans l’urgence – un rapport annonçant qu’en l’absence de mesures de confinement, le virus pourrait causer 510 000 morts au Royaume-Uni et 2.2 millions aux États-Unis (Ferguson 2020). Ce rapport a circulé bien au-delà du petit monde des spécialistes en santé publique, car on lui attribue notamment le revirement de Boris Johnson et la décision de confiner la Grande-Bretagne. L’étude s’appuyait, comme son principal auteur l’a reconnu, sur des milliers de lignes de code C non documentées, écrites dans les années 2000 pour modéliser des épidémies de grippe. Ces algorithmes n’ont été publiés qu’un an plus tard, en avril 2021, après avoir été réécrits (Pouzat 2022)."
   },
   {
     "objectID": "bibliographie.html",
