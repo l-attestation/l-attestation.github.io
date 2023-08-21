@@ -83,10 +83,10 @@ huxtable_excess_mortality = function(data) {
 ```
 
 
-## Classement du 1er mars au 1er juin
+## Classement du 1er mars au 1er juin 2020
 
 ```{r summarise_spring}
-excess_mortality_spring = summarise_excess_mortality(ymd(20200101), ymd(20200601))
+excess_mortality_spring = summarise_excess_mortality(ymd(20200301), ymd(20200601))
 ```
 
 ```{r huxtable_spring}
@@ -95,13 +95,13 @@ excess_mortality_spring |>
   theme_blue()
 ```
 
-## Classement sur l'année 2020
+## Classement du 1er mars 2020 au 1er mars 2021
 
-```{r summarise_2020}
-excess_mortality_2020 = summarise_excess_mortality(ymd(20200101), ymd(20201231))
+```{r summarise_2020_2021}
+excess_mortality_2020 = summarise_excess_mortality(ymd(20200301), ymd(20210301))
 ```
 
-```{r huxtable_2020}
+```{r huxtable_2020_2021}
 excess_mortality_2020 |> 
   huxtable_excess_mortality() |> 
   theme_green()
