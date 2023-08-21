@@ -121,7 +121,7 @@ oxcgrt_saho_2020 |>
 
 ```{r stricly_national}
 oxcgrt_saho_2020 |> 
-  slice_max(national_or_subnational_saho, n = 30) |> 
+  slice_max(national_saho, n = 30) |> 
   as_huxtable() |> 
   set_number_format(NA) |> 
   theme_grey()
