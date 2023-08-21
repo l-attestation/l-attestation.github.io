@@ -105,11 +105,11 @@
     "text": "Vérifications\nPour certains pays, la périodicité des données est hebdomadaire (ex : Australie, Autriche, Belgique, Colombie, Afrique du Sud, Espagne, Suisse). La mortalité observée est alors renseignée tous les dimanches à compter du 5 janvier 2020. Il y a donc 52 enregistrements pour chaque pays en 2020.\nPour d’autre, la périodicité est mensuelle ( ex : Albanie, Biélorussie, Brésil, Philippines). La mortalité observée est renseignée le dernier jour de chaque mois, à compter du 31 janvier 2020. Il y a donc 12 enregistrements pour chaque pays en 2020, sauf pour le Salvador où il n’y en a que 8. Les dernières données disponibles pour ce pays sont celles du mois d’août 2020.\n\nperiodicity = excess_mortality |&gt;\n  filter(year(date) == 2020,\n         !is.na(excess_proj_all_ages)) |&gt; \n  group_by(location) |&gt; \n  summarise(n = n(),\n            date_min = min(date),\n            date_max = max(date))"
   },
   {
-    "objectID": "exercices/exces-mortalite/index.html#deux-fonctions-simple",
-    "href": "exercices/exces-mortalite/index.html#deux-fonctions-simple",
+    "objectID": "exercices/exces-mortalite/index.html#deux-fonctions-simples",
+    "href": "exercices/exces-mortalite/index.html#deux-fonctions-simples",
     "title": "Quels ont été les pays les plus touchés par la pandémie ?",
-    "section": "Deux fonctions simple",
-    "text": "Deux fonctions simple\n\nsummarise_excess_mortality = function(date_beginn, date_end) {\n  excess_mortality |&gt; \n    filter(between(date, date_beginn, date_end)) |&gt; \n    group_by(location) |&gt; \n    summarise(p_score = sum(excess_proj_all_ages, na.rm = T) / \n                sum(projected_deaths_since_2020_all_ages, na.rm = T) * 100) \n}\n\n\nhuxtable_excess_mortality = function(data) {\n  data |&gt; \n    arrange(desc(p_score)) |&gt; \n    mutate(p_score = round(p_score)) |&gt; \n    as_huxtable()\n}"
+    "section": "Deux fonctions simples",
+    "text": "Deux fonctions simples\n\nsummarise_excess_mortality = function(date_beginn, date_end) {\n  excess_mortality |&gt; \n    filter(between(date, date_beginn, date_end)) |&gt; \n    group_by(location) |&gt; \n    summarise(p_score = sum(excess_proj_all_ages, na.rm = T) / \n                sum(projected_deaths_since_2020_all_ages, na.rm = T) * 100) \n}\n\n\nhuxtable_excess_mortality = function(data) {\n  data |&gt; \n    arrange(desc(p_score)) |&gt; \n    mutate(p_score = round(p_score)) |&gt; \n    as_huxtable()\n}"
   },
   {
     "objectID": "exercices/exces-mortalite/index.html#classement-du-1er-mars-au-1er-juin-2020",

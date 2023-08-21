@@ -61,7 +61,7 @@ periodicity = excess_mortality |>
             date_max = max(date))
 ```
 
-## Deux fonctions simple
+## Deux fonctions simples
 
 ```{r function_summarise}
 summarise_excess_mortality = function(date_beginn, date_end) {
