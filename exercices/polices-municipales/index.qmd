@@ -48,23 +48,34 @@ polices_municipales = readODS::read_ods(polices_municipales_path, skip = 8, col_
            gardes_champetres = x_8,
            maitres_chiens = x_9,
            chiens_patrouille = x_10) |> 
-  fill(nom_departement, .direction = "down") |> 
+  # fill(nom_departement, .direction = "down") |> 
   filter(!is.na(code_departement))
 ```
 
 ::: {.callout-caution}
-On croirait que le concepteur de ces données a pris un malin plaisir à les rendre inexploitables. Il n'y a pas de code postal pour les communes. Et aucune cohérence dans la manière d'écrire leurs noms. 
+Pour être exploitées au niveau communal, ces données requièrent des recodages laborieux. Il n'y a pas de code postal pour les communes. Et aucune cohérence dans la manière d'écrire leurs noms (majuscules, minuscules, tirets et espaces, abréviations, etc.). 
 :::
 
-```{r check}
-polices_municipales |> 
-  head(n = 20) |> 
-  as_hux() |> 
-  set_number_format(NA) |> 
-  theme_mondrian()
+## Par département
+
+On reprend directement les calculs des auteurs de la base.
+
+```{r summarise}
+pm_departements = polices_municipales |> 
+  filter(str_detect(code_departement, "TOTAL"),
+         !str_detect(code_departement, "NATIONAL")) |> 
+  mutate(total = municipaux + gardes_champetres + asvp,
+         departement = str_remove(code_departement, "^TOTAL ")) |>
+  select(departement, total) |> 
+  arrange(desc(total))
 ```
 
-## Les recoder
+```{r huxtable}
+pm_departements |> 
+  as_huxtable() |> 
+  set_number_format(NA) |> 
+  theme_orange()
+```
 
-D'où un recodage particulièrement laborieux, pour parvenir à joindre ces données avec une base contenant la couche cartographique des communes.
+On peut s'interroger sur l'existence d'un demi-policier dans le Var...
 

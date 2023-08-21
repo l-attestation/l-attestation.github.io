@@ -9,7 +9,7 @@ image: https://upload.wikimedia.org/wikipedia/commons/b/b5/Home_quarantine_stamp
 draft: false
 ---
 
-# Charger les principaux packages
+## Charger les principaux packages
 
 ```{r packages}
 library(here)
@@ -18,7 +18,7 @@ library(lubridate)
 library(countrycode)
 ```
 
-# Récupérer les données
+## Récupérer les données
 
 Note : jusqu'à juin 2023, les données étaient mises à disposition dans ce repo Github : [covid-policy-tracker](https://github.com/OxCGRT/covid-policy-tracker). Depuis juin 2023, un nouveau repo abrite la version définitive des données : [covid-policy-dataset](https://github.com/OxCGRT/covid-policy-dataset). Lors de la rédaction du livre, nous avons utilisé le premier. *A priori*, cela n'entraîne aucune modification importante.
 

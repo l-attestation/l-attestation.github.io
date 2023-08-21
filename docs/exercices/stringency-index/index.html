@@ -195,12 +195,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#charger-les-principaux-packages" id="toc-charger-les-principaux-packages" class="nav-link active" data-scroll-target="#charger-les-principaux-packages">Charger les principaux packages</a></li>
-  <li><a href="#récupérer-les-données" id="toc-récupérer-les-données" class="nav-link" data-scroll-target="#récupérer-les-données">Récupérer les données</a>
-  <ul class="collapse">
+  <li><a href="#récupérer-les-données" id="toc-récupérer-les-données" class="nav-link" data-scroll-target="#récupérer-les-données">Récupérer les données</a></li>
   <li><a href="#comprendre-le-codage-des-stay-at-home-orders" id="toc-comprendre-le-codage-des-stay-at-home-orders" class="nav-link" data-scroll-target="#comprendre-le-codage-des-stay-at-home-orders">Comprendre le codage des <em>Stay-at-home-orders</em></a></li>
   <li><a href="#choisir-les-bornes-temporelles" id="toc-choisir-les-bornes-temporelles" class="nav-link" data-scroll-target="#choisir-les-bornes-temporelles">Choisir les bornes temporelles</a></li>
   <li><a href="#agréger" id="toc-agréger" class="nav-link" data-scroll-target="#agréger">Agréger</a></li>
-  </ul></li>
   </ul>
 </nav>
     </div>
@@ -210,8 +208,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<section id="charger-les-principaux-packages" class="level1">
-<h1>Charger les principaux packages</h1>
+<section id="charger-les-principaux-packages" class="level2">
+<h2 class="anchored" data-anchor-id="charger-les-principaux-packages">Charger les principaux packages</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
@@ -219,8 +217,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(countrycode)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="récupérer-les-données" class="level1">
-<h1>Récupérer les données</h1>
+<section id="récupérer-les-données" class="level2">
+<h2 class="anchored" data-anchor-id="récupérer-les-données">Récupérer les données</h2>
 <p>Note : jusqu’à juin 2023, les données étaient mises à disposition dans ce repo Github : <a href="https://github.com/OxCGRT/covid-policy-tracker">covid-policy-tracker</a>. Depuis juin 2023, un nouveau repo abrite la version définitive des données : <a href="https://github.com/OxCGRT/covid-policy-dataset">covid-policy-dataset</a>. Lors de la rédaction du livre, nous avons utilisé le premier. <em>A priori</em>, cela n’entraîne aucune modification importante.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>oxcgrt_path <span class="ot">=</span> <span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"oxcgrt.rds"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -251,6 +249,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>         national_or_subnational_saho,</span>
 <span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>         national_saho)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section>
 <section id="comprendre-le-codage-des-stay-at-home-orders" class="level2">
 <h2 class="anchored" data-anchor-id="comprendre-le-codage-des-stay-at-home-orders">Comprendre le codage des <em>Stay-at-home-orders</em></h2>
 <p>Il s’agit de la variable <em>C6M_Stay at home requirements</em>, complétée par la variable <em>C6M_Flag</em>.</p>
@@ -292,7 +291,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 
 
-</section>
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{boulakia2023,
