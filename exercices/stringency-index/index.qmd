@@ -1,5 +1,5 @@
 ---
-title: "Les pays les plus sévères du monde"
+title: "Les États les plus sévères du monde"
 description: "Que montre l'Oxford Covid 19 Government Response Tracker ?"
 date: 2023-06-25
 categories: [FAQ]
@@ -16,6 +16,7 @@ library(here)
 library(tidyverse)
 library(lubridate)
 library(countrycode)
+library(huxtable)
 ```
 
 ## Récupérer les données
@@ -42,22 +43,31 @@ read_csv(old_repo,
   write_rds(oxcgrt_path)
 ```
 
+
 ```{r read}
 oxcgrt = read_rds(oxcgrt_path) |> 
-  janitor::clean_names() %>%
-  mutate(date = ymd(date),
-         national_or_subnational_saho = case_when(c6m_stay_at_home_requirements %in% 0:1 ~ 0,
-                                                  c6m_stay_at_home_requirements == 2 ~ 1,
-                                                  c6m_stay_at_home_requirements == 3 ~ 2),
-         national_saho = national_or_subnational_saho *  c6m_flag) %>%
-  select(country_name,
-         date,
-         stringency_index_average,
-         national_or_subnational_saho,
-         national_saho)
+  janitor::clean_names() |> 
+  mutate(date = ymd(date))
 ```
 
-## Comprendre le codage des *Stay-at-home-orders*
+## Palmarès du Stringency Index entre le 1er mars et le 1er juin
+
+Les 30 États les plus "bouclés" de la planète sont : 
+
+```{r stringency_index_palmares}
+oxcgrt |> 
+  filter(between(date, ymd(20200301), ymd(20200601))) |> 
+  group_by(country_name) |> 
+  summarise(stringency_index_average = mean(stringency_index_average, na.rm = T)) |> 
+  mutate(stringency_index_average = round(stringency_index_average, 1)) |> 
+  slice_max(stringency_index_average, n = 30) |> 
+  as_huxtable() |> 
+  set_number_format(NA)
+```
+
+## Durée et intensité des *Stay-at-home-orders* en 2020
+
+### Comprendre le codage des *Stay-at-home-orders*
 
 Il s'agit de la variable *C6M_Stay at home requirements*, complétée par la variable *C6M_Flag*.
 
@@ -77,20 +87,42 @@ C6M_Flag précise l'extension géographique de ces mesures :
 - 1 : general
 - Blank : no data
 
-## Choisir les bornes temporelles
+### Recoder à la marge
 
-```{r time_boundaries}
-date_beginn = ymd(20200301)
-date_end = ymd(20200601)
-date_end - date_beginn
+On rassemble l'absence de *stay-at-home-order* et les simples "recommandations" dans la même catégorie. Et on garde la distinction entre confinements à exercice physique autorisé (ex : France, Italie) et à exercice physique interdit (ex : Espagne, Philippines). 
+
+Note : Pour construire le score synthétique d'enfermement de la *FAQ*, on a attribué la valeur 1 aux premiers et la valeur 2 aux seconds. Ici, on atténue la différence en conservant les valeurs 2 et 3. 
+
+```{r}
+oxcgrt_saho_2020 = oxcgrt |> 
+  mutate(national_or_subnational_saho = case_when(c6m_stay_at_home_requirements %in% 0:1 ~ 0,
+                                                  .default = c6m_stay_at_home_requirements),
+         national_saho = national_or_subnational_saho *  c6m_flag) |>
+  filter(year(date) == 2020) |> 
+  group_by(country_name) |> 
+  summarise(national_or_subnational_saho = sum(national_or_subnational_saho, na.rm = T),
+            national_saho = sum(national_saho, na.rm = T))
 ```
 
-## Agréger
+### Palmarès
 
-```{r summarise}
-oxcgrt_spring_summary = oxcgrt |> 
-  filter(between(date, date_beginn, date_end)) |> 
-  group_by(country_name) |> 
-  summarise(stringency_index_average = mean(stringency_index_average, na.rm = T),
-            across(ends_with("saho"), ~ sum(.x, na.rm = T)))
+#### Au moins une partie du pays...
+
+```{r local_or_national}
+oxcgrt_saho_2020 |> 
+  slice_max(national_or_subnational_saho, n = 30) |> 
+  as_huxtable() |> 
+  set_number_format(NA) |> 
+  theme_grey()
+
+```
+
+#### Tout le pays...
+
+```{r stricly_national}
+oxcgrt_saho_2020 |> 
+  slice_max(national_or_subnational_saho, n = 30) |> 
+  as_huxtable() |> 
+  set_number_format(NA) |> 
+  theme_grey()
 ```

@@ -10,7 +10,7 @@
 <meta name="author" content="Nicolas Mariot">
 <meta name="description" content="Que montre l’Oxford Covid 19 Government Response Tracker ?">
 
-<title>L’Attestation - Les pays les plus sévères du monde</title>
+<title>L’Attestation - Les États les plus sévères du monde</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -152,7 +152,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Les pays les plus sévères du monde</h1>
+      <h1 class="title">Les États les plus sévères du monde</h1>
                   <div>
         <div class="description">
           Que montre l’Oxford Covid 19 Government Response Tracker ?
@@ -196,9 +196,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#charger-les-principaux-packages" id="toc-charger-les-principaux-packages" class="nav-link active" data-scroll-target="#charger-les-principaux-packages">Charger les principaux packages</a></li>
   <li><a href="#récupérer-les-données" id="toc-récupérer-les-données" class="nav-link" data-scroll-target="#récupérer-les-données">Récupérer les données</a></li>
+  <li><a href="#palmarès-du-stringency-index-entre-le-1er-mars-et-le-1er-juin" id="toc-palmarès-du-stringency-index-entre-le-1er-mars-et-le-1er-juin" class="nav-link" data-scroll-target="#palmarès-du-stringency-index-entre-le-1er-mars-et-le-1er-juin">Palmarès du Stringency Index entre le 1er mars et le 1er juin</a></li>
+  <li><a href="#durée-et-intensité-des-stay-at-home-orders-en-2020" id="toc-durée-et-intensité-des-stay-at-home-orders-en-2020" class="nav-link" data-scroll-target="#durée-et-intensité-des-stay-at-home-orders-en-2020">Durée et intensité des <em>Stay-at-home-orders</em> en 2020</a>
+  <ul class="collapse">
   <li><a href="#comprendre-le-codage-des-stay-at-home-orders" id="toc-comprendre-le-codage-des-stay-at-home-orders" class="nav-link" data-scroll-target="#comprendre-le-codage-des-stay-at-home-orders">Comprendre le codage des <em>Stay-at-home-orders</em></a></li>
-  <li><a href="#choisir-les-bornes-temporelles" id="toc-choisir-les-bornes-temporelles" class="nav-link" data-scroll-target="#choisir-les-bornes-temporelles">Choisir les bornes temporelles</a></li>
-  <li><a href="#agréger" id="toc-agréger" class="nav-link" data-scroll-target="#agréger">Agréger</a></li>
+  <li><a href="#recoder-à-la-marge" id="toc-recoder-à-la-marge" class="nav-link" data-scroll-target="#recoder-à-la-marge">Recoder à la marge</a></li>
+  <li><a href="#palmarès" id="toc-palmarès" class="nav-link" data-scroll-target="#palmarès">Palmarès</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -214,7 +218,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(countrycode)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(countrycode)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(huxtable)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="récupérer-les-données" class="level2">
@@ -237,21 +242,164 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>oxcgrt <span class="ot">=</span> <span class="fu">read_rds</span>(oxcgrt_path) <span class="sc">|&gt;</span> </span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  janitor<span class="sc">::</span><span class="fu">clean_names</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">date =</span> <span class="fu">ymd</span>(date),</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">national_or_subnational_saho =</span> <span class="fu">case_when</span>(c6m_stay_at_home_requirements <span class="sc">%in%</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">1</span> <span class="sc">~</span> <span class="dv">0</span>,</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>                                                  c6m_stay_at_home_requirements <span class="sc">==</span> <span class="dv">2</span> <span class="sc">~</span> <span class="dv">1</span>,</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>                                                  c6m_stay_at_home_requirements <span class="sc">==</span> <span class="dv">3</span> <span class="sc">~</span> <span class="dv">2</span>),</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">national_saho =</span> national_or_subnational_saho <span class="sc">*</span>  c6m_flag) <span class="sc">%&gt;%</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(country_name,</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>         date,</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>         stringency_index_average,</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>         national_or_subnational_saho,</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>         national_saho)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  janitor<span class="sc">::</span><span class="fu">clean_names</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">date =</span> <span class="fu">ymd</span>(date))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="comprendre-le-codage-des-stay-at-home-orders" class="level2">
-<h2 class="anchored" data-anchor-id="comprendre-le-codage-des-stay-at-home-orders">Comprendre le codage des <em>Stay-at-home-orders</em></h2>
+<section id="palmarès-du-stringency-index-entre-le-1er-mars-et-le-1er-juin" class="level2">
+<h2 class="anchored" data-anchor-id="palmarès-du-stringency-index-entre-le-1er-mars-et-le-1er-juin">Palmarès du Stringency Index entre le 1er mars et le 1er juin</h2>
+<p>Les 30 États les plus “bouclés” de la planète sont :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>oxcgrt <span class="sc">|&gt;</span> </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">between</span>(date, <span class="fu">ymd</span>(<span class="dv">20200301</span>), <span class="fu">ymd</span>(<span class="dv">20200601</span>))) <span class="sc">|&gt;</span> </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(country_name) <span class="sc">|&gt;</span> </span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">stringency_index_average =</span> <span class="fu">mean</span>(stringency_index_average, <span class="at">na.rm =</span> T)) <span class="sc">|&gt;</span> </span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">stringency_index_average =</span> <span class="fu">round</span>(stringency_index_average, <span class="dv">1</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(stringency_index_average, <span class="at">n =</span> <span class="dv">30</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_huxtable</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_number_format</span>(<span class="cn">NA</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table id="tab:stringency_index_palmares" class="huxtable table table-sm table-striped small" data-quarto-postprocess="true">
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th" style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">country_name</td>
+<td data-quarto-table-cell-role="th" style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">stringency_index_average</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">Palestine</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">86.9</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">Philippines</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">86.2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">Honduras</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">86&nbsp;&nbsp;</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">Iraq</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">84.6</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">Georgia</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">83.8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">Guatemala</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">82.7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">Kuwait</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">82.7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">Peru</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">82&nbsp;&nbsp;</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">El Salvador</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">81.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">Italy</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">81.3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">Bolivia</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">80.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">Bahamas</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">80.2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">Argentina</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">80.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">Nepal</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">79.4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">Kosovo</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">79.2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">Dominican Republic</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">78.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">Saudi Arabia</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">78.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">Morocco</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">78.4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">Pakistan</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">78.4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">Libya</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">78.2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">Ecuador</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">78.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">India</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">78&nbsp;&nbsp;</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">France</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">77.8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">Albania</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">77.4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">Jordan</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">76.9</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">Ukraine</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">76.7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">Jamaica</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">76.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">Paraguay</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">76.3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">Kyrgyz Republic</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">75.9</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">Oman</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">75.3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">Sri Lanka</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">75.3</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+</section>
+<section id="durée-et-intensité-des-stay-at-home-orders-en-2020" class="level2">
+<h2 class="anchored" data-anchor-id="durée-et-intensité-des-stay-at-home-orders-en-2020">Durée et intensité des <em>Stay-at-home-orders</em> en 2020</h2>
+<section id="comprendre-le-codage-des-stay-at-home-orders" class="level3">
+<h3 class="anchored" data-anchor-id="comprendre-le-codage-des-stay-at-home-orders">Comprendre le codage des <em>Stay-at-home-orders</em></h3>
 <p>Il s’agit de la variable <em>C6M_Stay at home requirements</em>, complétée par la variable <em>C6M_Flag</em>.</p>
 <p>D’après le <a href="https://github.com/OxCGRT/covid-policy-dataset/blob/main/documentation_and_codebook.md">dictionnaire des codes</a> :</p>
 <p><em>C6M_Stay at home requirements</em> prend les valeurs suivantes :</p>
@@ -269,39 +417,383 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Blank : no data</li>
 </ul>
 </section>
-<section id="choisir-les-bornes-temporelles" class="level2">
-<h2 class="anchored" data-anchor-id="choisir-les-bornes-temporelles">Choisir les bornes temporelles</h2>
+<section id="recoder-à-la-marge" class="level3">
+<h3 class="anchored" data-anchor-id="recoder-à-la-marge">Recoder à la marge</h3>
+<p>On rassemble l’absence de <em>stay-at-home-order</em> et les simples “recommandations” dans la même catégorie. Et on garde la distinction entre confinements à exercice physique autorisé (ex : France, Italie) et à exercice physique interdit (ex : Espagne, Philippines).</p>
+<p>Note : Pour construire le score synthétique d’enfermement de la <em>FAQ</em>, on a attribué la valeur 1 aux premiers et la valeur 2 aux seconds. Ici, on atténue la différence en conservant les valeurs 2 et 3.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>date_beginn <span class="ot">=</span> <span class="fu">ymd</span>(<span class="dv">20200301</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>date_end <span class="ot">=</span> <span class="fu">ymd</span>(<span class="dv">20200601</span>)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>date_end <span class="sc">-</span> date_beginn</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Time difference of 92 days</code></pre>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>oxcgrt_saho_2020 <span class="ot">=</span> oxcgrt <span class="sc">|&gt;</span> </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">national_or_subnational_saho =</span> <span class="fu">case_when</span>(c6m_stay_at_home_requirements <span class="sc">%in%</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">1</span> <span class="sc">~</span> <span class="dv">0</span>,</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>                                                  <span class="at">.default =</span> c6m_stay_at_home_requirements),</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">national_saho =</span> national_or_subnational_saho <span class="sc">*</span>  c6m_flag) <span class="sc">|&gt;</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">year</span>(date) <span class="sc">==</span> <span class="dv">2020</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(country_name) <span class="sc">|&gt;</span> </span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">national_or_subnational_saho =</span> <span class="fu">sum</span>(national_or_subnational_saho, <span class="at">na.rm =</span> T),</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">national_saho =</span> <span class="fu">sum</span>(national_saho, <span class="at">na.rm =</span> T))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="palmarès" class="level3">
+<h3 class="anchored" data-anchor-id="palmarès">Palmarès</h3>
+<section id="au-moins-une-partie-du-pays" class="level4">
+<h4 class="anchored" data-anchor-id="au-moins-une-partie-du-pays">Au moins une partie du pays…</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>oxcgrt_saho_2020 <span class="sc">|&gt;</span> </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(national_or_subnational_saho, <span class="at">n =</span> <span class="dv">30</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_huxtable</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_number_format</span>(<span class="cn">NA</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_grey</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table id="tab:local_or_national" class="huxtable table table-sm table-striped small" data-quarto-postprocess="true">
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th" style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(204, 204, 204); font-weight: bold;">country_name</td>
+<td data-quarto-table-cell-role="th" style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(204, 204, 204); font-weight: bold;">national_or_subnational_saho</td>
+<td data-quarto-table-cell-role="th" style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(204, 204, 204); font-weight: bold;">national_saho</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">Chile</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">802</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">88</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">China</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">801</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">Honduras</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">741</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">683</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">El Salvador</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">659</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">659</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">Kenya</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">652</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">376</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">Paraguay</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">641</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">596</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">Peru</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">638</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">554</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">Italy</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">626</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">390</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">Argentina</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">615</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">195</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">India</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">613</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">245</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">Congo</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">611</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">425</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">Algeria</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">600</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">Jamaica</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">593</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">536</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">Myanmar</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">590</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">78</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">Rwanda</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">586</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">504</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">United States</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">584</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">Fiji</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">576</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">554</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">Bahamas</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">574</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">286</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">Venezuela</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">574</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">518</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">Palestine</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">573</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">130</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">Gabon</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">572</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">510</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">Panama</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">565</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">337</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">Nigeria</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">556</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">484</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">Guinea</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">554</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">154</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">Tonga</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">554</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">554</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">Uganda</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">554</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">554</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">Eritrea</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">542</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">542</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">Suriname</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">542</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">524</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">Mexico</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">540</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">168</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">Libya</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">530</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">353</td>
+</tr>
+</tbody>
+</table>
+
+
 </div>
 </div>
 </section>
-<section id="agréger" class="level2">
-<h2 class="anchored" data-anchor-id="agréger">Agréger</h2>
+<section id="tout-le-pays" class="level4">
+<h4 class="anchored" data-anchor-id="tout-le-pays">Tout le pays…</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>oxcgrt_spring_summary <span class="ot">=</span> oxcgrt <span class="sc">|&gt;</span> </span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">between</span>(date, date_beginn, date_end)) <span class="sc">|&gt;</span> </span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(country_name) <span class="sc">|&gt;</span> </span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">stringency_index_average =</span> <span class="fu">mean</span>(stringency_index_average, <span class="at">na.rm =</span> T),</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>            <span class="fu">across</span>(<span class="fu">ends_with</span>(<span class="st">"saho"</span>), <span class="sc">~</span> <span class="fu">sum</span>(.x, <span class="at">na.rm =</span> T)))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>oxcgrt_saho_2020 <span class="sc">|&gt;</span> </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(national_or_subnational_saho, <span class="at">n =</span> <span class="dv">30</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_huxtable</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_number_format</span>(<span class="cn">NA</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_grey</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table id="tab:stricly_national" class="huxtable table table-sm table-striped small" data-quarto-postprocess="true">
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th" style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(204, 204, 204); font-weight: bold;">country_name</td>
+<td data-quarto-table-cell-role="th" style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(204, 204, 204); font-weight: bold;">national_or_subnational_saho</td>
+<td data-quarto-table-cell-role="th" style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(204, 204, 204); font-weight: bold;">national_saho</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">Chile</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">802</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">88</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">China</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">801</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">Honduras</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">741</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">683</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">El Salvador</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">659</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">659</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">Kenya</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">652</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">376</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">Paraguay</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">641</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">596</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">Peru</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">638</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">554</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">Italy</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">626</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">390</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">Argentina</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">615</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">195</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">India</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">613</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">245</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">Congo</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">611</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">425</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">Algeria</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">600</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">Jamaica</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">593</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">536</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">Myanmar</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">590</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">78</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">Rwanda</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">586</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">504</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">United States</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">584</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">Fiji</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">576</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">554</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">Bahamas</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">574</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">286</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">Venezuela</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">574</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">518</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">Palestine</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">573</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">130</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">Gabon</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">572</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">510</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">Panama</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">565</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">337</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">Nigeria</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">556</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">484</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">Guinea</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">554</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">154</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">Tonga</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">554</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">554</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">Uganda</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">554</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">554</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">Eritrea</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">542</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">542</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">Suriname</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">542</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">524</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">Mexico</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">540</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(242, 242, 242); font-weight: normal;">168</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">Libya</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">530</td>
+<td style="text-align: right; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(230, 230, 230); font-weight: normal;">353</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
 </div>
 
 
+</section>
+</section>
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{boulakia2023,
   author = {Boulakia, Théo and Mariot, Nicolas},
-  title = {Les pays les plus sévères du monde},
+  title = {Les États les plus sévères du monde},
   date = {2023-06-25},
   url = {https://l-attestation.github.io/exercices/stringency-index/},
   langid = {fr}
 }
 </code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">Veuillez citer ce travail comme suit&nbsp;:</div><div id="ref-boulakia2023" class="csl-entry quarto-appendix-citeas" role="listitem">
-Boulakia, Théo, and Nicolas Mariot. 2023. <span>“Les pays les plus
+Boulakia, Théo, and Nicolas Mariot. 2023. <span>“Les États les plus
 sévères du monde.”</span> June 25, 2023. <a href="https://l-attestation.github.io/exercices/stringency-index/">https://l-attestation.github.io/exercices/stringency-index/</a>.
 </div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
