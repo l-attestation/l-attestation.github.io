@@ -20,7 +20,7 @@ library(huxtable)
 
 ## D'où proviennent les données ?
 
-Ces données ont été rassemblées sur le site [Our World in Data](https://ourworldindata.org/) [@matthieu2020]. Elles s'appuient sur le travail de nombreux chercheurs, notamment @karlinsky2021. Leur production est expliquée en détail sur [cette page](https://ourworldindata.org/excess-mortality-covid#).
+Ces données ont été rassemblées sur le site [Our World in Data](https://ourworldindata.org/) [@mathieu2020]. Elles s'appuient sur le travail de nombreux chercheurs, notamment @karlinsky2021. Leur production est expliquée en détail sur [cette page](https://ourworldindata.org/excess-mortality-covid#).
 
 ## Les télécharger
 
