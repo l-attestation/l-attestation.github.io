@@ -5,7 +5,6 @@ date: 2023-06-25
 categories: [FAQ]
 citation: 
   url: https://l-attestation.github.io/exercices/policiers-europe/
-image: montenegro.jpg
 draft: false
 ---
 
