@@ -21,7 +21,9 @@ library(huxtable)
 
 ## Récupérer les données
 
-Note : jusqu'à juin 2023, les données étaient mises à disposition dans ce repo Github : [covid-policy-tracker](https://github.com/OxCGRT/covid-policy-tracker). Depuis juin 2023, un nouveau repo abrite la version définitive des données : [covid-policy-dataset](https://github.com/OxCGRT/covid-policy-dataset). Lors de la rédaction du livre, nous avons utilisé le premier. *A priori*, cela n'entraîne aucune modification importante.
+::: {.callout-note}
+Jusqu'à juin 2023, les données étaient mises à disposition dans ce repo Github : [covid-policy-tracker](https://github.com/OxCGRT/covid-policy-tracker). Depuis juin 2023, un nouveau repo abrite la version définitive des données : [covid-policy-dataset](https://github.com/OxCGRT/covid-policy-dataset). Lors de la rédaction du livre, nous avons utilisé le premier. *A priori*, cela n'entraîne aucune modification importante.
+:::
 
 ```{r path}
 oxcgrt_path = here("data", "oxcgrt.rds")
@@ -91,7 +93,9 @@ C6M_Flag précise l'extension géographique de ces mesures :
 
 On rassemble l'absence de *stay-at-home-order* et les simples "recommandations" dans la même catégorie. Et on garde la distinction entre confinements à exercice physique autorisé (ex : France, Italie) et à exercice physique interdit (ex : Espagne, Philippines). 
 
-Note : Pour construire le score synthétique d'enfermement de la *FAQ*, on a attribué la valeur 1 aux premiers et la valeur 2 aux seconds. Ici, on atténue la différence en conservant les valeurs 2 et 3. 
+::: {.callout-note}
+Pour construire le score synthétique d'enfermement de la *FAQ*, on a attribué la valeur 1 aux premiers et la valeur 2 aux seconds. Ici, on atténue la différence en conservant les valeurs 2 et 3. 
+:::
 
 ```{r}
 oxcgrt_saho_2020 = oxcgrt |> 

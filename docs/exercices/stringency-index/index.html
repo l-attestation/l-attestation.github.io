@@ -224,7 +224,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="récupérer-les-données" class="level2">
 <h2 class="anchored" data-anchor-id="récupérer-les-données">Récupérer les données</h2>
-<p>Note : jusqu’à juin 2023, les données étaient mises à disposition dans ce repo Github : <a href="https://github.com/OxCGRT/covid-policy-tracker">covid-policy-tracker</a>. Depuis juin 2023, un nouveau repo abrite la version définitive des données : <a href="https://github.com/OxCGRT/covid-policy-dataset">covid-policy-dataset</a>. Lors de la rédaction du livre, nous avons utilisé le premier. <em>A priori</em>, cela n’entraîne aucune modification importante.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Jusqu’à juin 2023, les données étaient mises à disposition dans ce repo Github : <a href="https://github.com/OxCGRT/covid-policy-tracker">covid-policy-tracker</a>. Depuis juin 2023, un nouveau repo abrite la version définitive des données : <a href="https://github.com/OxCGRT/covid-policy-dataset">covid-policy-dataset</a>. Lors de la rédaction du livre, nous avons utilisé le premier. <em>A priori</em>, cela n’entraîne aucune modification importante.</p>
+</div>
+</div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>oxcgrt_path <span class="ot">=</span> <span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"oxcgrt.rds"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -420,7 +432,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="recoder-à-la-marge" class="level3">
 <h3 class="anchored" data-anchor-id="recoder-à-la-marge">Recoder à la marge</h3>
 <p>On rassemble l’absence de <em>stay-at-home-order</em> et les simples “recommandations” dans la même catégorie. Et on garde la distinction entre confinements à exercice physique autorisé (ex : France, Italie) et à exercice physique interdit (ex : Espagne, Philippines).</p>
-<p>Note : Pour construire le score synthétique d’enfermement de la <em>FAQ</em>, on a attribué la valeur 1 aux premiers et la valeur 2 aux seconds. Ici, on atténue la différence en conservant les valeurs 2 et 3.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Pour construire le score synthétique d’enfermement de la <em>FAQ</em>, on a attribué la valeur 1 aux premiers et la valeur 2 aux seconds. Ici, on atténue la différence en conservant les valeurs 2 et 3.</p>
+</div>
+</div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>oxcgrt_saho_2020 <span class="ot">=</span> oxcgrt <span class="sc">|&gt;</span> </span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">national_or_subnational_saho =</span> <span class="fu">case_when</span>(c6m_stay_at_home_requirements <span class="sc">%in%</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">1</span> <span class="sc">~</span> <span class="dv">0</span>,</span>
