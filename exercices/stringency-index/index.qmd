@@ -5,9 +5,10 @@ date: 2023-06-25
 categories: [FAQ]
 citation: 
   url: https://l-attestation.github.io/exercices/stringency-index/ 
-image: https://upload.wikimedia.org/wikipedia/commons/b/b5/Home_quarantine_stamp_BMC.jpg
 draft: false
 ---
+
+![Un poste de contrôle de la police le long de l'autoroute Marcos, à la limite de Metro Manila et de Rizal, pendant le confinement du COVID-19, 15 mai 2020](https://upload.wikimedia.org/wikipedia/commons/f/fc/COVID_NCR_quarantine_-_Marcos_Highway_checkpoint_%28Cainta%2C_Rizal%3B_03-17-2020%29.jpg)
 
 ## Charger les principaux packages
 
@@ -21,7 +22,7 @@ library(huxtable)
 
 ## Récupérer les données
 
-::: {.callout-note}
+::: callout-note
 Jusqu'à juin 2023, les données étaient mises à disposition dans ce repo Github : [covid-policy-tracker](https://github.com/OxCGRT/covid-policy-tracker). Depuis juin 2023, un nouveau repo abrite la version définitive des données : [covid-policy-dataset](https://github.com/OxCGRT/covid-policy-dataset). Lors de la rédaction du livre, nous avons utilisé le premier. *A priori*, cela n'entraîne aucune modification importante.
 :::
 
@@ -45,7 +46,6 @@ read_csv(old_repo,
   write_rds(oxcgrt_path)
 ```
 
-
 ```{r read}
 oxcgrt = read_rds(oxcgrt_path) |> 
   janitor::clean_names() |> 
@@ -54,7 +54,7 @@ oxcgrt = read_rds(oxcgrt_path) |>
 
 ## Palmarès du Stringency Index entre le 1er mars et le 1er juin
 
-Les 30 États les plus "bouclés" de la planète sont : 
+Les 30 États les plus "bouclés" de la planète sont :
 
 ```{r stringency_index_palmares}
 oxcgrt |> 
@@ -77,24 +77,24 @@ D'après le [dictionnaire des codes](https://github.com/OxCGRT/covid-policy-data
 
 *C6M_Stay at home requirements* prend les valeurs suivantes :
 
-- 0 : no measures
-- 1 : recommend not leaving house
-- 2 : require not leaving house with exceptions for daily exercise, grocery shopping, and 'essential' trips
-- 3 : require not leaving house with minimal exceptions (eg allowed to leave once a week, or only one person can leave at a time, etc)
-- Blank : no data
+-   0 : no measures
+-   1 : recommend not leaving house
+-   2 : require not leaving house with exceptions for daily exercise, grocery shopping, and 'essential' trips
+-   3 : require not leaving house with minimal exceptions (eg allowed to leave once a week, or only one person can leave at a time, etc)
+-   Blank : no data
 
 C6M_Flag précise l'extension géographique de ces mesures :
 
-- 0 : targeted
-- 1 : general
-- Blank : no data
+-   0 : targeted
+-   1 : general
+-   Blank : no data
 
 ### Recoder à la marge
 
-On rassemble l'absence de *stay-at-home-order* et les simples "recommandations" dans la même catégorie. Et on garde la distinction entre confinements à exercice physique autorisé (ex : France, Italie) et à exercice physique interdit (ex : Espagne, Philippines). 
+On rassemble l'absence de *stay-at-home-order* et les simples "recommandations" dans la même catégorie. Et on garde la distinction entre confinements à exercice physique autorisé (ex : France, Italie) et à exercice physique interdit (ex : Espagne, Philippines).
 
-::: {.callout-note}
-Pour construire le score synthétique d'enfermement de la *FAQ*, on a attribué la valeur 1 aux premiers et la valeur 2 aux seconds. Ici, on atténue la différence en conservant les valeurs 2 et 3. 
+::: callout-note
+Pour construire le score synthétique d'enfermement de la *FAQ*, on a attribué la valeur 1 aux premiers et la valeur 2 aux seconds. Ici, on atténue la différence en conservant les valeurs 2 et 3.
 :::
 
 ```{r}

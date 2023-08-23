@@ -11,14 +11,14 @@
     "href": "exercices/stringency-index/index.html",
     "title": "Les États les plus sévères du monde",
     "section": "",
-    "text": "library(here)\nlibrary(tidyverse)\nlibrary(lubridate)\nlibrary(countrycode)\nlibrary(huxtable)"
+    "text": "Un poste de contrôle de la police le long de l’autoroute Marcos, à la limite de Metro Manila et de Rizal, pendant le confinement du COVID-19, 15 mai 2020"
   },
   {
     "objectID": "exercices/stringency-index/index.html#charger-les-principaux-packages",
     "href": "exercices/stringency-index/index.html#charger-les-principaux-packages",
     "title": "Les États les plus sévères du monde",
-    "section": "",
-    "text": "library(here)\nlibrary(tidyverse)\nlibrary(lubridate)\nlibrary(countrycode)\nlibrary(huxtable)"
+    "section": "Charger les principaux packages",
+    "text": "Charger les principaux packages\n\nlibrary(here)\nlibrary(tidyverse)\nlibrary(lubridate)\nlibrary(countrycode)\nlibrary(huxtable)"
   },
   {
     "objectID": "exercices/stringency-index/index.html#récupérer-les-données",
@@ -46,14 +46,14 @@
     "href": "exercices/policiers-europe/index.html",
     "title": "Où y a-t-il le plus de policiers en Europe ?",
     "section": "",
-    "text": "library(here)\nlibrary(tidyverse)\nlibrary(janitor)\nlibrary(countrycode)\nlibrary(huxtable)"
+    "text": "Dans plusieurs villes du Monténégro, la police a affronté des manifestants après l’arrestation d’un évêque orthodoxe serbe et de sept prêtres soupçonnés d’avoir enfreint les mesures de confinement du coronavirus, Mai 2020."
   },
   {
     "objectID": "exercices/policiers-europe/index.html#charger-les-principaux-packages",
     "href": "exercices/policiers-europe/index.html#charger-les-principaux-packages",
     "title": "Où y a-t-il le plus de policiers en Europe ?",
-    "section": "",
-    "text": "library(here)\nlibrary(tidyverse)\nlibrary(janitor)\nlibrary(countrycode)\nlibrary(huxtable)"
+    "section": "Charger les principaux packages",
+    "text": "Charger les principaux packages\n\nlibrary(here)\nlibrary(tidyverse)\nlibrary(janitor)\nlibrary(countrycode)\nlibrary(huxtable)"
   },
   {
     "objectID": "exercices/policiers-europe/index.html#récupérer-les-données",
@@ -67,7 +67,7 @@
     "href": "exercices/policiers-europe/index.html#les-inspecter",
     "title": "Où y a-t-il le plus de policiers en Europe ?",
     "section": "Les inspecter",
-    "text": "Les inspecter\n\nslice_sample(crim_just_job, n = 20) |&gt; \n  as_huxtable() |&gt; \n  set_number_format(NA) |&gt; \n  huxtable::theme_grey()\n\n\n\n\nisco08\nsex\nunit\ngeo\ntime\nvalues\n\n\nPolice officers\nFemales\nPer hundred thousand inhabitants\nSlovenia\n2011-01-01\n110.95\n\n\nPolice officers\nFemales\nNumber\nLiechtenstein\n2009-01-01\n8   \n\n\nProfessional judges\nFemales\nNumber\nCyprus\n2008-01-01\n40   \n\n\nPersonnel in juvenile prison\nFemales\nPer hundred thousand inhabitants\nItaly\n2013-01-01\n1.09\n\n\nPersonnel in adult prison\nTotal\nPer hundred thousand inhabitants\nPortugal\n2008-01-01\n55.03\n\n\nPolice officers\nMales\nPer hundred thousand inhabitants\nAustria\n2009-01-01\n578.17\n\n\nPersonnel in adult prison\nFemales\nNumber\nMontenegro\n2012-01-01\n103   \n\n\nPersonnel in juvenile prison\nTotal\nNumber\nSerbia\n2010-01-01\n447   \n\n\nPersonnel in adult prison\nMales\nPer hundred thousand inhabitants\nAustria\n2016-01-01\n71.51\n\n\nProfessional judges\nTotal\nPer hundred thousand inhabitants\nPoland\n2008-01-01\n23.77\n\n\nProfessional judges\nMales\nNumber\nEngland and Wales\n2013-01-01\n3778   \n\n\nPersonnel in adult prison\nTotal\nPer hundred thousand inhabitants\nLuxembourg\n2017-01-01\n78.89\n\n\nPersonnel in adult prison\nFemales\nPer hundred thousand inhabitants\nHungary\n2013-01-01\n39.88\n\n\nProfessional judges\nFemales\nNumber\nBosnia and Herzegovina\n2021-01-01\n761   \n\n\nProfessional judges\nTotal\nNumber\nSlovenia\n2016-01-01\n899   \n\n\nPersonnel in adult prison\nFemales\nPer hundred thousand inhabitants\nGreece\n2016-01-01\n11.98\n\n\nProfessional judges\nFemales\nPer hundred thousand inhabitants\nAustria\n2019-01-01\n4.73\n\n\nProfessional judges\nMales\nPer hundred thousand inhabitants\nSpain\n2010-01-01\n10.54\n\n\nPolice officers\nTotal\nPer hundred thousand inhabitants\nNorthern Ireland (UK)\n2015-01-01\n369.78\n\n\nProfessional judges\nFemales\nPer hundred thousand inhabitants\nBelgium\n2014-01-01\n22.26"
+    "text": "Les inspecter\n\nslice_sample(crim_just_job, n = 20) |&gt; \n  as_huxtable() |&gt; \n  set_number_format(NA) |&gt; \n  huxtable::theme_grey()\n\n\n\n\nisco08\nsex\nunit\ngeo\ntime\nvalues\n\n\nPersonnel in juvenile prison\nFemales\nPer hundred thousand inhabitants\nTürkiye\n2020-01-01\n0.23\n\n\nPersonnel in adult prison\nMales\nNumber\nDenmark\n2020-01-01\n1665   \n\n\nPersonnel in adult prison\nTotal\nPer hundred thousand inhabitants\nSpain\n2014-01-01\n62.9 \n\n\nProfessional judges\nFemales\nNumber\nLithuania\n2019-01-01\n479   \n\n\nPersonnel in juvenile prison\nTotal\nPer hundred thousand inhabitants\nSlovakia\n2015-01-01\n3.95\n\n\nPersonnel in adult prison\nMales\nNumber\nSlovakia\n2010-01-01\n3936   \n\n\nPersonnel in juvenile prison\nMales\nPer hundred thousand inhabitants\nSlovenia\n2018-01-01\n8.96\n\n\nPersonnel in juvenile prison\nFemales\nPer hundred thousand inhabitants\nTürkiye\n2021-01-01\n0.15\n\n\nPolice officers\nFemales\nNumber\nCyprus\n2012-01-01\n1245   \n\n\nPolice officers\nTotal\nPer hundred thousand inhabitants\nSlovakia\n2016-01-01\n405.8 \n\n\nPersonnel in juvenile prison\nTotal\nNumber\nLatvia\n2012-01-01\n96   \n\n\nPersonnel in adult prison\nFemales\nPer hundred thousand inhabitants\nEngland and Wales\n2011-01-01\n52.49\n\n\nPersonnel in adult prison\nFemales\nPer hundred thousand inhabitants\nAustria\n2010-01-01\n20.91\n\n\nProfessional judges\nTotal\nPer hundred thousand inhabitants\nLuxembourg\n2021-01-01\n35.45\n\n\nPersonnel in juvenile prison\nFemales\nPer hundred thousand inhabitants\nLatvia\n2015-01-01\n4.28\n\n\nProfessional judges\nTotal\nPer hundred thousand inhabitants\nEstonia\n2015-01-01\n17.8 \n\n\nPersonnel in adult prison\nFemales\nNumber\nAlbania\n2021-01-01\n777   \n\n\nProfessional judges\nTotal\nNumber\nAlbania\n2019-01-01\n346   \n\n\nProfessional judges\nTotal\nNumber\nLithuania\n2019-01-01\n745   \n\n\nPolice officers\nFemales\nNumber\nCzechia\n2021-01-01\n6702"
   },
   {
     "objectID": "exercices/policiers-europe/index.html#les-recoder",
@@ -361,7 +361,7 @@
     "href": "exercices.html",
     "title": "Exercices",
     "section": "",
-    "text": "Quels ont été les pays les plus touchés par la pandémie ?\n\n\n\nFAQ\n\n\n\nCalculer l’excès de mortalité sur différentes périodes\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n22 août 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLes États les plus sévères du monde\n\n\n\nFAQ\n\n\n\nQue montre l’Oxford Covid 19 Government Response Tracker ?\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\nOù y a-t-il le plus de policiers en Europe ?\n\n\n\nFAQ\n\n\n\nCalculer la concentration policière dans chaque pays, grâce aux données d’eurostat et de la banque mondiale\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLa France des polices municipales\n\n\n\nLa Police des sorties\n\n\n\nCartographier les initiatives sécuritaires locales\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDes verbalisations très inégalement distribuées\n\n\n\nLa Police des sorties\n\n\n\nCartographier la prévalence de la verbalisation\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nParisiens, ouvrez l’oeil !\n\n\n\nInquiètement\n\n\n\nCartographier les caméras de surveillance à Paris\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLa signature des confinements latins\n\n\n\nFAQ\n\n\n\nMontrer la spécificité des pays du Sud de l’Europe à l’aide de Google Mobility\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\nAucun article correspondant"
+    "text": "Quels ont été les pays les plus touchés par la pandémie ?\n\n\n\nFAQ\n\n\n\nCalculer l’excès de mortalité sur différentes périodes\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n23 août 2023\n\n\n\n\n\n\n\n\n\n\n\n\nLes États les plus sévères du monde\n\n\n\nFAQ\n\n\n\nQue montre l’Oxford Covid 19 Government Response Tracker ?\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\nOù y a-t-il le plus de policiers en Europe ?\n\n\n\nFAQ\n\n\n\nCalculer la concentration policière dans chaque pays, grâce aux données d’eurostat et de la banque mondiale\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLa France des polices municipales\n\n\n\nLa Police des sorties\n\n\n\nCartographier les initiatives sécuritaires locales\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDes verbalisations très inégalement distribuées\n\n\n\nLa Police des sorties\n\n\n\nCartographier la prévalence de la verbalisation\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\nParisiens, ouvrez l’oeil !\n\n\n\nInquiètement\n\n\n\nCartographier les caméras de surveillance à Paris\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLa signature des confinements latins\n\n\n\nFAQ\n\n\n\nMontrer la spécificité des pays du Sud de l’Europe à l’aide de Google Mobility\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\nAucun article correspondant"
   },
   {
     "objectID": "sources-francaises.html",
