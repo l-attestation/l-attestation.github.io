@@ -4,7 +4,7 @@ description: "Une expérience d'obéissance de masse, printemps 2020"
 sidebar: false
 about:
   image: rajesh_babu_helmet.jpg
-  template: broadside
+  template: trestles
 ---
 
 *Je soussigné(e) certifie que mon déplacement est lié au motif suivant...* Chacun d'entre nous se souvient de ces auto-attestations à remplir comme du confinement qui les accompagnait. Cet ouvrage a pour ambition de revenir sur ce moment littéralement extra-ordinaire au regard des questions qu'il a soulevées en matière de suspension des libertés et d'obéissance collective.
