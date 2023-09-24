@@ -10,7 +10,7 @@ website:
     left:
       - href: index.qmd
         text: Accueil
-      - mode-d-emploi.qmd
+      - gallerie.qmd
       - sources-francaises.qmd
       - donnees-mondiales.qmd
       - exercices.qmd
@@ -18,7 +18,7 @@ website:
 
 format:
   html:
-    theme: cosmo
+    theme: journal
     css: styles.css
     toc: true
     

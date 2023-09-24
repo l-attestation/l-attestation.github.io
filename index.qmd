@@ -3,10 +3,10 @@ title: "L'Attestation"
 description: "Une expérience d'obéissance de masse, printemps 2020"
 sidebar: false
 about:
-  image: rajesh_babu_helmet.jpg
+  image: couverture.jpg
   template: trestles
 ---
 
-*Je soussigné(e) certifie que mon déplacement est lié au motif suivant...* Chacun d'entre nous se souvient de ces auto-attestations à remplir comme du confinement qui les accompagnait. Cet ouvrage a pour ambition de revenir sur ce moment littéralement extra-ordinaire au regard des questions qu'il a soulevées en matière de suspension des libertés et d'obéissance collective.
+_Du printemps 2020, chacun d'entre nous garde le souvenir des attestations à remplir, des limites qu'elles imposaient et des vérifications policières qu'elles autorisaient. Pourtant, rares sont les bilans consacrés à ce versant coercitif de l'enfermement national. C'est tout l'enjeu de cette enquête. Pendant 55 jours, les forces de l'ordre firent le vide sur l'ensemble du territoire, y compris dans les espaces naturels que survolaient des drones et des hélicoptères. Assistées par d'improbables auxiliaires et de nombreuses délations, elles procédèrent à 21 millions de contrôles et infligèrent 1,1 million d'amendes. Cette situation où tout le monde, aisé ou pauvre, habitué à donner des ordres ou à en recevoir, était soumis aux mêmes interdits et aux mêmes vérifications, apparaît historiquement singulière. Elle offre l'opportunité d'étudier grandeur nature la production du conformisme (qu'est-ce qu'obéir à l'État ?) et son ancrage social. De la claustration totale au refus des règles, cet ouvrage suit les lignes de conduite qu'empruntèrent les confinés, soumis à une surveillance massive dont on trouvait alors, en Europe et dans le monde, bien peu d'équivalents._ 
 
-Ce site a été créé les auteurs, [Théo Boulakia](https://tblk.github.io) et [Nicolas Mariot](http://nicolas.mariot.cnrs.free.fr/) afin de présenter l'enquête, ses sources, ses méthodes et ses outils. Pour en savoir plus, rendez-vous sur la page [Mode d'emploi](https://l-attestation.github.io/mode-d-emploi).
+Ce site (en progression) présente l'enquête, ses sources, ses méthodes et ses outils.
