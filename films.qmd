@@ -12,7 +12,7 @@ Un tour du monde de cette sorte rencontre inévitablement les images de drones q
 
 Dans la soirée, le ministre de l'Intérieur complète les annonces présidentielles... (p. 86)
 
-{{< video https://www.youtube.com/watch?v=AGifYXBlDQ0&t=216s start="210" >}}
+{{< video https://www.youtube.com/watch?v=AGifYXBlDQ0 start="210" >}}
 
 ## La police des sorties
 
