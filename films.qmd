@@ -10,6 +10,7 @@ title: "Films"
 
 {{< video https://www.youtube.com/watch?v=xcDvM3PdVsc >}}
 
-## Les attraits de l'enfermement
+## Attraits
 
-{{< video https://www.dailymotion.com/video/x7sv5fg >}}
+{{< video test.mp4 >}}
+
