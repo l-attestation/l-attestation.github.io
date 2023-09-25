@@ -9,8 +9,3 @@ title: "Films"
 ## Inquiètement
 
 {{< video https://www.youtube.com/watch?v=xcDvM3PdVsc >}}
-
-## Attraits
-
-{{< video test.mp4 >}}
-
