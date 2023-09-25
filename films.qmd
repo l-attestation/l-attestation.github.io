@@ -4,9 +4,15 @@ title: "Films"
 
 ## FAQ
 
-Un tour du monde de cette sorte rencontre inévitablement les images de drones qui constituent la principale archive visuelle de l'évènement... (. 18)
+Un tour du monde de cette sorte rencontre inévitablement les images de drones qui constituent la principale archive visuelle de l'évènement... (p. 18)
 
 {{< video https://www.youtube.com/watch?v=x_xoTU_c_DI >}}
+
+## La police des sorties
+
+Certes, nombre d'unités de police et de gendarmerie ont généreusement partagé leur quotidien sur les réseaux sociaux... (p. 134)
+
+{{< video https://youtu.be/M0yTTUt_zGA?si=jQX5XEO0CwVWjYcy >}}
 
 ## Inquiètement
 
