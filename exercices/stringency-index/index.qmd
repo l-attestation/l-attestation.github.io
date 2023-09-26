@@ -8,8 +8,6 @@ citation:
 draft: false
 ---
 
-![Un poste de contrôle de la police le long de l'autoroute Marcos, à la limite de Metro Manila et de Rizal, pendant le confinement du COVID-19, 15 mai 2020](https://upload.wikimedia.org/wikipedia/commons/f/fc/COVID_NCR_quarantine_-_Marcos_Highway_checkpoint_%28Cainta%2C_Rizal%3B_03-17-2020%29.jpg)
-
 ## Charger les principaux packages
 
 ```{r packages}

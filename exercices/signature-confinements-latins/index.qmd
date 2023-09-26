@@ -5,7 +5,6 @@ date: 2023-06-25
 categories: [FAQ]
 citation: 
   url: https://l-attestation.github.io/exercices/signature-confinements-latins/
-image: https://upload.wikimedia.org/wikipedia/commons/b/b4/Tolima_-_Champ_de_sorgho.JPG
 draft: false
 ---
 

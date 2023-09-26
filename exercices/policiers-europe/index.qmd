@@ -8,8 +8,6 @@ citation:
 draft: false
 ---
 
-![Dans plusieurs villes du Monténégro, la police a affronté des manifestants après l'arrestation d'un évêque orthodoxe serbe et de sept prêtres soupçonnés d'avoir enfreint les mesures de confinement du coronavirus, Mai 2020.](/montenegro.jpg)
-
 ## Charger les principaux packages
 
 ```{r packages}
