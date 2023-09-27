@@ -33,4 +33,4 @@ Les indicateurs journaliers de *Google* sur la fréquentation de différents esp
 
 ## Traces de la violence
 
-On s'est également appuyés sur la presse internationale, les ONG de défense des Droits de l'Homme, ainsi que sur l'Armed Conflicts Locations and Events Dataset.
+On s'est également appuyés sur la presse internationale, les ONG de défense des Droits de l'Homme, ainsi que sur l'Armed Conflicts Locations and Events Dataset (ACLED). Les données du COVID-19 Disorder Tracker de l'ACLED sont téléchargeables sur [cette page](https://acleddata.com/analysis/covid-19-disorder-tracker/) (moyennant la création d'un compte).
