@@ -10,7 +10,7 @@ about:
     - icon: envelope
       text: Email
       href: mailto:attestation.contact@gmail.com
-    - icon: suit-heart-fill
+    - icon: book
       text: Anamosa
       href: https://anamosa.fr/livre/lattestation-une-experience-dobeissance-de-masse-printemps-2020/
 ---
