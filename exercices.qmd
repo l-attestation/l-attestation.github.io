@@ -1,5 +1,6 @@
 ---
 title: Exercices
+description: L'ensemble des analyses statistiques et des graphiques du livre ont été réalisés avec **R**.
 sidebar: false
 listing: 
   contents: exercices # all Quarto docs in the `posts` directory
