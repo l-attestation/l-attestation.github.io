@@ -6,7 +6,9 @@ website:
   title: "L'Attestation"
   site-url: "https://l-attestation.github.io/"
   page-navigation: true
+  favicon: couverture.jpg
   navbar:
+    logo: couverture.jpg
     left:
       - href: index.qmd
         text: Accueil
