@@ -123,14 +123,14 @@
     "href": "exercices/exces-mortalite/index.html",
     "title": "Quels ont été les pays les plus touchés par la pandémie ?",
     "section": "",
-    "text": "library(here)\nlibrary(tidyverse)\nlibrary(lubridate)\nlibrary(huxtable)"
+    "text": "Lima en confinement, 5 avril 2020, 08:24:46, Luis Enrique Saldana pour le ministère de la Défense du Pérou, Wikimedia Commons."
   },
   {
     "objectID": "exercices/exces-mortalite/index.html#packages-nécessaires",
     "href": "exercices/exces-mortalite/index.html#packages-nécessaires",
     "title": "Quels ont été les pays les plus touchés par la pandémie ?",
-    "section": "",
-    "text": "library(here)\nlibrary(tidyverse)\nlibrary(lubridate)\nlibrary(huxtable)"
+    "section": "Packages nécessaires",
+    "text": "Packages nécessaires\n\nlibrary(here)\nlibrary(tidyverse)\nlibrary(lubridate)\nlibrary(huxtable)"
   },
   {
     "objectID": "exercices/exces-mortalite/index.html#doù-proviennent-les-données",

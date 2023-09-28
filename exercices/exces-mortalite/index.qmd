@@ -8,6 +8,8 @@ citation:
 draft: false
 ---
 
+![Lima en confinement, 5 avril 2020, 08:24:46, Luis Enrique Saldana pour le ministère de la Défense du Pérou, Wikimedia Commons.](https://upload.wikimedia.org/wikipedia/commons/b/b8/MINISTRO_DE_DEFENSA_SOBREVOL%C3%93_LIMA_PARA_VERIFICAR_CUMPLIMIENTO_DE_AISLAMIENTO_SOCIAL_OBLIGATORIO_-_49739120227.jpg)
+
 ## Packages nécessaires
 
 ```{r packages}
@@ -80,7 +82,6 @@ huxtable_excess_mortality = function(data) {
     as_huxtable()
 }
 ```
-
 
 ## Classement du 1er mars au 1er juin 2020
 
