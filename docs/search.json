@@ -39,14 +39,14 @@
     "href": "exercices/stringency-index/index.html",
     "title": "Les États les plus sévères du monde",
     "section": "",
-    "text": "library(here)\nlibrary(tidyverse)\nlibrary(lubridate)\nlibrary(countrycode)\nlibrary(huxtable)"
+    "text": "Exempted bicycle moving during lockdown due to covid 19 in Uganda, 15 April 2020, 12:31:38, Ndahiro derrick, CC BY-SA 4.0 &lt;https://creativecommons.org/licenses/by-sa/4.0&gt;, via Wikimedia Commons."
   },
   {
     "objectID": "exercices/stringency-index/index.html#charger-les-principaux-packages",
     "href": "exercices/stringency-index/index.html#charger-les-principaux-packages",
     "title": "Les États les plus sévères du monde",
-    "section": "",
-    "text": "library(here)\nlibrary(tidyverse)\nlibrary(lubridate)\nlibrary(countrycode)\nlibrary(huxtable)"
+    "section": "Charger les principaux packages",
+    "text": "Charger les principaux packages\n\nlibrary(here)\nlibrary(tidyverse)\nlibrary(lubridate)\nlibrary(countrycode)\nlibrary(huxtable)"
   },
   {
     "objectID": "exercices/stringency-index/index.html#récupérer-les-données",
