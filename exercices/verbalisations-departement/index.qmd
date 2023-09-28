@@ -91,7 +91,7 @@ departements |>
   slice_max(order_by = verbalisations_pmla, n = 10) |> 
   mutate(nom_departement = fct_reorder(nom_departement, verbalisations_pmla)) |>
   ggplot(aes(x = verbalisations_pmla, y = nom_departement)) +
-  geom_bar(stat = "identity") +
+  geom_bar(stat = "identity", fill = "#E12634") +
   labs(x = "Verbalisations pour 1000 adultes",
        y = "",
        title = "Palmarès des départements les plus verbalisés") +

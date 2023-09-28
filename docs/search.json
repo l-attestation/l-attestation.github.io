@@ -263,7 +263,7 @@
     "href": "exercices/verbalisations-departement/index.html#visualiser-le-palmarès",
     "title": "Des verbalisations très inégalement distribuées",
     "section": "Visualiser le palmarès",
-    "text": "Visualiser le palmarès\n\ndepartements |&gt; \n  slice_max(order_by = verbalisations_pmla, n = 10) |&gt; \n  mutate(nom_departement = fct_reorder(nom_departement, verbalisations_pmla)) |&gt;\n  ggplot(aes(x = verbalisations_pmla, y = nom_departement)) +\n  geom_bar(stat = \"identity\") +\n  labs(x = \"Verbalisations pour 1000 adultes\",\n       y = \"\",\n       title = \"Palmarès des départements les plus verbalisés\") +\n  theme_minimal()"
+    "text": "Visualiser le palmarès\n\ndepartements |&gt; \n  slice_max(order_by = verbalisations_pmla, n = 10) |&gt; \n  mutate(nom_departement = fct_reorder(nom_departement, verbalisations_pmla)) |&gt;\n  ggplot(aes(x = verbalisations_pmla, y = nom_departement)) +\n  geom_bar(stat = \"identity\", fill = \"#E12634\") +\n  labs(x = \"Verbalisations pour 1000 adultes\",\n       y = \"\",\n       title = \"Palmarès des départements les plus verbalisés\") +\n  theme_minimal()"
   },
   {
     "objectID": "exercices/verbalisations-departement/index.html#récupérer-la-couche-cartographique",
