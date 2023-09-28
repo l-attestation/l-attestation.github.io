@@ -6,9 +6,9 @@ website:
   title: "L'Attestation"
   site-url: "https://l-attestation.github.io/"
   page-navigation: true
-  favicon: couverture.jpg
+  favicon: COUV_ATTESTATION_PROMO_VOLUME.jpg
   navbar:
-    logo: couverture.jpg
+    logo: COUV_ATTESTATION_PROMO_VOLUME.jpg
     left:
       - href: index.qmd
         text: Accueil
@@ -22,6 +22,7 @@ website:
 format:
   html:
     theme: cosmo
+    linkcolor: "#E12634"
     css: styles.css
     toc: true
     

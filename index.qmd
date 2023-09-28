@@ -2,10 +2,9 @@
 title: "L'Attestation"
 description: "Une expérience d'obéissance de masse, printemps 2020"
 sidebar: false
-linkcolor: "#E12634"
 about:
-  image: couverture.jpg
-  template: trestles
+  image: COUV_ATTESTATION_PROMO_VOLUME.jpg
+  template: broadside
   links:
     - icon: envelope
       text: Email
