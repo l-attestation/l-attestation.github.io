@@ -38,6 +38,12 @@ En revanche, nous ne disposons pas d'une distribution départementale équivalen
 
 Pour résorber ce manque, nous avons déployé d'importants efforts pour rassembler les chiffres livrés dans la presse ou sur les réseaux sociaux, au printemps 2020, par les préfectures et les mairies qui avaient alors fait le choix de « communiquer ». Grâce à ce travail, nous disposons, au terme de la récolte, d'une solide base de données rassemblant les chiffres des vérifications rendus publics pour la gendarmerie, la police nationale et la police municipale, ensemble ou séparément, à différentes dates et pour 22 villes et 60 départements de métropole. Ces chiffres montrent d'impressionnantes différences de traitement selon les territoires. Certaines sont relativement attendues. Il aurait été pour le moins bizarre de s'acharner à verbaliser les habitants de la Lozère, par exemple. D'autres posent davantage de questions.
 
+::: {.callout-note}
+## Exemple
+
+La **Sarthe** est un exemple particulièrement bien documenté, le préfet ayant donné les chiffres des contrôles et verbalisations tout au long du confinement. Le 19 mars, deux jours après le début du confinement, on comptait déjà 10 000 contrôles, pour 119 verbalisations [@mutricy2020]. Le 30 avril : 294 104 contrôles pour 6 129 verbalisations [@fernand2020]. Le 11 mai : **335 000 contrôles** pour 6800 verbalisations [@lateur2020]. Est-ce beaucoup par rapport aux autres départements ? Est-ce sévère ? Le chapitre "La police des sorties" répond à ces questions. *Note* : En 2020, la Sarthe comptait **465 515 habitants** de plus de 15 ans.
+:::
+
 ## Entretiens de Marion Guénot
 
 L'étude de l'activité des forces de l'ordre a également bénéficié de l'apport d'une enquête menée à l'automne 2020 par une chercheuse au Centre de Recherches sur le Droit et les Institutions Pénales, Marion Guénot, que nous remercions chaleureusement pour son aide précieuse. L'étude visait à comprendre en quoi le confinement avait transformé les pratiques quotidiennes des forces de l'ordre. 
@@ -55,7 +61,7 @@ Après de premiers coups de sonde fructueux, l'investigation a pris un tour syst
 ::: {.callout-tip}
 ## Exemples de mots clés
 
-confinement + barbecue, contrôle, course poursuite, délation, drones, hélicoptère, pêcheur, pique-nique, plage, randonneur, rebelle, récalcitrant, sanglier, traque, triche, vidéo-surveillance.
+confinement + barbecue, contrôle, course-poursuite, délation, drones, hélicoptère, pêcheur, pique-nique, plage, randonneur, rebelle, récalcitrant, sanglier, traque, triche, vidéo-surveillance.
 :::
 
 Elles renseignent sur au moins trois choses qui nous intéressent au premier chef. Ce sont d'abord les moyens mis en œuvre pour la surveillance de la population. Grâce à elles, nous avons pu documenter l'usage systématique des drones, des hélicoptères et des caméras de surveillance. Ensuite, elles montrent qu'un certain nombre de personnes ont continué à braver les interdits tout au long du confinement. Enfin, elles documentent la politique de communication des autorités et ses relais médiatiques.

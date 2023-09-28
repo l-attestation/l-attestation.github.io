@@ -17,6 +17,7 @@ library(tidyverse)
 library(sf)
 library(janitor)
 library(tmap)
+library(huxtable)
 ```
 
 ## D'où proviennent les données ?
@@ -74,6 +75,13 @@ population_departement = read_excel(population_departement_path,
   select(code_departement, nom_departement, population_plus_de_15_ans, population_totale) |> 
   filter(!str_detect(code_departement, "France"),
          !str_detect(code_departement, "DOM"))
+```
+
+```{r population_departement_huxtable}
+population_departement |> 
+  as_huxtable() |> 
+  set_number_format(NA) |> 
+  huxtable::theme_blue()
 ```
 
 ## Rapporter les verbalisations au nombre d'adultes
