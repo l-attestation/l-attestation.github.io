@@ -5,7 +5,7 @@ date: 2023-06-25
 categories: [Lignes de conduite]
 citation: 
   url: https://l-attestation.github.io/mots-des-confines/
-draft: true
+draft: false
 execute: 
   eval: false
 ---

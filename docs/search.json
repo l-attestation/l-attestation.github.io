@@ -385,11 +385,60 @@
     "text": "Les comparer\n\ngoogle_mobility_country |&gt; \n  filter(between(date, date_beginn, date_end)) |&gt;\n  mutate(pays = countrycode(iso3c, origin = \"iso3c\", destination = \"country.name.fr\"),\n         pays = fct_relevel(pays, selection_pays_europe),\n         parks_roll7 = rollmean(parks, k = 7, fill = NA)) %&gt;%\n  filter(pays %in% selection_pays_europe) %&gt;%\n  ggplot(aes(x = date, y = parks_roll7)) +\n  geom_line() +\n  facet_wrap(~ pays) +\n  labs(title = \"La signature des confinements latins\",\n       subtitle = \"Un effondrement brutal et prolongé des sorties d'aération\",\n       x = \"\",\n       y = \"Fréquentation des espaces verts par rapport à janvier\\n(Moyenne glissante sur 7 jours)\",\n       caption = \"Données : Google Mobility Reports\")"
   },
   {
+    "objectID": "exercices/mots-des-confines/index.html",
+    "href": "exercices/mots-des-confines/index.html",
+    "title": "À quoi pense-t-on quand on s’enferme ?",
+    "section": "",
+    "text": "library(tidyverse)\nlibrary(huxtable)\nlibrary(tidytext)\nlibrary(widyr)\nlibrary(tidygraph)\nlibrary(ggraph)\nlibrary(igraph)"
+  },
+  {
+    "objectID": "exercices/mots-des-confines/index.html#charger-les-principaux-packages",
+    "href": "exercices/mots-des-confines/index.html#charger-les-principaux-packages",
+    "title": "À quoi pense-t-on quand on s’enferme ?",
+    "section": "",
+    "text": "library(tidyverse)\nlibrary(huxtable)\nlibrary(tidytext)\nlibrary(widyr)\nlibrary(tidygraph)\nlibrary(ggraph)\nlibrary(igraph)"
+  },
+  {
+    "objectID": "exercices/mots-des-confines/index.html#récupérer-les-données",
+    "href": "exercices/mots-des-confines/index.html#récupérer-les-données",
+    "title": "À quoi pense-t-on quand on s’enferme ?",
+    "section": "Récupérer les données",
+    "text": "Récupérer les données\n\n\n\n\n\n\nImportant\n\n\n\nLa base de données issue de l’Enquête La Vie en confinement contient des informations personnelles, bien que non identifiantes. Elle n’est donc pas librement accessible en ligne. Pour savoir comment y accéder, reportez-vous à cette page du site de l’enquête.\n\n\nUne seule variable parmi les centaines que compte la base nous intéresse ici, c’est celle qui stocke les comentaires libres que les gens ont fait à la fin du questionnaire."
+  },
+  {
+    "objectID": "exercices/mots-des-confines/index.html#recoder",
+    "href": "exercices/mots-des-confines/index.html#recoder",
+    "title": "À quoi pense-t-on quand on s’enferme ?",
+    "section": "Recoder",
+    "text": "Recoder\nLe recodage consiste en deux opérations :\n\nSegmenter chacun des 3000 commentaires en mots\nRapporter chaque mot à un lemme, afin que (par exemple), “je sors” et “nous sortons” soient tous deux associés au lemme sortir.\n\n\n\n\n\n\n\nAstuce\n\n\n\nL’outil qu’il nous faut ici est la fonction udpipe::udpipe_annotate.\n\n\nLes calculs prennent un certain temps, voici à quoi ressemble le résultat en cache :\n\ntargets::tar_load(commentaires_annotate, store = \"~/vico/_targets\")\n\ncommentaires_annotate |&gt; \n  head(n = 10) |&gt; \n  as_hux() |&gt; \n  set_number_format(NA) |&gt; \n  theme_green()"
+  },
+  {
+    "objectID": "exercices/mots-des-confines/index.html#choisir-les-mots-qui-nous-intéressent",
+    "href": "exercices/mots-des-confines/index.html#choisir-les-mots-qui-nous-intéressent",
+    "title": "À quoi pense-t-on quand on s’enferme ?",
+    "section": "Choisir les mots qui nous intéressent",
+    "text": "Choisir les mots qui nous intéressent\n\nsortie_mots =  c(\"sortie\", \"sortir\", \"dehors\")"
+  },
+  {
+    "objectID": "exercices/mots-des-confines/index.html#calculer-les-corrélations",
+    "href": "exercices/mots-des-confines/index.html#calculer-les-corrélations",
+    "title": "À quoi pense-t-on quand on s’enferme ?",
+    "section": "Calculer les corrélations",
+    "text": "Calculer les corrélations\n\nsortie_correlations = commentaires_annotate %&gt;%\n  unite(col = id_unique_sentence, doc_id, sentence_id, remove = FALSE) %&gt;%\n  group_by(lemma) %&gt;%\n  filter(n() &gt;= 10) %&gt;%\n  pairwise_cor(lemma, id_unique_sentence, sort = TRUE) %&gt;%\n  mutate(cor_sortie = if_else(\n    (item1 %in% sortie_mots | item2 %in% sortie_mots) &\n      correlation &gt; 0.06,\n    TRUE,\n    FALSE))"
+  },
+  {
+    "objectID": "exercices/mots-des-confines/index.html#les-représenter",
+    "href": "exercices/mots-des-confines/index.html#les-représenter",
+    "title": "À quoi pense-t-on quand on s’enferme ?",
+    "section": "Les représenter",
+    "text": "Les représenter\n\nsortie_correlations %&gt;%\n  filter(cor_sortie == TRUE) %&gt;%\n  graph_from_data_frame() %&gt;%\n  ggraph(layout = \"fr\") +\n  geom_edge_diagonal(aes(edge_alpha = correlation), show.legend = FALSE) +\n  geom_node_point(color = \"grey\", size = 5) +\n  geom_node_text(aes(label = name), family = \"Helvetica\", repel = TRUE) +\n  labs(title = \"Mots associés à *sortir*, *dehors* et *sortie*\",\n       subtitle = str_wrap(\"Aucun n'est relatif à la peur de la contamination, beaucoup aux interdictions et à la frustration qu'elles suscitent\", 80),\n       caption = \"Données : 3000 commentaires libres des répondants à l'enquête VICO\") +\n  theme_void() +\n  theme(plot.title = ggtext::element_markdown(face = \"bold\"))"
+  },
+  {
     "objectID": "exercices.html",
     "href": "exercices.html",
     "title": "Exercices",
     "section": "",
-    "text": "Quels ont été les pays les plus touchés par la pandémie ?\n\n\n\nFAQ\n\n\n\nCalculer l’excès de mortalité sur différentes périodes\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n29 sept. 2023\n\n\n\n\n\n\n\n\n\n\n\n\nLes États les plus sévères du monde\n\n\n\nFAQ\n\n\n\nQue montre l’Oxford Covid 19 Government Response Tracker ?\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\nOù y a-t-il le plus de policiers en Europe ?\n\n\n\nFAQ\n\n\n\nCalculer la concentration policière dans chaque pays, grâce aux données d’eurostat et de la banque mondiale\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\nLa France des polices municipales\n\n\n\nLa Police des sorties\n\n\n\nCartographier les initiatives sécuritaires locales\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\nDes verbalisations très inégalement distribuées\n\n\n\nLa Police des sorties\n\n\n\nCartographier la prévalence de la verbalisation\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\nParisiens, ouvrez l’oeil !\n\n\n\nInquiètement\n\n\n\nCartographier les caméras de surveillance à Paris\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\nLa signature des confinements latins\n\n\n\nFAQ\n\n\n\nMontrer la spécificité des pays du Sud de l’Europe à l’aide de Google Mobility\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\nAucun article correspondant"
+    "text": "Quels ont été les pays les plus touchés par la pandémie ?\n\n\n\nFAQ\n\n\n\nCalculer l’excès de mortalité sur différentes périodes\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n29 sept. 2023\n\n\n\n\n\n\n\n\n\n\n\n\nLes États les plus sévères du monde\n\n\n\nFAQ\n\n\n\nQue montre l’Oxford Covid 19 Government Response Tracker ?\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\nOù y a-t-il le plus de policiers en Europe ?\n\n\n\nFAQ\n\n\n\nCalculer la concentration policière dans chaque pays, grâce aux données d’eurostat et de la banque mondiale\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\nLa France des polices municipales\n\n\n\nLa Police des sorties\n\n\n\nCartographier les initiatives sécuritaires locales\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\nDes verbalisations très inégalement distribuées\n\n\n\nLa Police des sorties\n\n\n\nCartographier la prévalence de la verbalisation\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\nParisiens, ouvrez l’oeil !\n\n\n\nInquiètement\n\n\n\nCartographier les caméras de surveillance à Paris\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\nLa signature des confinements latins\n\n\n\nFAQ\n\n\n\nMontrer la spécificité des pays du Sud de l’Europe à l’aide de Google Mobility\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\nÀ quoi pense-t-on quand on s’enferme ?\n\n\n\nLignes de conduite\n\n\n\nReprésenter graphiquement des associations d’idées\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\nAucun article correspondant"
   },
   {
     "objectID": "sources-francaises.html",
