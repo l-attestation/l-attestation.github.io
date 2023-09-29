@@ -6,6 +6,8 @@ categories: [Lignes de conduite]
 citation: 
   url: https://l-attestation.github.io/mots-des-confines/
 draft: true
+execute: 
+  eval: false
 ---
 
 ## Charger les principaux packages
