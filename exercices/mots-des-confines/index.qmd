@@ -1,0 +1,92 @@
+---
+title: "À quoi pense-t-on quand on s'enferme ?"
+description: "Représenter graphiquement des associations d'idées"
+date: 2023-06-25
+categories: [Lignes de conduite]
+citation: 
+  url: https://l-attestation.github.io/mots-des-confines/
+draft: true
+---
+
+## Charger les principaux packages
+
+```{r}
+library(tidyverse)
+library(huxtable)
+library(tidytext)
+library(widyr)
+library(tidygraph)
+library(ggraph)
+library(igraph)
+```
+
+## Récupérer les données
+
+::: callout-important
+La base de données issue de l'Enquête La Vie en confinement contient des informations personnelles, bien que non identifiantes. Elle n'est donc pas librement accessible en ligne. Pour savoir comment y accéder, reportez-vous à [cette page](https://vico.hypotheses.org/donnees) du site de l'enquête.
+:::
+
+Une seule variable parmi les centaines que compte la base nous intéresse ici, c'est celle qui stocke les comentaires libres que les gens ont fait à la fin du questionnaire.
+
+## Recoder
+
+Le recodage consiste en deux opérations :
+
+- Segmenter chacun des 3000 commentaires en mots
+- Rapporter chaque mot à un lemme, afin que (par exemple), "je sors" et "nous sortons" soient tous deux associés au lemme sortir.
+
+::: callout-tip
+L'outil qu'il nous faut ici est la fonction `udpipe::udpipe_annotate`.
+:::
+
+Les calculs prennent un certain temps, voici à quoi ressemble le résultat en cache :
+
+```{r}
+targets::tar_load(commentaires_annotate, store = "~/vico/_targets")
+
+commentaires_annotate |> 
+  head(n = 10) |> 
+  as_hux() |> 
+  set_number_format(NA) |> 
+  theme_green()
+```
+
+## Choisir les mots qui nous intéressent
+
+```{r}
+sortie_mots =  c("sortie", "sortir", "dehors")
+```
+
+## Calculer les corrélations
+
+```{r}
+sortie_correlations = commentaires_annotate %>%
+  unite(col = id_unique_sentence, doc_id, sentence_id, remove = FALSE) %>%
+  group_by(lemma) %>%
+  filter(n() >= 10) %>%
+  pairwise_cor(lemma, id_unique_sentence, sort = TRUE) %>%
+  mutate(cor_sortie = if_else(
+    (item1 %in% sortie_mots | item2 %in% sortie_mots) &
+      correlation > 0.06,
+    TRUE,
+    FALSE))
+```
+
+## Les représenter
+
+```{r}
+sortie_correlations %>%
+  filter(cor_sortie == TRUE) %>%
+  graph_from_data_frame() %>%
+  ggraph(layout = "fr") +
+  geom_edge_diagonal(aes(edge_alpha = correlation), show.legend = FALSE) +
+  geom_node_point(color = "grey", size = 5) +
+  geom_node_text(aes(label = name), family = "Helvetica", repel = TRUE) +
+  labs(title = "Mots associés à *sortir*, *dehors* et *sortie*",
+       subtitle = str_wrap("Aucun n'est relatif à la peur de la contamination, beaucoup aux interdictions et à la frustration qu'elles suscitent", 80),
+       caption = "Données : 3000 commentaires libres des répondants à l'enquête VICO") +
+  theme_void() +
+  theme(plot.title = ggtext::element_markdown(face = "bold"))
+
+```
+
