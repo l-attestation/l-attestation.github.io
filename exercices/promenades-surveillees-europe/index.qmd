@@ -6,7 +6,7 @@ date-modified: today
 categories: [FAQ]
 citation: 
   url: https://l-attestation.github.io/exercices/promenades-surveillees-europe/ 
-draft: true
+draft: false
 ---
 
 [![Parco Leonardo, Fiumicino, Italie, 2 avril 2020, N i c o l a, CC BY 2.0 \<https://creativecommons.org/licenses/by/2.0\>, via Wikimedia Commons](https://upload.wikimedia.org/wikipedia/commons/f/f4/Italy_Lockdown_-_IMG_6473_%2849728530411%29.jpg)](https://commons.wikimedia.org/wiki/File:Italy_Lockdown_-_IMG_6473_(49728530411).jpg)
