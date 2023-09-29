@@ -11,10 +11,31 @@ draft: true
 
 [![Parco Leonardo, Fiumicino, Italie, 2 avril 2020, N i c o l a, CC BY 2.0 \<https://creativecommons.org/licenses/by/2.0\>, via Wikimedia Commons](https://upload.wikimedia.org/wikipedia/commons/f/f4/Italy_Lockdown_-_IMG_6473_%2849728530411%29.jpg)](https://commons.wikimedia.org/wiki/File:Italy_Lockdown_-_IMG_6473_(49728530411).jpg)
 
-# Télécharger les données
+## Charger les packages nécessaires
 
-```{r}
-
+```{r packages}
+library(tidyverse)
+library(here)
 ```
 
-En construction...
+
+## Télécharger les données
+
+```{r agr_path}
+agr_path = here("data", "agr.rds")
+```
+
+```{r write_agr}
+#| eval: false
+vroom::vroom("https://raw.githubusercontent.com/sternenklar/A-Good-Reason/main/Data/complete_data_compared.csv") |> 
+  write_rds(agr_path)
+```
+
+```{r read_agr}
+agr = read_rds(agr_path)
+```
+
+```{r glimpse_agr}
+glimpse(agr)
+```
+
