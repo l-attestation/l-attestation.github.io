@@ -2,6 +2,7 @@
 title: "La France des polices municipales"
 description: "Cartographier les initiatives sécuritaires locales"
 date: 2023-06-25
+date-modified: today
 categories: [La Police des sorties]
 citation: 
   url: https://l-attestation.github.io/exercices/polices-municipales/ 
@@ -14,6 +15,8 @@ draft: false
 library(here)
 library(tidyverse)
 library(huxtable)
+library(fedmatch)
+library(sf)
 ```
 
 ## Récupérer les données
@@ -36,18 +39,18 @@ download.file(url = "https://www.data.gouv.fr/fr/datasets/r/ad814337-074c-459b-a
 ## Les lire
 
 ```{r read}
-polices_municipales = readODS::read_ods(polices_municipales_path, skip = 8, col_names = FALSE, .name_repair = janitor::make_clean_names) |> 
+pm = readODS::read_ods(polices_municipales_path, skip = 8, col_names = FALSE, .name_repair = janitor::make_clean_names) |> 
   select(x, x_2, x_4:x_10) |> 
-    rename(code_departement = x,
-           nom_departement = x_2,
-           nom_commune = x_4,
-           population = x_5,
-           municipaux = x_6,
-           asvp = x_7,
-           gardes_champetres = x_8,
-           maitres_chiens = x_9,
-           chiens_patrouille = x_10) |> 
-  # fill(nom_departement, .direction = "down") |> 
+  rename(code_departement = x,
+         nom_departement = x_2,
+         nom_commune = x_4,
+         population = x_5,
+         municipaux = x_6,
+         asvp = x_7,
+         gardes_champetres = x_8,
+         maitres_chiens = x_9,
+         chiens_patrouille = x_10) |> 
+  mutate(total = municipaux + gardes_champetres + asvp) |> 
   filter(!is.na(code_departement))
 ```
 
@@ -55,12 +58,71 @@ polices_municipales = readODS::read_ods(polices_municipales_path, skip = 8, col_
 Pour être exploitées au niveau communal, ces données requièrent des recodages laborieux. Il n'y a pas de code postal pour les communes. Et aucune cohérence dans la manière d'écrire leurs noms (majuscules, minuscules, tirets et espaces, abréviations, etc.). 
 :::
 
-## Par département
+## Recodage communes
+
+Nettoyer le nom des communes.
+
+```{r clean_com}
+pm_com = pm |> 
+  filter(!str_detect(code_departement, "TOTAL")) |> 
+  mutate(nom_commune_clean = stringi::stri_trans_general(nom_commune, "Latin-ASCII"),
+         nom_commune_clean = clean_strings(nom_commune_clean)) |> 
+  relocate(nom_commune_clean, .after = nom_commune)
+```
+
+```{r glimpse_pm_com}
+glimpse(pm_com)
+```
+
+
+## Récupérer la couche cartographique
+
+Télécharger la couche cartographique des communes en 2020 dans un sous-dossier `data` du projet (à ne faire qu'une fois).
+
+```{r download_com_sf}
+#| eval: false
+CARTElette::charger_carte(destfile = here::here("data"),
+                          COG = 2020,
+                          nivsupra = "COM")
+```
+
+Lire la couche cartographique et nettoyer le nom des communes de la même manière que dans la base des polices municipales. La population indiquée est celle comptabilisée par le recensement de 2017.
+
+```{r read_com_sf}
+com_sf = st_read(here("data", "COM_2020_CARTElette.shp")) |> 
+  janitor::clean_names() |> 
+  select(insee_dep, insee_com, nom_com, population) |> 
+  rename(code_departement = insee_dep,
+         code_commune = insee_com,
+         nom_commune = nom_com,
+         population_2017 = population) |> 
+  mutate(nom_commune_clean = stringi::stri_trans_general(nom_commune, "Latin-ASCII"),
+         nom_commune_clean = clean_strings(nom_commune_clean)) |> 
+  relocate(nom_commune_clean, .after = nom_commune)
+```
+
+```{r glimpse_com_sf}
+glimpse(com_sf)
+```
+
+## Jointure
+
+::: {.callout-warning}
+Il y a des homonymes parmi les communes. Pour réduire les jointures multiples, on peut commencer par joindre par le nom "nettoyé" de la commune et le code du département. Mais attention, celui-ci n'est pas écrit de la même façon dans les deux bases de données.
+:::
+
+```{r pm_sf}
+pm_com_sf = pm_com |> 
+  select(code_departement, nom_commune_clean, total) |> 
+  left_join(com_sf, by = join_by(code_departement, nom_commune_clean))
+```
+
+## Comptage par département
 
 On reprend directement les calculs des auteurs de la base.
 
-```{r summarise}
-pm_departements = polices_municipales |> 
+```{r pm_dep}
+pm_dep = pm |> 
   filter(str_detect(code_departement, "TOTAL"),
          !str_detect(code_departement, "NATIONAL")) |> 
   mutate(total = municipaux + gardes_champetres + asvp,
@@ -69,8 +131,8 @@ pm_departements = polices_municipales |>
   arrange(desc(total))
 ```
 
-```{r huxtable}
-pm_departements |> 
+```{r pm_dep_huxtable}
+pm_dep |> 
   as_huxtable() |> 
   set_number_format(NA) |> 
   theme_orange()

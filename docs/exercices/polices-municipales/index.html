@@ -191,6 +191,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       </div>
     </div>
     
+      <div>
+      <div class="quarto-title-meta-heading">Modifié</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date-modified">30 septembre 2023</p>
+      </div>
+    </div>
       
     </div>
     
@@ -206,7 +212,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#charger-les-principaux-packages" id="toc-charger-les-principaux-packages" class="nav-link active" data-scroll-target="#charger-les-principaux-packages">Charger les principaux packages</a></li>
   <li><a href="#récupérer-les-données" id="toc-récupérer-les-données" class="nav-link" data-scroll-target="#récupérer-les-données">Récupérer les données</a></li>
   <li><a href="#les-lire" id="toc-les-lire" class="nav-link" data-scroll-target="#les-lire">Les lire</a></li>
-  <li><a href="#par-département" id="toc-par-département" class="nav-link" data-scroll-target="#par-département">Par département</a></li>
+  <li><a href="#recodage-communes" id="toc-recodage-communes" class="nav-link" data-scroll-target="#recodage-communes">Recodage communes</a></li>
+  <li><a href="#récupérer-la-couche-cartographique" id="toc-récupérer-la-couche-cartographique" class="nav-link" data-scroll-target="#récupérer-la-couche-cartographique">Récupérer la couche cartographique</a></li>
+  <li><a href="#jointure" id="toc-jointure" class="nav-link" data-scroll-target="#jointure">Jointure</a></li>
+  <li><a href="#comptage-par-département" id="toc-comptage-par-département" class="nav-link" data-scroll-target="#comptage-par-département">Comptage par département</a></li>
   </ul>
 </nav>
     </div>
@@ -221,7 +230,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(huxtable)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(huxtable)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fedmatch)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="récupérer-les-données" class="level2">
@@ -239,18 +250,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="les-lire" class="level2">
 <h2 class="anchored" data-anchor-id="les-lire">Les lire</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>polices_municipales <span class="ot">=</span> readODS<span class="sc">::</span><span class="fu">read_ods</span>(polices_municipales_path, <span class="at">skip =</span> <span class="dv">8</span>, <span class="at">col_names =</span> <span class="cn">FALSE</span>, <span class="at">.name_repair =</span> janitor<span class="sc">::</span>make_clean_names) <span class="sc">|&gt;</span> </span>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>pm <span class="ot">=</span> readODS<span class="sc">::</span><span class="fu">read_ods</span>(polices_municipales_path, <span class="at">skip =</span> <span class="dv">8</span>, <span class="at">col_names =</span> <span class="cn">FALSE</span>, <span class="at">.name_repair =</span> janitor<span class="sc">::</span>make_clean_names) <span class="sc">|&gt;</span> </span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(x, x_2, x_4<span class="sc">:</span>x_10) <span class="sc">|&gt;</span> </span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="at">code_departement =</span> x,</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">nom_departement =</span> x_2,</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">nom_commune =</span> x_4,</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">population =</span> x_5,</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>           <span class="at">municipaux =</span> x_6,</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>           <span class="at">asvp =</span> x_7,</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>           <span class="at">gardes_champetres =</span> x_8,</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>           <span class="at">maitres_chiens =</span> x_9,</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>           <span class="at">chiens_patrouille =</span> x_10) <span class="sc">|&gt;</span> </span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># fill(nom_departement, .direction = "down") |&gt; </span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">code_departement =</span> x,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">nom_departement =</span> x_2,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">nom_commune =</span> x_4,</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">population =</span> x_5,</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">municipaux =</span> x_6,</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">asvp =</span> x_7,</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">gardes_champetres =</span> x_8,</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">maitres_chiens =</span> x_9,</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">chiens_patrouille =</span> x_10) <span class="sc">|&gt;</span> </span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">total =</span> municipaux <span class="sc">+</span> gardes_champetres <span class="sc">+</span> asvp) <span class="sc">|&gt;</span> </span>
 <span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(code_departement))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout callout-style-default callout-caution callout-titled">
@@ -267,25 +278,120 @@ Mise en garde
 </div>
 </div>
 </section>
-<section id="par-département" class="level2">
-<h2 class="anchored" data-anchor-id="par-département">Par département</h2>
-<p>On reprend directement les calculs des auteurs de la base.</p>
+<section id="recodage-communes" class="level2">
+<h2 class="anchored" data-anchor-id="recodage-communes">Recodage communes</h2>
+<p>Nettoyer le nom des communes.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>pm_departements <span class="ot">=</span> polices_municipales <span class="sc">|&gt;</span> </span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(code_departement, <span class="st">"TOTAL"</span>),</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>         <span class="sc">!</span><span class="fu">str_detect</span>(code_departement, <span class="st">"NATIONAL"</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">total =</span> municipaux <span class="sc">+</span> gardes_champetres <span class="sc">+</span> asvp,</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">departement =</span> <span class="fu">str_remove</span>(code_departement, <span class="st">"^TOTAL "</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(departement, total) <span class="sc">|&gt;</span> </span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(total))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>pm_com <span class="ot">=</span> pm <span class="sc">|&gt;</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">str_detect</span>(code_departement, <span class="st">"TOTAL"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">nom_commune_clean =</span> stringi<span class="sc">::</span><span class="fu">stri_trans_general</span>(nom_commune, <span class="st">"Latin-ASCII"</span>),</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">nom_commune_clean =</span> <span class="fu">clean_strings</span>(nom_commune_clean)) <span class="sc">|&gt;</span> </span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(nom_commune_clean, <span class="at">.after =</span> nom_commune)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>pm_departements <span class="sc">|&gt;</span> </span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_huxtable</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_number_format</span>(<span class="cn">NA</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_orange</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(pm_com)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 4,524
+Columns: 11
+$ code_departement  &lt;chr&gt; "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1…
+$ nom_departement   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ nom_commune       &lt;chr&gt; "Ambérieu en Bugey", "Ambérieux en Dombes", "Ambrona…
+$ nom_commune_clean &lt;chr&gt; "amberieu en bugey", "amberieux en dombes", "ambrona…
+$ population        &lt;chr&gt; "14424", "1723", "2878", "1130", "3486", "3250", "41…
+$ municipaux        &lt;dbl&gt; 8, 0, 0, 0, 3, 1, 1, 1, 5, 0, 3, 4, 0, 23, 0, 3, 1, …
+$ asvp              &lt;dbl&gt; 0, 0, 1, 1, 0, 0, 0, 0, 2, 0, 0, 1, 0, 7, 0, 0, 0, 1…
+$ gardes_champetres &lt;dbl&gt; 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0…
+$ maitres_chiens    &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0…
+$ chiens_patrouille &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0…
+$ total             &lt;dbl&gt; 8, 1, 1, 1, 3, 1, 1, 1, 7, 1, 3, 5, 1, 30, 1, 3, 1, …</code></pre>
+</div>
+</div>
+</section>
+<section id="récupérer-la-couche-cartographique" class="level2">
+<h2 class="anchored" data-anchor-id="récupérer-la-couche-cartographique">Récupérer la couche cartographique</h2>
+<p>Télécharger la couche cartographique des communes en 2020 dans un sous-dossier <code>data</code> du projet (à ne faire qu’une fois).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>CARTElette<span class="sc">::</span><span class="fu">charger_carte</span>(<span class="at">destfile =</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>),</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>                          <span class="at">COG =</span> <span class="dv">2020</span>,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>                          <span class="at">nivsupra =</span> <span class="st">"COM"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Lire la couche cartographique et nettoyer le nom des communes de la même manière que dans la base des polices municipales. La population indiquée est celle comptabilisée par le recensement de 2017.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>com_sf <span class="ot">=</span> <span class="fu">st_read</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"COM_2020_CARTElette.shp"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  janitor<span class="sc">::</span><span class="fu">clean_names</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(insee_dep, insee_com, nom_com, population) <span class="sc">|&gt;</span> </span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">code_departement =</span> insee_dep,</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">code_commune =</span> insee_com,</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">nom_commune =</span> nom_com,</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">population_2017 =</span> population) <span class="sc">|&gt;</span> </span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">nom_commune_clean =</span> stringi<span class="sc">::</span><span class="fu">stri_trans_general</span>(nom_commune, <span class="st">"Latin-ASCII"</span>),</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">nom_commune_clean =</span> <span class="fu">clean_strings</span>(nom_commune_clean)) <span class="sc">|&gt;</span> </span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(nom_commune_clean, <span class="at">.after =</span> nom_commune)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Reading layer `COM_2020_CARTElette' from data source 
+  `/home/theo/l-attestation.github.io/data/COM_2020_CARTElette.shp' 
+  using driver `ESRI Shapefile'
+Simple feature collection with 34968 features and 11 fields
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: -5.141277 ymin: 40.28472 xmax: 9.559956 ymax: 51.08899
+Geodetic CRS:  WGS 84</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(com_sf)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 34,968
+Columns: 6
+$ code_departement  &lt;chr&gt; "32", "47", "38", "32", "62", "08", "32", "10", "42"…
+$ code_commune      &lt;chr&gt; "32216", "47033", "38225", "32009", "62890", "08018"…
+$ nom_commune       &lt;chr&gt; "Lourties-Monbrun", "Boudy-de-Beauregard", "Autrans-…
+$ nom_commune_clean &lt;chr&gt; "lourties monbrun", "boudy de beauregard", "autrans …
+$ population_2017   &lt;dbl&gt; 158, 414, 3000, 86, 188, 68, 92, 352, 916, 324, 12, …
+$ geometry          &lt;MULTIPOLYGON [°]&gt; MULTIPOLYGON (((0.5518489 4..., MULTIPO…</code></pre>
+</div>
+</div>
+</section>
+<section id="jointure" class="level2">
+<h2 class="anchored" data-anchor-id="jointure">Jointure</h2>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Avertissement
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Il y a des homonymes parmi les communes. Pour réduire les jointures multiples, on peut commencer par joindre par le nom “nettoyé” de la commune et le code du département. Mais attention, celui-ci n’est pas écrit de la même façon dans les deux bases de données.</p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>pm_com_sf <span class="ot">=</span> pm_com <span class="sc">|&gt;</span> </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(code_departement, nom_commune_clean, total) <span class="sc">|&gt;</span> </span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(com_sf, <span class="at">by =</span> <span class="fu">join_by</span>(code_departement, nom_commune_clean))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="comptage-par-département" class="level2">
+<h2 class="anchored" data-anchor-id="comptage-par-département">Comptage par département</h2>
+<p>On reprend directement les calculs des auteurs de la base.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>pm_dep <span class="ot">=</span> pm <span class="sc">|&gt;</span> </span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(code_departement, <span class="st">"TOTAL"</span>),</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>         <span class="sc">!</span><span class="fu">str_detect</span>(code_departement, <span class="st">"NATIONAL"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">total =</span> municipaux <span class="sc">+</span> gardes_champetres <span class="sc">+</span> asvp,</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">departement =</span> <span class="fu">str_remove</span>(code_departement, <span class="st">"^TOTAL "</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(departement, total) <span class="sc">|&gt;</span> </span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(total))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>pm_dep <span class="sc">|&gt;</span> </span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_huxtable</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_number_format</span>(<span class="cn">NA</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_orange</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<table id="tab:huxtable" class="huxtable table table-sm table-striped small" data-quarto-postprocess="true">
+<table id="tab:pm_dep_huxtable" class="huxtable table table-sm table-striped small" data-quarto-postprocess="true">
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th" style="text-align: left; vertical-align: top; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 1pt 1pt 1pt; border-top-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-color: rgb(255, 255, 255); padding: 6pt 6pt 6pt 6pt; background-color: rgb(208, 211, 212); font-weight: bold;">departement</td>
