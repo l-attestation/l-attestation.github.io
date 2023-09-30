@@ -207,14 +207,14 @@
     "href": "exercices/polices-municipales/index.html",
     "title": "La France des polices municipales",
     "section": "",
-    "text": "library(here)\nlibrary(tidyverse)\nlibrary(huxtable)\nlibrary(fedmatch)\nlibrary(sf)"
+    "text": "library(here)\nlibrary(tidyverse)\nlibrary(huxtable)\nlibrary(fedmatch)\nlibrary(sf)\nlibrary(tmap)"
   },
   {
     "objectID": "exercices/polices-municipales/index.html#charger-les-principaux-packages",
     "href": "exercices/polices-municipales/index.html#charger-les-principaux-packages",
     "title": "La France des polices municipales",
     "section": "",
-    "text": "library(here)\nlibrary(tidyverse)\nlibrary(huxtable)\nlibrary(fedmatch)\nlibrary(sf)"
+    "text": "library(here)\nlibrary(tidyverse)\nlibrary(huxtable)\nlibrary(fedmatch)\nlibrary(sf)\nlibrary(tmap)"
   },
   {
     "objectID": "exercices/polices-municipales/index.html#récupérer-les-données",
@@ -235,7 +235,7 @@
     "href": "exercices/polices-municipales/index.html#recodage-communes",
     "title": "La France des polices municipales",
     "section": "Recodage communes",
-    "text": "Recodage communes\nNettoyer le nom des communes.\n\npm_com = pm |&gt; \n  filter(!str_detect(code_departement, \"TOTAL\")) |&gt; \n  mutate(nom_commune_clean = stringi::stri_trans_general(nom_commune, \"Latin-ASCII\"),\n         nom_commune_clean = clean_strings(nom_commune_clean)) |&gt; \n  relocate(nom_commune_clean, .after = nom_commune)\n\n\nglimpse(pm_com)\n\nRows: 4,524\nColumns: 11\n$ code_departement  &lt;chr&gt; \"1\", \"1\", \"1\", \"1\", \"1\", \"1\", \"1\", \"1\", \"1\", \"1\", \"1…\n$ nom_departement   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …\n$ nom_commune       &lt;chr&gt; \"Ambérieu en Bugey\", \"Ambérieux en Dombes\", \"Ambrona…\n$ nom_commune_clean &lt;chr&gt; \"amberieu en bugey\", \"amberieux en dombes\", \"ambrona…\n$ population        &lt;chr&gt; \"14424\", \"1723\", \"2878\", \"1130\", \"3486\", \"3250\", \"41…\n$ municipaux        &lt;dbl&gt; 8, 0, 0, 0, 3, 1, 1, 1, 5, 0, 3, 4, 0, 23, 0, 3, 1, …\n$ asvp              &lt;dbl&gt; 0, 0, 1, 1, 0, 0, 0, 0, 2, 0, 0, 1, 0, 7, 0, 0, 0, 1…\n$ gardes_champetres &lt;dbl&gt; 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0…\n$ maitres_chiens    &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0…\n$ chiens_patrouille &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0…\n$ total             &lt;dbl&gt; 8, 1, 1, 1, 3, 1, 1, 1, 7, 1, 3, 5, 1, 30, 1, 3, 1, …"
+    "text": "Recodage communes\nNettoyer le nom des communes.\n\npm_com = pm |&gt; \n  filter(!str_detect(code_departement, \"TOTAL\")) |&gt; \n  mutate(code_departement = if_else(code_departement %in% as.character(1:9),\n                                    str_c(\"0\", code_departement),\n                                    code_departement),\n         nom_commune_clean = stringi::stri_trans_general(nom_commune, \"Latin-ASCII\"),\n         nom_commune_clean = clean_strings(nom_commune_clean)) |&gt;\n  select(code_departement, nom_commune_clean, total)\n\n\nglimpse(pm_com)\n\nRows: 4,524\nColumns: 3\n$ code_departement  &lt;chr&gt; \"01\", \"01\", \"01\", \"01\", \"01\", \"01\", \"01\", \"01\", \"01\"…\n$ nom_commune_clean &lt;chr&gt; \"amberieu en bugey\", \"amberieux en dombes\", \"ambrona…\n$ total             &lt;dbl&gt; 8, 1, 1, 1, 3, 1, 1, 1, 7, 1, 3, 5, 1, 30, 1, 3, 1, …"
   },
   {
     "objectID": "exercices/polices-municipales/index.html#récupérer-la-couche-cartographique",
@@ -249,7 +249,14 @@
     "href": "exercices/polices-municipales/index.html#jointure",
     "title": "La France des polices municipales",
     "section": "Jointure",
-    "text": "Jointure\n\n\n\n\n\n\nAvertissement\n\n\n\nIl y a des homonymes parmi les communes. Pour réduire les jointures multiples, on peut commencer par joindre par le nom “nettoyé” de la commune et le code du département. Mais attention, celui-ci n’est pas écrit de la même façon dans les deux bases de données.\n\n\n\npm_com_sf = pm_com |&gt; \n  select(code_departement, nom_commune_clean, total) |&gt; \n  left_join(com_sf, by = join_by(code_departement, nom_commune_clean))"
+    "text": "Jointure\n\n\n\n\n\n\nAvertissement\n\n\n\nIl y a des homonymes parmi les communes. Pour réduire les jointures multiples, on peut commencer par joindre par le nom “nettoyé” de la commune et le code du département. Mais attention, celui-ci n’est pas écrit de la même façon dans les deux bases de données.\n\n\n\npm_com_sf = com_sf |&gt; \n  inner_join(pm_com, by = join_by(code_departement, nom_commune_clean))\n\nCe nettoyage nous permet de géolocaliser 4074 communes sur 4524."
+  },
+  {
+    "objectID": "exercices/polices-municipales/index.html#cartographier",
+    "href": "exercices/polices-municipales/index.html#cartographier",
+    "title": "La France des polices municipales",
+    "section": "Cartographier",
+    "text": "Cartographier\n\npm_com_sf |&gt; \n  mutate(policier_par_habitant = total / population_2017) |&gt; \n  filter(policier_par_habitant &gt; mean(policier_par_habitant, na.rm = T)) |&gt;\n  st_centroid() |&gt; \n  # filter(policier_par_habitant &gt; quantile(policier_par_habitant, 0.75)) %&gt;%\n  ggplot() +\n  geom_sf(size = 1, alpha = 0.5, colour = \"#E12634\") +\n  theme_void()"
   },
   {
     "objectID": "exercices/polices-municipales/index.html#comptage-par-département",

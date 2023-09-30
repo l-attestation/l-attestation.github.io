@@ -17,6 +17,7 @@ library(tidyverse)
 library(huxtable)
 library(fedmatch)
 library(sf)
+library(tmap)
 ```
 
 ## Récupérer les données
@@ -65,9 +66,12 @@ Nettoyer le nom des communes.
 ```{r clean_com}
 pm_com = pm |> 
   filter(!str_detect(code_departement, "TOTAL")) |> 
-  mutate(nom_commune_clean = stringi::stri_trans_general(nom_commune, "Latin-ASCII"),
-         nom_commune_clean = clean_strings(nom_commune_clean)) |> 
-  relocate(nom_commune_clean, .after = nom_commune)
+  mutate(code_departement = if_else(code_departement %in% as.character(1:9),
+                                    str_c("0", code_departement),
+                                    code_departement),
+         nom_commune_clean = stringi::stri_trans_general(nom_commune, "Latin-ASCII"),
+         nom_commune_clean = clean_strings(nom_commune_clean)) |>
+  select(code_departement, nom_commune_clean, total)
 ```
 
 ```{r glimpse_pm_com}
@@ -112,10 +116,25 @@ Il y a des homonymes parmi les communes. Pour réduire les jointures multiples, 
 :::
 
 ```{r pm_sf}
-pm_com_sf = pm_com |> 
-  select(code_departement, nom_commune_clean, total) |> 
-  left_join(com_sf, by = join_by(code_departement, nom_commune_clean))
+pm_com_sf = com_sf |> 
+  inner_join(pm_com, by = join_by(code_departement, nom_commune_clean))
 ```
+
+Ce nettoyage nous permet de géolocaliser 4074 communes sur 4524. 
+
+## Cartographier
+
+```{r map_pm_sf}
+pm_com_sf |> 
+  mutate(policier_par_habitant = total / population_2017) |> 
+  filter(policier_par_habitant > mean(policier_par_habitant, na.rm = T)) |>
+  st_centroid() |> 
+  # filter(policier_par_habitant > quantile(policier_par_habitant, 0.75)) %>%
+  ggplot() +
+  geom_sf(size = 1, alpha = 0.5, colour = "#E12634") +
+  theme_void()
+```
+
 
 ## Comptage par département
 
