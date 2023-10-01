@@ -124,12 +124,13 @@ Ce nettoyage nous permet de géolocaliser 4074 communes sur 4524.
 
 ## Cartographier
 
+On ne représente sur cette carte que les communes dont le ratio policiers municipaux et assimilés / habitants est supérieur à la moyenne des communes dotées d'une police municipale. 
+
 ```{r map_pm_sf}
 pm_com_sf |> 
   mutate(policier_par_habitant = total / population_2017) |> 
   filter(policier_par_habitant > mean(policier_par_habitant, na.rm = T)) |>
   st_centroid() |> 
-  # filter(policier_par_habitant > quantile(policier_par_habitant, 0.75)) %>%
   ggplot() +
   geom_sf(size = 1, alpha = 0.5, colour = "#E12634") +
   theme_void()
