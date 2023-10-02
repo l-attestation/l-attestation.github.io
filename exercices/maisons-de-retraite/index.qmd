@@ -1,6 +1,6 @@
 ---
-title: "Mortalité en maisons de retraite"
-description: "Il est très difficile de rassembler des données internationales"
+title: "Mortalité dans les maisons de retraite"
+description: "Les données internationales sur le sujet sont rares et très mal distribuées."
 date: 2023-10-02
 date-modified: today
 categories: [FAQ]
@@ -11,19 +11,25 @@ draft: false
 
 [![Calles de Almería vacías por el Coronavirus, 15 mars 2020, 14:07:05, LaMons, CC BY-SA 4.0 \<https://creativecommons.org/licenses/by-sa/4.0\>, via Wikimedia Commons](https://upload.wikimedia.org/wikipedia/commons/4/4a/Coronavirus_Almer%C3%ADa.jpg)](https://commons.wikimedia.org/wiki/File:Coronavirus_Almer%C3%ADa.jpg)
 
-La part des décès en LTC (Long Term Care) s'établit à 40% en moyenne, pour les pays de l'OCDE, entre le début de la pandémie et février 2021 [@rocard2021, p. 17].
+Entre le début de la pandémie et février 2021, dans les pays de l'OCDE, 40% des décès du virus ont eu lieu dans les maisons de retraite [@rocard2021, p. 17].
 
 Ce pourcentage varie grandement selon les pays. Précautions dans l'interprétation :
 
 1)  Il est particulièrement élevé dans les pays très peu touchés par la pandémie, comme l'Australie (75%) et la Nouvelle-Zélande (64%).
 2)  Certains pays, comme la Belgique (57%) comptent les cas avérés *et suspectés*.
 3)  La pyramide des âges varie selon les pays.
-4)  La définition de « long term care » n'est pas la même selon les pays.
+4)  Dans certains pays, le champ des "Long Term Care Facilities" est plus large ou plus étroit que ce qu'on entend généralement par "maisons de retraite".
 
-La part des décès en maison de retraite dans l'ensemble des décès du virus est de 40% en Espagne et de 42% en France, entre le début de la pandémie et février 2021 [@rocard2021, p. 17]
+La part des décès en maison de retraite dans l'ensemble des décès du virus est de 40% en Espagne et de 42% en France, entre le début de la pandémie et février 2021 [@rocard2021, p. 17].
 
 Les données sont issues de @comas-herrera2021 et de [l'European Centre for Disease Prevention and Control](https://www.ecdc.europa.eu/en/all-topics-z/coronavirus/threats-and-outbreaks/covid-19/prevention-and-control/LTCF).
 
 ::: callout-note
 @comas-herrera2021 a été mis à jour régulièrement jusqu'à la fin de l'année 2022. Voir la [version la plus récente](https://ltccovid.org/international-living-report-covid-ltc/)
+:::
+
+En France, à l'issue de la première vague, les résidents d'Ehpad représentaient **la moitié des décès** @sanchez2020.
+
+::: callout-note
+La base de données de l'INED sur la [démographie des décès par COVID-19](https://dc-covid.site.ined.fr/) comporte une variable identifiant le lieu de décès : hôpitaux ou établissements sociaux et médico-sociaux (ESMS).
 :::

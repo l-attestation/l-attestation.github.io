@@ -16,8 +16,8 @@ draft: false
 ```{r packages}
 library(tidyverse)
 library(here)
+library(rnaturalearth)
 ```
-
 
 ## Télécharger les données
 
@@ -37,5 +37,11 @@ agr = read_rds(agr_path)
 
 ```{r glimpse_agr}
 glimpse(agr)
+```
+
+## Recoder
+
+```{r}
+
 ```
 
