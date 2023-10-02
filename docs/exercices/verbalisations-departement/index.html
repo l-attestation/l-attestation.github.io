@@ -975,7 +975,7 @@ Astuce
 </section>
 <section id="cartographier" class="level2">
 <h2 class="anchored" data-anchor-id="cartographier">Cartographier</h2>
-<div class="cell">
+<div class="cell preview-image">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>departements_sf <span class="sc">|&gt;</span> </span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>nom_departement) <span class="sc">|&gt;</span> </span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(departements, <span class="at">by =</span> <span class="st">"code_departement"</span>) <span class="sc">|&gt;</span> </span>
@@ -998,7 +998,7 @@ Astuce
 <span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>            <span class="at">legend.position =</span> <span class="fu">c</span>(<span class="st">"LEFT"</span>, <span class="st">"BOTTOM"</span>),</span>
 <span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>            <span class="at">legend.title.size =</span> .<span class="dv">8</span>,</span>
 <span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>            <span class="at">fontfamily =</span> <span class="st">"Helvetica"</span>,</span>
-<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>            <span class="at">frame.lwd =</span> <span class="dv">1</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>            <span class="at">frame.lwd =</span> <span class="dv">0</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="index_files/figure-html/map-1.png" class="img-fluid" width="672"></p>
 </div>

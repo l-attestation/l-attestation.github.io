@@ -147,7 +147,7 @@ verbalisations_pmla_breaks = mapsf::mf_get_breaks(departements$verbalisations_pm
 ## Cartographier
 
 ```{r map}
-
+#| classes: preview-image
 departements_sf |> 
   select(-nom_departement) |> 
   left_join(departements, by = "code_departement") |> 
@@ -170,5 +170,5 @@ departements_sf |>
             legend.position = c("LEFT", "BOTTOM"),
             legend.title.size = .8,
             fontfamily = "Helvetica",
-            frame.lwd = 1)
+            frame.lwd = 0)
 ```
