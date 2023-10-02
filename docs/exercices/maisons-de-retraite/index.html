@@ -8,9 +8,9 @@
 
 <meta name="author" content="Théo Boulakia">
 <meta name="author" content="Nicolas Mariot">
-<meta name="description" content="Introduction à la base de données A Good Reason">
+<meta name="description" content="Il est très difficile de rassembler des données internationales">
 
-<title>L’Attestation - L’Europe des promenades surveillées</title>
+<title>L’Attestation - Mortalité en maisons de retraite</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,41 +23,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
 }
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
 }
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
 }
-</style>
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -161,10 +146,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">L’Europe des promenades surveillées</h1>
+      <h1 class="title">Mortalité en maisons de retraite</h1>
                   <div>
         <div class="description">
-          Introduction à la base de données <em>A Good Reason</em>
+          Il est très difficile de rassembler des données internationales
         </div>
       </div>
                           <div class="quarto-categories">
@@ -187,7 +172,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Date de publication</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">29 septembre 2023</p>
+        <p class="date">2 octobre 2023</p>
       </div>
     </div>
     
@@ -205,14 +190,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Sur cette page</h2>
-   
-  <ul>
-  <li><a href="#charger-les-packages-nécessaires" id="toc-charger-les-packages-nécessaires" class="nav-link active" data-scroll-target="#charger-les-packages-nécessaires">Charger les packages nécessaires</a></li>
-  <li><a href="#télécharger-les-données" id="toc-télécharger-les-données" class="nav-link" data-scroll-target="#télécharger-les-données">Télécharger les données</a></li>
-  </ul>
-</nav>
+        
     </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
@@ -222,65 +200,54 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="https://commons.wikimedia.org/wiki/File:Italy_Lockdown_-_IMG_6473_(49728530411).jpg"><img src="https://upload.wikimedia.org/wikipedia/commons/f/f4/Italy_Lockdown_-_IMG_6473_%2849728530411%29.jpg" class="img-fluid figure-img"></a></p>
-<figcaption class="figure-caption">Parco Leonardo, Fiumicino, Italie, 2 avril 2020, N i c o l a, CC BY 2.0 &lt;https://creativecommons.org/licenses/by/2.0&gt;, via Wikimedia Commons</figcaption>
+<p><a href="https://commons.wikimedia.org/wiki/File:Coronavirus_Almer%C3%ADa.jpg"><img src="https://upload.wikimedia.org/wikipedia/commons/4/4a/Coronavirus_Almer%C3%ADa.jpg" class="img-fluid figure-img"></a></p>
+<figcaption class="figure-caption">Calles de Almería vacías por el Coronavirus, 15 mars 2020, 14:07:05, LaMons, CC BY-SA 4.0 &lt;https://creativecommons.org/licenses/by-sa/4.0&gt;, via Wikimedia Commons</figcaption>
 </figure>
 </div>
-<section id="charger-les-packages-nécessaires" class="level2">
-<h2 class="anchored" data-anchor-id="charger-les-packages-nécessaires">Charger les packages nécessaires</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>La part des décès en LTC (Long Term Care) s’établit à 40% en moyenne, pour les pays de l’OCDE, entre le début de la pandémie et février 2021 <span class="citation" data-cites="rocard2021">(<a href="#ref-rocard2021" role="doc-biblioref">Rocard, Sillitti, et Llena-Nozal 2021, 17</a>)</span>.</p>
+<p>Ce pourcentage varie grandement selon les pays. Précautions dans l’interprétation :</p>
+<ol type="1">
+<li>Il est particulièrement élevé dans les pays très peu touchés par la pandémie, comme l’Australie (75%) et la Nouvelle-Zélande (64%).</li>
+<li>Certains pays, comme la Belgique (57%) comptent les cas avérés <em>et suspectés</em>.</li>
+<li>La pyramide des âges varie selon les pays.</li>
+<li>La définition de « long term care » n’est pas la même selon les pays.</li>
+</ol>
+<p>La part des décès en maison de retraite dans l’ensemble des décès du virus est de 40% en Espagne et de 42% en France, entre le début de la pandémie et février 2021 <span class="citation" data-cites="rocard2021">(<a href="#ref-rocard2021" role="doc-biblioref">Rocard, Sillitti, et Llena-Nozal 2021, 17</a>)</span></p>
+<p>Les données sont issues de <span class="citation" data-cites="comas-herrera2021">Comas-Herrera et al. (<a href="#ref-comas-herrera2021" role="doc-biblioref">2021</a>)</span> et de <a href="https://www.ecdc.europa.eu/en/all-topics-z/coronavirus/threats-and-outbreaks/covid-19/prevention-and-control/LTCF">l’European Centre for Disease Prevention and Control</a>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
 </div>
-</section>
-<section id="télécharger-les-données" class="level2">
-<h2 class="anchored" data-anchor-id="télécharger-les-données">Télécharger les données</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>agr_path <span class="ot">=</span> <span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"agr.rds"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout-title-container flex-fill">
+Note
 </div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>vroom<span class="sc">::</span><span class="fu">vroom</span>(<span class="st">"https://raw.githubusercontent.com/sternenklar/A-Good-Reason/main/Data/complete_data_compared.csv"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">write_rds</span>(agr_path)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>agr <span class="ot">=</span> <span class="fu">read_rds</span>(agr_path)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(agr)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Rows: 51,512
-Columns: 15
-$ date                   &lt;date&gt; 2020-01-01, 2020-01-02, 2020-01-03, 2020-01-04…
-$ country                &lt;chr&gt; "Albania", "Albania", "Albania", "Albania", "Al…
-$ strictest_night        &lt;chr&gt; "0", "0", "0", "0", "0", "0", "0", "0", "0", "0…
-$ strictest_day          &lt;chr&gt; "0", "0", "0", "0", "0", "0", "0", "0", "0", "0…
-$ least_strict_night     &lt;chr&gt; "0", "0", "0", "0", "0", "0", "0", "0", "0", "0…
-$ least_strict_day       &lt;chr&gt; "0", "0", "0", "0", "0", "0", "0", "0", "0", "0…
-$ leave_municip          &lt;chr&gt; "no", "no", "no", "no", "no", "no", "no", "no",…
-$ change                 &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ source                 &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-$ stayhome_day           &lt;chr&gt; "no", "no", "no", "no", "no", "no", "no", "no",…
-$ stayhome_night         &lt;chr&gt; "no", "no", "no", "no", "no", "no", "no", "no",…
-$ walk_day               &lt;chr&gt; "yes", "yes", "yes", "yes", "yes", "yes", "yes"…
-$ walk_night             &lt;chr&gt; "yes", "yes", "yes", "yes", "yes", "yes", "yes"…
-$ outside_masks          &lt;chr&gt; "no", "no", "no", "no", "no", "no", "no", "no",…
-$ difference_with_oxcgrt &lt;chr&gt; "no", "no", "no", "no", "no", "no", "no", "no",…</code></pre>
+<div class="callout-body-container callout-body">
+<p><span class="citation" data-cites="comas-herrera2021">Comas-Herrera et al. (<a href="#ref-comas-herrera2021" role="doc-biblioref">2021</a>)</span> a été mis à jour régulièrement jusqu’à la fin de l’année 2022. Voir la <a href="https://ltccovid.org/international-living-report-covid-ltc/">version la plus récente</a></p>
 </div>
 </div>
 
 
-</section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{boulakia2023,
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">Les références</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-comas-herrera2021" class="csl-entry" role="listitem">
+Comas-Herrera, Adelina, Joanna Marczak, William Byrd, et Klara Lorenz-Dant. 2021. <span>«&nbsp;LTCcovid International living report on COVID-19 and Long-Term Care&nbsp;»</span>. LTCCovid and Care Policy and Evaluation Centre, London School of Economics. <a href="https://doi.org/10.21953/LSE.MLRE15E0U6S6">https://doi.org/10.21953/LSE.MLRE15E0U6S6</a>.
+</div>
+<div id="ref-rocard2021" class="csl-entry" role="listitem">
+Rocard, Eileen, Paola Sillitti, et Ana Llena-Nozal. 2021. <span>«&nbsp;COVID-19 in Long-Term Care: Impact, Policy Responses and Challenges&nbsp;»</span>. Paris: OCDE. <a href="https://doi.org/10.1787/b966f837-en">https://doi.org/10.1787/b966f837-en</a>.
+</div>
+</div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{boulakia2023,
   author = {Boulakia, Théo and Mariot, Nicolas},
-  title = {L’Europe des promenades surveillées},
-  date = {2023-09-29},
-  url = {https://l-attestation.github.io/exercices/promenades-surveillees-europe/},
+  title = {Mortalité en maisons de retraite},
+  date = {2023-10-02},
+  url = {https://l-attestation.github.io/exercices/maisons-de-retraite/},
   langid = {fr}
 }
 </code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">Veuillez citer ce travail comme suit&nbsp;:</div><div id="ref-boulakia2023" class="csl-entry quarto-appendix-citeas" role="listitem">
-Boulakia, Théo, and Nicolas Mariot. 2023. <span>“L’Europe des promenades
-surveillées.”</span> September 29, 2023. <a href="https://l-attestation.github.io/exercices/promenades-surveillees-europe/">https://l-attestation.github.io/exercices/promenades-surveillees-europe/</a>.
+Boulakia, Théo, and Nicolas Mariot. 2023. <span>“Mortalité en maisons de
+retraite.”</span> October 2, 2023. <a href="https://l-attestation.github.io/exercices/maisons-de-retraite/">https://l-attestation.github.io/exercices/maisons-de-retraite/</a>.
 </div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
