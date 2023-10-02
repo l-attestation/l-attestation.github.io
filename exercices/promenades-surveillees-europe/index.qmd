@@ -16,7 +16,9 @@ draft: false
 ```{r packages}
 library(tidyverse)
 library(here)
+library(huxtable)
 library(rnaturalearth)
+library(tmap)
 ```
 
 ## Télécharger les données
@@ -41,7 +43,56 @@ glimpse(agr)
 
 ## Recoder
 
-```{r}
+```{r agr_mode}
+agr_mode = agr |> 
+  filter(between(date, ymd(20200401), ymd(20200501))) |> 
+  mutate(
+    least_strict_day = str_remove_all(least_strict_day, "b"),
+    least_strict_day = as.numeric(least_strict_day),
+    least_strict_day = case_when(
+      least_strict_day %in% 0:1 ~ "Sorties totalement libres",
+      least_strict_day %in% 2:3 ~ "Sorties à justifier",
+      least_strict_day %in% 4:5 ~ "Excercice physique limité",
+      least_strict_day %in% 6:7 ~ "Excercice physique interdit")
+  ) |> 
+  count(country, least_strict_day) |> 
+  group_by(country) |> 
+  filter(n == max(n)) |> 
+  rename(mode_least_strict_day_april = least_strict_day) |> 
+  select(-n) |> 
+  mutate(
+    wb = countrycode::countrycode(country, origin = "country.name", destination = "wb")
+  ) |> 
+  filter(!country %in% c("Northern Cyprus"))
+```
 
+```{r agr_mode_huxtable}
+agr_mode |> 
+  as_hux() |> 
+  theme_bright()
+```
+
+## Cartographier
+
+```{r europe_sf}
+europe_sf = ne_countries(continent = "europe", returnclass = "sf")
+```
+
+```{r}
+agr_mode_sf = europe_sf |> 
+  mutate(
+    wb = countrycode::countrycode(name, origin = "country.name", destination = "wb")
+  ) |> 
+  left_join(agr_mode, join_by(wb)) |> 
+  select(country, wb, mode_least_strict_day_april)
+```
+
+```{r}
+agr_mode_sf |> 
+  filter(country != "Russia") |> 
+  ggplot() +
+  geom_sf(aes(fill = mode_least_strict_day_april)) +
+  labs(fill = "Situation en avril 2020") +
+  theme_void()
 ```
 

@@ -193,7 +193,7 @@
     "href": "exercices/promenades-surveillees-europe/index.html#charger-les-packages-nécessaires",
     "title": "L’Europe des promenades surveillées",
     "section": "Charger les packages nécessaires",
-    "text": "Charger les packages nécessaires\n\nlibrary(tidyverse)\nlibrary(here)\nlibrary(rnaturalearth)"
+    "text": "Charger les packages nécessaires\n\nlibrary(tidyverse)\nlibrary(here)\nlibrary(huxtable)\nlibrary(rnaturalearth)\nlibrary(tmap)"
   },
   {
     "objectID": "exercices/promenades-surveillees-europe/index.html#télécharger-les-données",
@@ -207,7 +207,14 @@
     "href": "exercices/promenades-surveillees-europe/index.html#recoder",
     "title": "L’Europe des promenades surveillées",
     "section": "Recoder",
-    "text": "Recoder"
+    "text": "Recoder\n\nagr_mode = agr |&gt; \n  filter(between(date, ymd(20200401), ymd(20200501))) |&gt; \n  mutate(\n    least_strict_day = str_remove_all(least_strict_day, \"b\"),\n    least_strict_day = as.numeric(least_strict_day),\n    least_strict_day = case_when(\n      least_strict_day %in% 0:1 ~ \"Sorties totalement libres\",\n      least_strict_day %in% 2:3 ~ \"Sorties à justifier\",\n      least_strict_day %in% 4:5 ~ \"Excercice physique limité\",\n      least_strict_day %in% 6:7 ~ \"Excercice physique interdit\")\n  ) |&gt; \n  count(country, least_strict_day) |&gt; \n  group_by(country) |&gt; \n  filter(n == max(n)) |&gt; \n  rename(mode_least_strict_day_april = least_strict_day) |&gt; \n  select(-n) |&gt; \n  mutate(\n    wb = countrycode::countrycode(country, origin = \"country.name\", destination = \"wb\")\n  ) |&gt; \n  filter(!country %in% c(\"Northern Cyprus\"))\n\n\nagr_mode |&gt; \n  as_hux() |&gt; \n  theme_bright()\n\n\n\n\ncountry\nmode_least_strict_day_april\nwb\n\n\nAlbania\nExcercice physique interdit\nALB\n\n\nAndorra\nExcercice physique interdit\nAND\n\n\nAustria\nSorties à justifier\nAUT\n\n\nBelarus\nSorties totalement libres\nBLR\n\n\nBelgium\nSorties à justifier\nBEL\n\n\nBosnia and Herzegovina\nExcercice physique interdit\nBIH\n\n\nBulgaria\nSorties totalement libres\nBGR\n\n\nCroatia\nSorties totalement libres\nHRV\n\n\nCyprus\nExcercice physique limité\nCYP\n\n\nCzech Republic\nSorties à justifier\nCZE\n\n\nDenmark\nSorties totalement libres\nDNK\n\n\nEstonia\nSorties totalement libres\nEST\n\n\nFinland\nSorties totalement libres\nFIN\n\n\nFrance\nExcercice physique limité\nFRA\n\n\nGermany\nSorties totalement libres\nDEU\n\n\nGreece\nExcercice physique limité\nGRC\n\n\nHungary\nSorties à justifier\nHUN\n\n\nIceland\nSorties totalement libres\nISL\n\n\nIreland\nExcercice physique limité\nIRL\n\n\nItaly\nExcercice physique limité\nITA\n\n\nKosovo\nExcercice physique interdit\nXKX\n\n\nLatvia\nSorties totalement libres\nLVA\n\n\nLiechtenstein\nSorties totalement libres\nLIE\n\n\nLithuania\nSorties totalement libres\nLTU\n\n\nLuxembourg\nSorties à justifier\nLUX\n\n\nMalta\nExcercice physique interdit\nMLT\n\n\nMoldova\nExcercice physique interdit\nMDA\n\n\nMonaco\nSorties à justifier\nMCO\n\n\nMontenegro\nExcercice physique interdit\nMNE\n\n\nNetherlands\nSorties totalement libres\nNLD\n\n\nNorth Macedonia\nExcercice physique interdit\nMKD\n\n\nNorway\nSorties totalement libres\nNOR\n\n\nPoland\nExcercice physique interdit\nPOL\n\n\nPortugal\nExcercice physique interdit\nPRT\n\n\nRomania\nExcercice physique interdit\nROU\n\n\nRussia\nSorties totalement libres\nRUS\n\n\nSan Marino\nExcercice physique interdit\nSMR\n\n\nSerbia\nExcercice physique interdit\nSRB\n\n\nSlovak Republic\nSorties totalement libres\nSVK\n\n\nSlovenia\nSorties à justifier\nSVN\n\n\nSpain\nExcercice physique interdit\nESP\n\n\nSweden\nSorties totalement libres\nSWE\n\n\nSwitzerland\nSorties totalement libres\nCHE\n\n\nTurkey\nExcercice physique interdit\nTUR\n\n\nUkraine\nExcercice physique interdit\nUKR\n\n\nUnited Kingdom\nSorties à justifier\nGBR"
+  },
+  {
+    "objectID": "exercices/promenades-surveillees-europe/index.html#cartographier",
+    "href": "exercices/promenades-surveillees-europe/index.html#cartographier",
+    "title": "L’Europe des promenades surveillées",
+    "section": "Cartographier",
+    "text": "Cartographier\n\neurope_sf = ne_countries(continent = \"europe\", returnclass = \"sf\")\n\n\nagr_mode_sf = europe_sf |&gt; \n  mutate(\n    wb = countrycode::countrycode(name, origin = \"country.name\", destination = \"wb\")\n  ) |&gt; \n  left_join(agr_mode, join_by(wb)) |&gt; \n  select(country, wb, mode_least_strict_day_april)\n\n\nagr_mode_sf |&gt; \n  filter(country != \"Russia\") |&gt; \n  ggplot() +\n  geom_sf(aes(fill = mode_least_strict_day_april)) +\n  labs(fill = \"Situation en avril 2020\") +\n  theme_void()"
   },
   {
     "objectID": "exercices/polices-municipales/index.html",
