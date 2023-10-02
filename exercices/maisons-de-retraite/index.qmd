@@ -28,7 +28,7 @@ Les données sont issues de @comas-herrera2021 et de [l'European Centre for Dise
 @comas-herrera2021 a été mis à jour régulièrement jusqu'à la fin de l'année 2022. Voir la [version la plus récente](https://ltccovid.org/international-living-report-covid-ltc/)
 :::
 
-En France, à l'issue de la première vague, les résidents d'Ehpad représentaient **la moitié des décès** @sanchez2020.
+En France, à l'issue de la première vague, les résidents d'Ehpad représentaient **la moitié des décès** [@sanchez2020].
 
 ::: callout-note
 La base de données de l'INED sur la [démographie des décès par COVID-19](https://dc-covid.site.ined.fr/) comporte une variable identifiant le lieu de décès : hôpitaux ou établissements sociaux et médico-sociaux (ESMS).
