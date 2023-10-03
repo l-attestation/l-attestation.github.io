@@ -43,6 +43,10 @@ Les [données de mobilité de Facebook](https://dataforgood.facebook.com/dfg/too
 
 *Baidu* (l'équivalent chinois de *Google*), ainsi que les opérateurs de téléphonie mobile, ont aussi fourni les leurs. Nous espérons que le large usage que nous en avons fait dans ce livre permettra, en creux et après beaucoup d'autres mises en garde, de réfléchir à leur potentielle dangerosité.
 
+## Sondages
+
+Le [Covid 19 Behaviour Tracker Data Hub](https://github.com/YouGov-Data/covid-19-tracker) constitué par *YouGov* et l'*Imperial College* de Londres contient des données nationalement représentatives pour de nombreux pays (dont le Danemark, la Finlande, la France, l'Allemagne, les Philippines, l'Espagne, l'Italie et la Suède) à partir du **31 mars 2020**.
+
 ## Traces de la violence
 
 On s'est également appuyés sur la presse internationale, les ONG de défense des Droits de l'Homme, ainsi que sur l'Armed Conflicts Locations and Events Dataset (ACLED). Les données du COVID-19 Disorder Tracker de l'ACLED sont téléchargeables sur [cette page](https://acleddata.com/analysis/covid-19-disorder-tracker/) (moyennant la [création d'un compte](https://developer.acleddata.com/)).
