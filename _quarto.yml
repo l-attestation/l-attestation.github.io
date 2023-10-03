@@ -8,7 +8,7 @@ website:
   page-navigation: true
   favicon: COUV_ATTESTATION_PROMO_VOLUME.jpg
   open-graph: true
-  page-footer: "Théo Boulakia et Nicolas Mariot, avec [Quarto](https://quarto.org)"
+  # page-footer: "Théo Boulakia et Nicolas Mariot, avec [Quarto](https://quarto.org)"
   navbar:
     logo: COUV_ATTESTATION_PROMO_VOLUME.jpg
     left:
