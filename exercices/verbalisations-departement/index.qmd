@@ -77,13 +77,6 @@ population_departement = read_excel(population_departement_path,
          !str_detect(code_departement, "DOM"))
 ```
 
-```{r population_departement_huxtable}
-population_departement |> 
-  as_huxtable() |> 
-  set_number_format(NA) |> 
-  huxtable::theme_blue()
-```
-
 ## Rapporter les verbalisations au nombre d'adultes
 
 ```{r recode}
@@ -91,6 +84,15 @@ departements = population_departement |>
   left_join(verbalisations_departement, by = "code_departement") |> 
   mutate(verbalisations_pmla = verbalisations / population_plus_de_15_ans * 1000)
 ```
+
+```{r departements_huxtable}
+departements |> 
+  as_huxtable() |> 
+  set_number_format(NA) |> 
+  huxtable::theme_blue()
+```
+
+Pourquoi les habitants des Pyrénées-Orientales (**29** verbalisations pour 1000 adultes) ont-ils été deux fois plus verbalisés que ceux du Finistère (**15** verbalisations pour 1000 adultes) ? Pourquoi les habitants des Alpes-Maritimes (**44** verbalisations pour 1000 adultes) ont-ils été 4 fois plus verbalisés que ceux du Morbihan, de la Mayenne, de la Vendée ou de la Charente (**11** verbalisations pour 1000 adultes) ?
 
 ## Visualiser le palmarès
 
@@ -137,11 +139,15 @@ outre_mer_sf = departements_sf |> filter(nom_departement %in% outre_mer)
 
 ## Discrétiser
 
-```{r get_breaks}
+La carte sera très différente selon la discrétisation choisie. On peut opter pour une discrétisation par quartiles (quatre classes d'effectifs égaux), pour une discrétisation très simple qui sépare les départements en deux groupes (plus ou moins de 22 verbalisations pour 1000 habitants adultes)
 
-verbalisations_pmla_breaks = mapsf::mf_get_breaks(departements$verbalisations_pmla,
+```{r breaks}
+
+breaks_quartile = mapsf::mf_get_breaks(departements$verbalisations_pmla,
                                                   nbreaks =  4,
                                                   breaks = "quantile")
+
+breaks22 = c(9, 22, 55)
 ```
 
 ## Cartographier
@@ -154,7 +160,7 @@ departements_sf |>
   tm_shape() +
   tm_polygons("verbalisations_pmla",
               palette = rcartocolor::carto_pal(n = 4, name = "Sunset"),
-              breaks = verbalisations_pmla_breaks,
+              breaks = breaks22,
               title = "Verbalisations\npour\n1000 adultes :",
               legend.format = list(digits = 0, text.separator = "-")) +
   tm_shape(outre_mer_sf) +
@@ -162,7 +168,7 @@ departements_sf |>
   tm_compass(type = "8star",
              position = c("RIGHT", "TOP"),
              size = 4) +
-  tm_credits(text = "Données :\nANTAI\nDiscrétisation :\nquartiles",
+  tm_credits(text = "Données :\nANTAI",
              position = c("right", "bottom")) +
   tm_layout(main.title = "L'inégale distribution des amendes",
             main.title.position = "center",
