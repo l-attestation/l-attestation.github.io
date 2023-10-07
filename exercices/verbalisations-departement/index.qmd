@@ -88,8 +88,8 @@ departements = population_departement |>
 ```{r departements_huxtable}
 departements |> 
   select(nom_departement, verbalisations_pmla) |> 
-  as_huxtable() |> 
-  set_number_format(NA) |> 
+  mutate(verbalisations_pmla = round(verbalisations_pmla, 1)) |> 
+  as_huxtable() |>
   huxtable::theme_blue()
 ```
 
