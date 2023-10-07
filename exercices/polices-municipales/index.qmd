@@ -17,7 +17,6 @@ library(tidyverse)
 library(huxtable)
 library(fedmatch)
 library(sf)
-library(tmap)
 ```
 
 ## Récupérer les données
@@ -70,14 +69,14 @@ pm_com = pm |>
                                     str_c("0", code_departement),
                                     code_departement),
          nom_commune_clean = stringi::stri_trans_general(nom_commune, "Latin-ASCII"),
-         nom_commune_clean = clean_strings(nom_commune_clean)) |>
+         nom_commune_clean = clean_strings(nom_commune_clean),
+         population = as.numeric(population)) |>
   select(code_departement, nom_commune_clean, total)
 ```
 
 ```{r glimpse_pm_com}
 glimpse(pm_com)
 ```
-
 
 ## Récupérer la couche cartographique
 
@@ -93,7 +92,7 @@ CARTElette::charger_carte(destfile = here::here("data"),
 Lire la couche cartographique et nettoyer le nom des communes de la même manière que dans la base des polices municipales. La population indiquée est celle comptabilisée par le recensement de 2017.
 
 ```{r read_com_sf}
-com_sf = st_read(here("data", "COM_2020_CARTElette.shp")) |> 
+com_sf = st_read(here("data", "COM_2020_CARTElette.shp"), quiet = T) |> 
   janitor::clean_names() |> 
   select(insee_dep, insee_com, nom_com, population) |> 
   rename(code_departement = insee_dep,
