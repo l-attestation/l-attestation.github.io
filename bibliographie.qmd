@@ -86,4 +86,4 @@ Inutile de poursuivre plus loin cette quête manifestement vaine : de quelques c
 
 ## Surveillance
 
-La revue \_Surveillance & Society\_ a publié en 2021 un [numéro spécial](https://ojs.library.queensu.ca/index.php/surveillance-and-society/issue/view/890) sur les liens entre pandémie de COVID-19 et surveillance de masse. On y trouve notamment un article sur le fonctionnement du "code santé" en Chine [@cassiano2021].
+La revue *Surveillance & Society* a publié en 2021 un [numéro spécial](https://ojs.library.queensu.ca/index.php/surveillance-and-society/issue/view/890) sur les liens entre pandémie de COVID-19 et surveillance de masse. On y trouve notamment un article sur le fonctionnement du "code santé" en Chine [@cassiano2021].
