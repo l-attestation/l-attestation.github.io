@@ -5,6 +5,7 @@ project:
 website:
   title: "L'Attestation"
   site-url: "https://l-attestation.github.io/"
+  google-analytics: "G-9P56MCMK2Z"
   page-navigation: true
   favicon: COUV_ATTESTATION_PROMO_VOLUME.jpg
   open-graph: true
