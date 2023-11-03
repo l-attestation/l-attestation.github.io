@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "L’Attestation",
     "section": "",
-    "text": "Du printemps 2020, chacun d’entre nous garde le souvenir des attestations à remplir, des limites qu’elles imposaient et des vérifications policières qu’elles autorisaient. Pourtant, rares sont les bilans consacrés à ce versant coercitif de l’enfermement national. C’est tout l’enjeu de cette enquête. Pendant 55 jours, les forces de l’ordre firent le vide sur l’ensemble du territoire, y compris dans les espaces naturels que survolaient des drones et des hélicoptères. Assistées par d’improbables auxiliaires et de nombreuses délations, elles procédèrent à 21 millions de contrôles et infligèrent 1,1 million d’amendes. Cette situation où tout le monde, aisé ou pauvre, habitué à donner des ordres ou à en recevoir, était soumis aux mêmes interdits et aux mêmes vérifications, apparaît historiquement singulière. Elle offre l’opportunité d’étudier grandeur nature la production du conformisme (qu’est-ce qu’obéir à l’État ?) et son ancrage social. De la claustration totale au refus des règles, cet ouvrage suit les lignes de conduite qu’empruntèrent les confinés, soumis à une surveillance massive dont on trouvait alors, en Europe et dans le monde, bien peu d’équivalents.\nCe site présente l’enquête, ses sources, ses méthodes et le code informatique des analyses statistiques. Une sélection de courtes vidéos permet de retrouver l’atmosphère de la période."
+    "text": "“L’Attestation renouvelle enfin les banalités éditées que l’on a\n    pu lire sur le confinement.”\n    — Joseph Confavreux Mediapart\nCe site présente l’enquête, ses sources, ses méthodes et le code informatique des analyses statistiques. Une sélection de courtes vidéos permet de retrouver l’atmosphère de la période."
   },
   {
     "objectID": "tables.html",
@@ -642,6 +642,27 @@
     "title": "Bibliographie",
     "section": "Surveillance",
     "text": "Surveillance\nLa revue Surveillance & Society a publié en 2021 un numéro spécial sur les liens entre pandémie de COVID-19 et surveillance de masse. On y trouve notamment un article sur le fonctionnement du “code santé” en Chine (Cassiano, Haggerty, et Bernot 2021)."
+  },
+  {
+    "objectID": "a-propos.html",
+    "href": "a-propos.html",
+    "title": "À propos",
+    "section": "",
+    "text": "Du printemps 2020, chacun d’entre nous garde le souvenir des attestations à remplir, des limites qu’elles imposaient et des vérifications policières qu’elles autorisaient. Pourtant, rares sont les bilans consacrés à ce versant coercitif de l’enfermement national. C’est tout l’enjeu de cette enquête. Pendant 55 jours, les forces de l’ordre firent le vide sur l’ensemble du territoire, y compris dans les espaces naturels que survolaient des drones et des hélicoptères. Assistées par d’improbables auxiliaires et de nombreuses délations, elles procédèrent à 21 millions de contrôles et infligèrent 1,1 million d’amendes. Cette situation où tout le monde, aisé ou pauvre, habitué à donner des ordres ou à en recevoir, était soumis aux mêmes interdits et aux mêmes vérifications, apparaît historiquement singulière. Elle offre l’opportunité d’étudier grandeur nature la production du conformisme (qu’est-ce qu’obéir à l’État ?) et son ancrage social. De la claustration totale au refus des règles, cet ouvrage suit les lignes de conduite qu’empruntèrent les confinés, soumis à une surveillance massive dont on trouvait alors, en Europe et dans le monde, bien peu d’équivalents."
+  },
+  {
+    "objectID": "a-propos.html#résumé",
+    "href": "a-propos.html#résumé",
+    "title": "À propos",
+    "section": "",
+    "text": "Du printemps 2020, chacun d’entre nous garde le souvenir des attestations à remplir, des limites qu’elles imposaient et des vérifications policières qu’elles autorisaient. Pourtant, rares sont les bilans consacrés à ce versant coercitif de l’enfermement national. C’est tout l’enjeu de cette enquête. Pendant 55 jours, les forces de l’ordre firent le vide sur l’ensemble du territoire, y compris dans les espaces naturels que survolaient des drones et des hélicoptères. Assistées par d’improbables auxiliaires et de nombreuses délations, elles procédèrent à 21 millions de contrôles et infligèrent 1,1 million d’amendes. Cette situation où tout le monde, aisé ou pauvre, habitué à donner des ordres ou à en recevoir, était soumis aux mêmes interdits et aux mêmes vérifications, apparaît historiquement singulière. Elle offre l’opportunité d’étudier grandeur nature la production du conformisme (qu’est-ce qu’obéir à l’État ?) et son ancrage social. De la claustration totale au refus des règles, cet ouvrage suit les lignes de conduite qu’empruntèrent les confinés, soumis à une surveillance massive dont on trouvait alors, en Europe et dans le monde, bien peu d’équivalents."
+  },
+  {
+    "objectID": "a-propos.html#les-auteurs",
+    "href": "a-propos.html#les-auteurs",
+    "title": "À propos",
+    "section": "Les auteurs",
+    "text": "Les auteurs\nThéo Boulakia est normalien, doctorant en sociologie (École normale supérieure, Centre Maurice Halbwachs). Ses recherches, qui combinent méthodes ethnographiques et statistiques, portent sur l’élevage, la santé au travail et la surveillance de masse.\nNicolas Mariot est historien et sociologue, directeur de recherche au Centre européen de sociologie et de science politique (CNRS, EHESS et université Paris 1-Panthéon Sorbonne). Les notions d’obéissance et de conformisme sont depuis longtemps au coeur de son travail. Il fait partie du comité de pilotage du projet ANR « La vie en confinement » (Vico), dont les données constituent une partie du matériau utilisé dans ce livre. Il est l’auteur de nombreux ouvrages, parmi lesquels : Intellectuels empêchés. Ou comment penser dans l’épreuve (dir. avec Brigitte Gaïti, ENS Éditions, 2021), Histoire d’un sacrifice. Robert, Alice et la guerre (Seuil, 2017), Tous unis dans la tranchée ? 1914-1918, les intellectuels rencontrent le peuple (Seuil, 2013) ou Face à la persécution. 991 Juifs dans la guerre (avec Claire Zalc, Odile Jacob, 2010)."
   },
   {
     "objectID": "films.html",

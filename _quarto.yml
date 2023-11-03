@@ -21,6 +21,7 @@ website:
       - donnees-mondiales.qmd
       - exercices.qmd
       - bibliographie.qmd
+      - a-propos.qmd
 
 format:
   html:
