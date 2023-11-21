@@ -8,7 +8,7 @@ title: "À propos"
 
 **Nicolas Mariot** est historien et sociologue, directeur de recherche au Centre européen de sociologie et de science politique (CNRS, EHESS et université Paris 1-Panthéon Sorbonne). Les notions d'obéissance et de conformisme sont depuis longtemps au coeur de son travail. Il fait partie du comité de pilotage du projet ANR « La vie en confinement » (Vico), dont les données constituent une partie du matériau utilisé dans ce livre. Il est l'auteur de nombreux ouvrages, parmi lesquels : *Intellectuels empêchés. Ou comment penser dans l'épreuve* (dir. avec Brigitte Gaïti, ENS Éditions, 2021), *Histoire d'un sacrifice. Robert, Alice et la guerre* (Seuil, 2017), *Tous unis dans la tranchée ? 1914-1918, les intellectuels rencontrent le peuple* (Seuil, 2013) ou *Face à la persécution. 991 Juifs dans la guerre* (avec Claire Zalc, Odile Jacob, 2010).
 
-## Presse
+## Réception
 
 ### Mediapart
 
@@ -17,3 +17,13 @@ title: "À propos"
 ### Le Monde
 
 [Entretien](https://www.lemonde.fr/idees/article/2023/11/06/le-covid-19-trois-ans-apres-avec-l-attestation-de-sortie-en-france-il-y-a-eu-une-forme-de-suivisme_6198467_3232.html) paru le 7 novembre 2023.
+
+### Au poste
+
+```{=html}
+<iframe title="«L’attestation. Une expérience d’obéissance de masse, printemps 2020». Avec Théo Boulakia &amp; Nicolas Mariot" width="560" height="315" src="https://video.davduf.net/videos/embed/2638aabd-e33d-4b2a-ae27-15d773e398fe" frameborder="0" allowfullscreen="" sandbox="allow-same-origin allow-scripts allow-popups"></iframe>
+```
+
+### Libération
+
+![Entretien paru le 18 novembre 2023](libe_article.jpg)
