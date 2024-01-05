@@ -10,19 +10,19 @@ Il nous faut débuter l'inventaire en évoquant l'étude « La Vie en confinem
 On trouvera sur [ce site](https://vico.hypotheses.org/a-propos) toutes les informations nécessaires sur l'enquête.
 :::
 
-Interpellés par le caractère trans-classes des mesures prises, surpris par la mise en place de l'attestation, nous étions résolus à lancer une investigation dans le temps même de l'évènement -- au jour le jour et non après coup, lorsqu'on a le recul du temps, il est important de le souligner. Faute de trouver un panel de sondage existant qui aurait accepté d'inclure quelques questions portant sur l'obéissance et la triche dans les usages de la fiche gouvernementale, nous avons fait le choix, avec quelques collègues, d'établir dans l'urgence un questionnaire qu'on diffuserait par nos propres moyens. 
+Interpellés par le caractère trans-classes des mesures prises, surpris par la mise en place de l'attestation, nous étions résolus à lancer une investigation dans le temps même de l'évènement -- au jour le jour et non après coup, lorsqu'on a le recul du temps, il est important de le souligner. Faute de trouver un panel de sondage existant qui aurait accepté d'inclure quelques questions portant sur l'obéissance et la triche dans les usages de la fiche gouvernementale, nous avons fait le choix, avec quelques collègues, d'établir dans l'urgence un questionnaire qu'on diffuserait par nos propres moyens.
 
 Bien nous en a pris : grâce à l'aide précieuse d'un réseau d'enseignants des facultés de sociologie qui ont relayé l'enquête auprès des étudiants et de leurs familles, mais aussi et surtout des **rédactions de quotidiens de la presse régionale** qui ont accepté de mettre notre questionnaire en ligne sur leurs sites internet, plus de 16 000 personnes y ont répondu de manière complète et exploitable. Ce sont ces réponses qui nous permettent d'identifier les réactions individuelles aux règles mises en place.
 
 ## Remarques libres
 
-Mais VICO a un atout supplémentaire, celui d'ajouter à ces réponses quantifiables aux questions soulevées par l'enquêteur, des développements beaucoup moins contraints puisque laissés à l'initiative des répondants. Ceux-ci avaient en effet l'opportunité, dans un dernier effort au terme du questionnaire, de proposer un commentaire de leur choix dans une case dévolue à cet objectif. 
+Mais VICO a un atout supplémentaire, celui d'ajouter à ces réponses quantifiables aux questions soulevées par l'enquêteur, des développements beaucoup moins contraints puisque laissés à l'initiative des répondants. Ceux-ci avaient en effet l'opportunité, dans un dernier effort au terme du questionnaire, de proposer un commentaire de leur choix dans une case dévolue à cet objectif.
 
-Or parmi les 16 000 répondants, **pas moins de 3000** ont accepté de dire leur sentiment sur l'étrange expérience qu'ils étaient en train de vivre, souvent en quelques lignes, parfois plus longuement. 
+Or parmi les 16 000 répondants, **pas moins de 3000** ont accepté de dire leur sentiment sur l'étrange expérience qu'ils étaient en train de vivre, souvent en quelques lignes, parfois plus longuement.
 
-Les thèmes abordés sont on ne peut plus variés. Certains parlent de la difficulté d'occuper leurs enfants, de leurs problèmes de sommeil, du bruit des voisins, des avantages ou des inconvénients du télétravail. D'autres évoquent leurs loisirs, la manière dont ils occupent leurs journées, les privilèges dont le confinement leur fait prendre conscience : avoir une maison, un jardin, un chien. 
+Les thèmes abordés sont on ne peut plus variés. Certains parlent de la difficulté d'occuper leurs enfants, de leurs problèmes de sommeil, du bruit des voisins, des avantages ou des inconvénients du télétravail. D'autres évoquent leurs loisirs, la manière dont ils occupent leurs journées, les privilèges dont le confinement leur fait prendre conscience : avoir une maison, un jardin, un chien.
 
-Beaucoup confient leur ennui, leur solitude lancinante, le temps qui s'étire et perd son sens, les jours qui se ressemblent, les chantiers annulés, les aides publiques auxquelles ils n'ont pas droit. Il y aussi les commentaires pleins de colère sur la gestion de la crise par le gouvernement et de sa couverture par les médias, l'angoisse de se faire contrôler par la police, l'exaspération que suscite l'attestation de sortie. 
+Beaucoup confient leur ennui, leur solitude lancinante, le temps qui s'étire et perd son sens, les jours qui se ressemblent, les chantiers annulés, les aides publiques auxquelles ils n'ont pas droit. Il y aussi les commentaires pleins de colère sur la gestion de la crise par le gouvernement et de sa couverture par les médias, l'angoisse de se faire contrôler par la police, l'exaspération que suscite l'attestation de sortie.
 
 Sans compter, enfin, tous les gens qui dénoncent les infractions au confinement des voisins, demandent des précisions sur les règles de sortie ou regrettent de ne pas être « dans les cases » du questionnaire. Rassemblées, ces remarques composent **un recueil de quelques 500 pages** : elles constituent un matériau d'une rare richesse que nous avons mobilisé tout au long du livre.
 
@@ -34,26 +34,25 @@ La force de cette source tient à ce que les gens ont évoqué ce qui leur tenai
 
 Ces différentes sources sont mobilisées tout au long de la seconde partie du livre, celle qui s'intéresse aux logiques de la conformation. Mais, pour enquêter sur l'activité policière, nous avions besoin d'autres données, et notamment des chiffres territorialisés des verbalisations et des contrôles. En la matière la situation est contrastée. Pour ce qui concerne les amendes, les données par département sont systématiques puisque nous disposons des chiffres enregistrés par l'Agence Nationale de Traitement Automatisé des Infractions (ANTAI), et tardivement rendus publics grâce à l'opiniâtreté du journaliste Alexandre Léchenet [-@lechenet2021].
 
-En revanche, nous ne disposons pas d'une distribution départementale équivalente pour ce qui concerne les totalisations des contrôles, les services du Ministère de l'Intérieur ne les ayant jamais rendues publiques. Or ces données des contrôles sont a priori les plus importantes au sens où, comme on l'a vu, c'est l'universalité potentielle des vérifications, plus que l'importance des amendes, qui constitue la véritable « nouveauté » induite par le confinement en matière d'ordre public. 
+En revanche, nous ne disposons pas d'une distribution départementale équivalente pour ce qui concerne les totalisations des contrôles, les services du Ministère de l'Intérieur ne les ayant jamais rendues publiques. Or ces données des contrôles sont a priori les plus importantes au sens où, comme on l'a vu, c'est l'universalité potentielle des vérifications, plus que l'importance des amendes, qui constitue la véritable « nouveauté » induite par le confinement en matière d'ordre public.
 
 Pour résorber ce manque, nous avons déployé d'importants efforts pour rassembler les chiffres livrés dans la presse ou sur les réseaux sociaux, au printemps 2020, par les préfectures et les mairies qui avaient alors fait le choix de « communiquer ». Grâce à ce travail, nous disposons, au terme de la récolte, d'une solide base de données rassemblant les chiffres des vérifications rendus publics pour la gendarmerie, la police nationale et la police municipale, ensemble ou séparément, à différentes dates et pour 22 villes et 60 départements de métropole. Ces chiffres montrent d'impressionnantes différences de traitement selon les territoires. Certaines sont relativement attendues. Il aurait été pour le moins bizarre de s'acharner à verbaliser les habitants de la Lozère, par exemple. D'autres posent davantage de questions.
 
-::: {.callout-note}
+::: callout-note
 ## Exemple
 
 La **Sarthe** est un exemple particulièrement bien documenté, le préfet ayant donné les chiffres des contrôles et verbalisations tout au long du confinement. Le 19 mars, deux jours après le début du confinement, on comptait déjà 10 000 contrôles, pour 119 verbalisations [@mutricy2020]. Le 30 avril : 294 104 contrôles pour 6 129 verbalisations [@fernand2020]. Le 11 mai : **335 000 contrôles** pour 6800 verbalisations [@lateur2020]. Est-ce beaucoup par rapport aux autres départements ? Est-ce sévère ? Le chapitre "La police des sorties" répond à ces questions. *Note* : En 2020, la Sarthe comptait **465 515 habitants** de plus de 15 ans.
 :::
 
-::: {.callout-tip}
+::: callout-tip
 ## Les verbalisations multiples
 
-D'après le service statistique du ministère de l'Intérieur, **5 500** "infractions délictuelles au confinement", correspondant à plus de 3 violations dans un délai de 30 jours,  ont été enregistrées entre le 23 mars et le 31 mai 2020. Cette
-infraction est passible d’une peine d’emprisonnement maximale de **6 mois** et d’une amende de **3 750 euros** [@delobel2020].
+D'après le service statistique du ministère de l'Intérieur, **5 500** "infractions délictuelles au confinement", correspondant à plus de 3 violations dans un délai de 30 jours, ont été enregistrées entre le 23 mars et le 31 mai 2020. Cette infraction est passible d'une peine d'emprisonnement maximale de **6 mois** et d'une amende de **3 750 euros** [@delobel2020].
 :::
 
 ## Entretiens de Marion Guénot
 
-L'étude de l'activité des forces de l'ordre a également bénéficié de l'apport d'une enquête menée à l'automne 2020 par une chercheuse au Centre de Recherches sur le Droit et les Institutions Pénales, Marion Guénot, que nous remercions chaleureusement pour son aide précieuse. L'étude visait à comprendre en quoi le confinement avait transformé les pratiques quotidiennes des forces de l'ordre. 
+L'étude de l'activité des forces de l'ordre a également bénéficié de l'apport d'une enquête menée à l'automne 2020 par une chercheuse au Centre de Recherches sur le Droit et les Institutions Pénales, Marion Guénot, que nous remercions chaleureusement pour son aide précieuse. L'étude visait à comprendre en quoi le confinement avait transformé les pratiques quotidiennes des forces de l'ordre.
 
 En acceptant avec gentillesse de mettre ses données (non encore publiées) à notre disposition (extraits d'entretiens anonymisés et résultats d'un questionnaire diffusé en interne), notre collègue nous a permis de retourner le miroir de notre propre enquête en accédant au regard portés par les policiers eux-mêmes sur les tâches de surveillance de la présence humaine dans l'espace public qui constituaient alors l'essentiel de leur activité. Ils ne sont pas tous enthousiastes.
 
@@ -65,13 +64,13 @@ Elles racontent le quadrillage du terrain par les forces de l'ordre, les verbali
 
 Après de premiers coups de sonde fructueux, l'investigation a pris un tour systématique : armés de quelques mots clés, nous avons interrogé un moteur de recherche pour chaque département métropolitain, et pour la période allant du 16 mars au 30 mai 2020. Ces histoires, qui pour la plupart ne dépassent pas 500 mots, ont tout de petites fables de circonstance, mettant en scène les dangers que présentent les transgressions du confinement.
 
-::: {.callout-tip}
+::: callout-tip
 ## Exemples de mots clés
 
 confinement + barbecue, contrôle, course-poursuite, délation, drones, hélicoptère, pêcheur, pique-nique, plage, randonneur, rebelle, récalcitrant, sanglier, traque, triche, vidéo-surveillance.
 :::
 
-> "Sur la plage abandonnée"… Ce goéland en train de couver ses œufs semble connaître la chanson. Capturé par l’objectif du photographe niçois Valéry Hache, le volatile, seul sur les galets d’une promenade des Anglais désertée, a profité du confinement pour installer son nid juste en face de la mer. (...) "Quelques secondes plus tard, un drone est passé au-dessus de la plage et le goéland s’est envolé, poursuit Valéry Hache. J’en ai profité pour avancer. Il y avait deux œufs déjà assez gros dans un enchevêtrement assez sommaire de morceaux de bois et de tissus." Le journaliste refait quelques photos et s’écarte à nouveau pour ne "pas perturber davantage" cette nature qui a repris ses droits grâce au confinement. [@binacchi2020a]
+> "Sur la plage abandonnée"... Ce goéland en train de couver ses œufs semble connaître la chanson. Capturé par l'objectif du photographe niçois Valéry Hache, le volatile, seul sur les galets d'une promenade des Anglais désertée, a profité du confinement pour installer son nid juste en face de la mer. (...) "Quelques secondes plus tard, un drone est passé au-dessus de la plage et le goéland s'est envolé, poursuit Valéry Hache. J'en ai profité pour avancer. Il y avait deux œufs déjà assez gros dans un enchevêtrement assez sommaire de morceaux de bois et de tissus." Le journaliste refait quelques photos et s'écarte à nouveau pour ne "pas perturber davantage" cette nature qui a repris ses droits grâce au confinement. [@binacchi2020a]
 
 Elles renseignent sur au moins trois choses qui nous intéressent au premier chef. Ce sont d'abord les moyens mis en œuvre pour la surveillance de la population. Grâce à elles, nous avons pu documenter l'usage systématique des drones, des hélicoptères et des caméras de surveillance. Ensuite, elles montrent qu'un certain nombre de personnes ont continué à braver les interdits tout au long du confinement. Enfin, elles documentent la politique de communication des autorités et ses relais médiatiques.
 
@@ -95,3 +94,7 @@ Ailleurs encore, elles commentent leurs succès sur les réseaux sociaux, voire 
 Très souvent, elles ont pu alors s'appuyer sur la presse locale pour relayer leur message, tout particulièrement dans le cadre d'innombrables publireportages dans lesquels le journaliste « *embeded* » les montrait au travail, sur terre ou dans les airs, en train de surveiller et de contrôler celles et ceux qui s'aventuraient encore dans l'espace public. L'article publié dans le *Berry Républicain* le 2 avril est en ce sens exemplaire. Le localier est invité à assister au premier déploiement de drone dans le ciel de la Préfecture du Cher, en présence de la directrice départementale de la sécurité publique. Sous l'ensemble des images et de la vidéo qui illustrent l'article, le « crédit photographique » indique : « SRPJ Orléans » [@letreulle2020].
 
 Nombre de quotidiens ou d'hebdomadaires, qu'ils soient nationaux ou régionaux, ne se sont guère écartés de cette ligne de promotion du travail de l'État. À de rares exceptions près, ils se sont en quelque sorte auto-institués, à l'instar de très nombreuses municipalités, comme relais et bras droit des autorités pour diffuser et rappeler les mesures prises dans le cadre de l'état d'urgence. Une des manifestations les plus frappantes de la couverture médiatique des évènements du printemps 2020 tient ainsi à la récurrence de ces reportages réalisés aux côtés des forces de l'ordre.
+
+## Géographie sécuritaire
+
+-   [Palmarès](https://docs.google.com/spreadsheets/d/1Vkl6wNx-LmpwOy7aWFdieAWXeTpqUYNGnIFPAtu-AZ4/edit#gid=396876962) des grandes villes françaises les plus vidéo-surveillées en 2020.
