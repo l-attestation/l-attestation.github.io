@@ -23,7 +23,18 @@ title: "À propos"
 ```{=html}
 <iframe title="«L’attestation. Une expérience d’obéissance de masse, printemps 2020». Avec Théo Boulakia &amp; Nicolas Mariot" width="560" height="315" src="https://video.davduf.net/videos/embed/2638aabd-e33d-4b2a-ae27-15d773e398fe" frameborder="0" allowfullscreen="" sandbox="allow-same-origin allow-scripts allow-popups"></iframe>
 ```
-
 ### Libération
 
 ![Entretien paru le 18 novembre 2023](libe_article.jpg)
+
+### Paroles d'histoire
+
+{{< video https://youtu.be/8-mpQUmO2Rg?si=sGjPuUoJJ3jmTfa3 >}}
+
+### Collateral
+
+Un [article](https://www.collateral.media/post/théo-boulakia-et-nicolas-mariot-l-etat-policier-en-temps-de-confinement-l-attestation) de Luis Teixeira.
+
+```{=html}
+<iframe width="780" height="500" src="https://www.collateral.media/post/th%C3%A9o-boulakia-et-nicolas-mariot-l-etat-policier-en-temps-de-confinement-l-attestation" title="Article de Luis Teixeira"></iframe>
+```
