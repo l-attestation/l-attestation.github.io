@@ -7,12 +7,9 @@ library(tarchetypes)
 
 options(tidyverse.quiet = TRUE)
 
-tar_option_set(packages = c("tidyverse", "readxl", "readODS", "janitor", "magrittr",
-                            "lubridate", "ggrepel", "questionr",
-                            "tidytext", "udpipe", "pdftools",
-                            "sf", "cartography", "rcartocolor",
-                            "broom", "FactoMineR", "dendextend",
-                            "knitr", "kableExtra"))
+tar_option_set(packages = c("tidyverse", "readxl", "readODS", "janitor",
+                            "lubridate", "ggrepel",
+                            "sf", "cartography", "rcartocolor"))
 
 tar_plan(
   
@@ -20,10 +17,10 @@ tar_plan(
   
   tar_file(agr_file, here::here("data", "agr.rds")),
   tar_file(excess_mortality_file, here::here("data", "excess_mortality.rds")),
-  tar_file(google_mobility_file, here::here("data", "google_mobility_country.rds")),
+  tar_file(google_file, here::here("data", "google_mobility_country.rds")),
   tar_file(oxcgrt_file, here::here("data", "oxcgrt.rds")),
   tar_file(wb_file, here::here("data", "oxcgrt.rds")),
-  tar_file(policiers_europe_file, here::here("data", "crim_just_job.rds")),
+  tar_file(police_europe_file, here::here("data", "crim_just_job.rds")),
   tar_file(exceptius_file, here::here("data", "indicateurs exceptius paper01.xlsx")),
   tar_file(apple_file, here::here("data", "apple.rds")),
   
@@ -41,9 +38,7 @@ tar_plan(
   
   # World Bank----------
   
-  wb = read_rds(here("data", "wb.rds")),
-  
-  wb_recode = wb |>
+  wb = read_rds(wb_file) |>
     mutate(country = str_replace(country, "Turkiye", "Turkey"),
            wb = countrycode(country, origin = "country.name", destination = "wb")) |>
     rename(year = date) |>
@@ -51,8 +46,8 @@ tar_plan(
   
   # OxCGRT Stringency index--------
   
-  oxcgrt_recode = oxcgrt |>
-    clean_names() |>
+  oxcgrt = read_rds(oxcgrt_file) |>
+    janitor::clean_names() |>
     mutate(date = ymd(date),
            wb = countrycode(country_name, origin = "country.name", destination = "wb"),
            national_or_subnational_saho = case_when(c6m_stay_at_home_requirements %in% 0:1 ~ 0,
@@ -90,19 +85,16 @@ tar_plan(
   
   # Google ------
   
-  google_recode = google |>
-    
+  google = read_rds(google_file) |>
     mutate(date = ymd(date),
            wb = countrycode(country_region, origin = "country.name.en", destination = "wb")) |>
-    
     filter(is.na(sub_region_1),
            is.na(sub_region_2)) |>
-    
     select(wb, date, ends_with("_baseline")),
   
   # Excess mortality------
   
-  excess_mortality_recode = excess_mortality |>
+  excess_mortality = read_rds(excess_mortality_file) |>
     mutate(date = ymd(date),
            wb = countrycode(location, origin = "country.name.en", destination = "wb")) |>
     select(wb,
@@ -114,7 +106,7 @@ tar_plan(
   
   # Police Europe--------
   
-  police_europe = read_rds(policiers_europe_file) |>
+  police_europe = read_rds(police_europe_file) |>
     pivot_wider(names_from = c(sex, isco08, unit), values_from = "values",
                 names_repair = make_clean_names) |>
     complete(geo, time) |>
@@ -131,7 +123,7 @@ tar_plan(
            ends_with("number") &
              contains("police")),
   
-  wb_police_europe_pcmh = wb_recode |>
+  wb_police_europe_pcmh = wb |>
     left_join(police_europe) |>
     mutate(policiers_pcm_habitants = total_police_officers_number / population * 100000) |>
     group_by(wb) |>
@@ -140,20 +132,20 @@ tar_plan(
   
   # AGR-------
   
-  agr_recode = agr |>
+  agr = read_rds(agr_file) |>
     mutate(date = ymd(date),
            wb = countrycode(country, origin = "country.name", destination = "wb")) |>
     select(-country),
   
-  agr_mode = agr_recode |>
+  agr_mode = agr |>
     filter(between(date, ymd(20200401), ymd(20200501))) |>
     mutate(least_strict_day = str_remove_all(least_strict_day, "b"),
            least_strict_day = as.numeric(least_strict_day),
            least_strict_day = case_when(
              least_strict_day %in% 0:1 ~ "Sorties totalement libres",
-                                        least_strict_day %in% 2:3 ~ "Sorties à justifier",
-                                        least_strict_day %in% 4:5 ~ "Excercice physique limité",
-                                        least_strict_day %in% 6:7 ~ "Excercice physique interdit")) |>
+             least_strict_day %in% 2:3 ~ "Sorties à justifier",
+             least_strict_day %in% 4:5 ~ "Excercice physique limité",
+             least_strict_day %in% 6:7 ~ "Excercice physique interdit")) |>
     count(wb, least_strict_day) |>
     group_by(wb) |>
     filter(n == max(n)) |>
@@ -171,7 +163,7 @@ tar_plan(
   
   ## Country-Date-----------
   
-  world_country_date = oxcgrt_recode |>
+  world_country_date = oxcgrt |>
     left_join(agr) |>
     left_join(google) |>
     left_join(apple) |>
@@ -228,39 +220,39 @@ tar_plan(
   ## Stringency Index-------
   
   stringency_index_plot = world_summarise |>
-    
+
     filter(continent == "Europe",
            !is.na(stringency_index_average)) |>
-    
+
     mutate(pays = str_wrap(pays, 5, whitespace_only = F),
            pays = fct_reorder(pays, stringency_index_average)) |>
-    
-    ggplot(aes(y = stringency_index_average, x = pays)) +
-    
+
+    ggplot2::ggplot(aes(y = stringency_index_average, x = pays)) +
+
     geom_hline(
       aes(yintercept = y),
       data.frame(y = c(0:9) * 10),
       color = "lightgrey"
     ) +
-    
+
     geom_bar(stat = "identity",
              # colour = "red"
     ) +
-    
+
     scale_y_continuous(
       limits = c(-10, 110),
       expand = c(0, 0),
       breaks = NULL) +
-    
+
     coord_polar(start = 0) +
-    
+
     labs(x = "",
          y = "",
          title = "Ampleur des restrictions dans les États européens,\nentre le 1er mars et le 1er juin 2020",
          subtitle = "Maximale en Italie, au Kosovo et en France,\nminimale en Biélorussie, en Islande et en Lettonie",
          # subtitle = str_glue("Entre le {format(date_beginn, '%d %B %Y')} et le {format(date_end, '%d %B %Y')}"),
          caption = "Données : Stringency Index, Oxford Covid-19 Government Response Tracker (OxCGRT)") +
-    
+
     theme(axis.text = element_text(size = 7),
           legend.position = "none"),
   
@@ -268,7 +260,7 @@ tar_plan(
   
   exceptius_plot = world_summarise |>
     
-    ggplot(aes(x = score_decrets, y = score_controle)) +
+    ggplot2::ggplot(aes(x = score_decrets, y = score_controle)) +
     
     geom_point(alpha = 0.6) +
     
@@ -297,23 +289,23 @@ tar_plan(
   ## Parks average------------
   
   parks_average_plot = world_summarise |>
-    
+
     filter(continent == "Europe",
            !is.na(parks_percent_change_from_baseline)) |>
-    
+
     mutate(pays = fct_reorder(pays, desc(parks_percent_change_from_baseline))) |>
-    
-    ggplot(aes(y = pays, x = parks_percent_change_from_baseline)) +
-    
+
+    ggplot2::ggplot(aes(y = pays, x = parks_percent_change_from_baseline)) +
+
     geom_bar(stat="identity",
              alpha = 1) +
-    
+
     labs(x = "Fréquentation des espaces verts du 1er mars au 1er juin par rapport à janvier 2020 (%)",
          y = "",
          title = "Européens à l'air libre au Nord, enfermés au Sud et à l'Est",
          subtitle = "La fréquentation des espaces verts *baisse* de 50% en Italie et *augmente* de 80% au Danemark",
          caption = "Données : Google Mobility Reports") +
-    
+
     theme(plot.subtitle = element_markdown()),
   
   ## Parks evolution-------
@@ -328,7 +320,7 @@ tar_plan(
     
     filter(pays %in% selection_pays_europe) |>
     
-    ggplot(aes(x = date, y = parks_roll7)) +
+    ggplot2::ggplot(aes(x = date, y = parks_roll7)) +
     
     geom_line() +
     
@@ -342,15 +334,15 @@ tar_plan(
   
   ## Police Europe---------
   
-  world_summarise |>
-    
+  police_europe_plot = world_summarise |>
+
     filter(continent == "Europe",
            !is.na(policiers_pcm_habitants)) |>
-    
+
     mutate(pays = fct_reorder(pays, policiers_pcm_habitants)) |>
-    
-    ggplot(aes(y = pays, x = policiers_pcm_habitants)) +
-    
+
+    ggplot2::ggplot(aes(y = pays, x = policiers_pcm_habitants)) +
+
     geom_bar(stat = "identity"),
   
   ## Fariss & Parks--------
@@ -360,7 +352,7 @@ tar_plan(
     filter(!is.na(policiers_pcm_habitants),
            !pays %in% c("Turquie", "Luxembourg")) |>
     
-    ggplot(aes(x = hr_fariss, y = parks_percent_change_from_baseline)) +
+    ggplot2::ggplot(aes(x = hr_fariss, y = parks_percent_change_from_baseline)) +
     
     geom_point() +
     
@@ -377,7 +369,7 @@ tar_plan(
   
   police_parks_plot = world_summarise |>
     
-    ggplot(aes(x = policiers_pcm_habitants, y = parks_percent_change_from_baseline)) +
+    ggplot2::ggplot(aes(x = policiers_pcm_habitants, y = parks_percent_change_from_baseline)) +
     
     geom_point() +
     
@@ -401,7 +393,7 @@ tar_plan(
            mode_least_strict_day_april = fct_reorder(mode_least_strict_day_april,
                                                      policiers_pcm_habitants)) |>
     
-    ggplot(aes(x = mode_least_strict_day_april,
+    ggplot2::ggplot(aes(x = mode_least_strict_day_april,
                y = policiers_pcm_habitants)) +
     
     geom_boxplot(varwidth = TRUE) +
@@ -420,7 +412,7 @@ tar_plan(
   
   indice_p_score_plot = world_summarise |>
     left_join(world_composite_score) |>
-    ggplot(aes(x = indice_enfermement, y = p_score)) +
+    ggplot2::ggplot(aes(x = indice_enfermement, y = p_score)) +
     geom_point() +
     geom_text_repel(aes(label = pays), family = geom_fontfamily, size = 3) +
     labs(title = "Où passer le prochain ?",
