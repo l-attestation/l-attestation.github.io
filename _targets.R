@@ -23,6 +23,7 @@ tar_plan(
   tar_file(police_europe_file, here::here("data", "crim_just_job.rds")),
   tar_file(exceptius_file, here::here("data", "indicateurs exceptius paper01.xlsx")),
   tar_file(apple_file, here::here("data", "apple.rds")),
+  tar_file(fariss_file, here::here("data", "HumanRightsProtectionScores_v4.01.csv")),
   
   # Dates--------
   
@@ -82,6 +83,12 @@ tar_plan(
   
   # Fariss---------
   
+  fariss = read_csv(fariss_file) |>
+    janitor::clean_names() |>
+    filter(year == 2019) |>
+    rename(hr_fariss = theta_mean)  |> 
+    mutate(countrycode(country_name, origin = "country.name", destination = "wb")) |> 
+    select(wb, hr_fariss),
   
   # Google ------
   
@@ -190,7 +197,7 @@ tar_plan(
     left_join(wb_police_europe_pcmh) |>
     left_join(agr_mode) |>
     left_join(exceptius) |>
-    left_join(barcelo) |>
+    left_join(fariss) |>
     mutate(pays = countrycode(wb, origin = "wb", destination = "country.name.fr"),
            pays = if_else(wb == "MNE", "Monténégro", pays),
            pays = if_else(wb == "MKD", "Macédoine du Nord", pays)) |>
