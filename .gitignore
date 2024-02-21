@@ -7,5 +7,6 @@ l-attestation.github.io.Rproj
 /.quarto/
 /data
 /_freeze
+/_targets
 
 references.json
