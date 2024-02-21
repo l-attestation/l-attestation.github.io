@@ -91,7 +91,7 @@ tar_plan(
     janitor::clean_names() |>
     filter(year == 2019) |>
     rename(hr_fariss = theta_mean)  |> 
-    mutate(countrycode(country_name, origin = "country.name", destination = "wb")) |> 
+    mutate(wb = countrycode(country_name, origin = "country.name", destination = "wb")) |> 
     select(wb, hr_fariss),
   
   # Google ------
@@ -120,7 +120,7 @@ tar_plan(
   
   police_europe = read_rds(police_europe_file) |>
     pivot_wider(names_from = c(sex, isco08, unit), values_from = "values",
-                names_repair = make_janitor::clean_names) |>
+                names_repair = janitor::make_clean_names) |>
     complete(geo, time) |>
     mutate(geo = if_else(geo %in% c("Scotland", "England and Wales", "Northern Ireland (UK)"),
                          "United Kingdom", geo)) |>
@@ -315,7 +315,7 @@ tar_plan(
          subtitle = "La fréquentation des espaces verts *baisse* de 50% en Italie et *augmente* de 80% au Danemark",
          caption = "Données : Google Mobility Reports") +
 
-    theme(plot.subtitle = element_markdown()),
+    theme(plot.subtitle = ggtext::element_markdown()),
   
   ## Parks evolution-------
   
@@ -325,7 +325,7 @@ tar_plan(
     
     mutate(pays = countrycode(wb, origin = "wb", destination = "country.name.fr"),
            pays = fct_relevel(pays, selection_pays_europe),
-           parks_roll7 = rollmean(parks_percent_change_from_baseline, k = 7, fill = NA)) |>
+           parks_roll7 = zoo::rollmean(parks_percent_change_from_baseline, k = 7, fill = NA)) |>
     
     filter(pays %in% selection_pays_europe) |>
     
@@ -361,7 +361,7 @@ tar_plan(
     filter(!is.na(policiers_pcm_habitants),
            !pays %in% c("Turquie", "Luxembourg")) |>
     
-    ggplot2::ggplot(aes(x = hr_fariss, y = parks_percent_change_from_baseline)) +
+    ggplot(aes(x = hr_fariss, y = parks_percent_change_from_baseline)) +
     
     geom_point() +
     
@@ -377,15 +377,10 @@ tar_plan(
   ## Police & Parks---------
   
   police_parks_plot = world_summarise |>
-    
-    ggplot2::ggplot(aes(x = policiers_pcm_habitants, y = parks_percent_change_from_baseline)) +
-    
+    ggplot(aes(x = policiers_pcm_habitants, y = parks_percent_change_from_baseline)) +
     geom_point() +
-    
     geom_text_repel(aes(label = pays), family = geom_fontfamily, size = 3) +
-    
     scale_x_continuous(limits = c(130, 510)) +
-    
     labs(title = "Plus les États européens comptaient de policiers par habitant,\nplus ils ont enfermé leur population",
          x = "Policiers et assimilés pour 100 000 habitants",
          y = "Fréquentation des espaces verts du 1er mars au 1er juin\npar rapport à janvier 2020 (%)",
@@ -394,27 +389,20 @@ tar_plan(
   ## AGR & Police-----------
   
   agr_police_plot = world_summarise |>
-    
     filter(!is.na(mode_least_strict_day_april),
            !is.na(policiers_pcm_habitants)) |>
-    
     mutate(mode_least_strict_day_april = str_wrap(mode_least_strict_day_april, 5),
            mode_least_strict_day_april = fct_reorder(mode_least_strict_day_april,
                                                      policiers_pcm_habitants)) |>
-    
-    ggplot2::ggplot(aes(x = mode_least_strict_day_april,
+    ggplot(aes(x = mode_least_strict_day_april,
                y = policiers_pcm_habitants)) +
-    
     geom_boxplot(varwidth = TRUE) +
-    
     geom_label_repel(aes(label = pays), family = geom_fontfamily, size = 2.5) +
-    
     labs(title = "La concentration policière augmente avec le niveau des restrictions",
          subtitle = "La France est dans le petit groupe des pays à attestation",
          y = "Policiers et assimilés pour 100 000 habitants",
          x = "",
          caption = "Données : A Good Reason & Eurostat") +
-    
     theme(axis.text.x = element_text(face= "bold")),
   
   ## Indice and p_score--------
