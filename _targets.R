@@ -27,7 +27,7 @@ tar_plan(
   
   # Font Family-----
   
-  geom_fontfamily = "Helvetica",
+  geom_fontfamily = "Serif",
   
   # Dates--------
   
