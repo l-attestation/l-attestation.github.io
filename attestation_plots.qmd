@@ -1,0 +1,122 @@
+---
+title: "L'Attestation"
+subtitle: "Une expérience d'obéissance de masse, printemps 2020"
+author: "Théo Boulakia & Nicolas Mariot"
+date: 2024-02-29
+date-format: long
+format: revealjs
+editor: source
+lang: fr
+---
+
+```{r theming}
+library(targets)
+library(ggplot2)
+tar_load(geom_fontfamily)
+theme_set(theme_minimal(base_family = geom_fontfamily) +
+            theme(plot.title = element_text(face = "bold")))
+```
+
+----
+
+```{r fariss_parks}
+tar_read(fariss_parks_plot)
+```
+
+----
+
+```{r police_parks}
+tar_read(police_parks_plot)
+```
+
+----
+
+```{r agr_police}
+tar_read(agr_police_plot)
+```
+
+----
+
+```{r stringency_index}
+tar_read(stringency_index_plot)
+```
+
+----
+
+```{r exceptius}
+tar_read(exceptius_plot)
+```
+
+----
+
+```{r parks_average}
+tar_read(parks_average_plot)
+```
+
+----
+
+```{r parks_evolution}
+tar_read(parks_evolution_plot)
+```
+
+----
+
+```{r indice_p_score}
+tar_read(indice_p_score_plot)
+```
+
+----
+
+```{r couvre_feux}
+#| eval: false
+tar_read(couvre_feux_map)
+```
+
+----
+
+```{r prevalence_verbalisation}
+#| eval: false
+tar_read(prevalence_verbalisation_map)
+```
+
+----
+
+```{r taux_verbalisation}
+#| eval: false
+tar_read(taux_verbalisation_plot)
+```
+
+----
+
+```{r residential_verbalisation}
+#| eval: false
+tar_read(residential_verbalisation_plot)
+```
+
+----
+
+```{r communes_securitaires}
+#| eval: false
+tar_read(communes_securitaires_map)
+```
+
+-----
+
+```{r cameras_paris}
+#| eval: false
+tar_read(cameras_paris_map2)
+```
+
+----
+
+```{r dendrogram}
+#| eval: false
+tar_read(vico_dendrogram)
+```
+
+----
+
+```{r sortie_correlations}
+#| eval: false
+tar_read(sortie_correlations_graph)
+```
