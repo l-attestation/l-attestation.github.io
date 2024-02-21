@@ -7,9 +7,9 @@ library(tarchetypes)
 
 options(tidyverse.quiet = TRUE)
 
-tar_option_set(packages = c("tidyverse", "readxl", "readODS", "janitor",
+tar_option_set(packages = c("tidyverse", "readxl",
                             "lubridate", "ggrepel",
-                            "sf", "cartography", "rcartocolor"))
+                            "sf", "countrycode"))
 
 tar_plan(
   
@@ -17,13 +17,17 @@ tar_plan(
   
   tar_file(agr_file, here::here("data", "agr.rds")),
   tar_file(excess_mortality_file, here::here("data", "excess_mortality.rds")),
-  tar_file(google_file, here::here("data", "google_mobility_country.rds")),
+  tar_file(google_file, here::here("data", "google", "part-0.parquet")),
   tar_file(oxcgrt_file, here::here("data", "oxcgrt.rds")),
-  tar_file(wb_file, here::here("data", "oxcgrt.rds")),
+  tar_file(wb_file, here::here("data", "wb.rds")),
   tar_file(police_europe_file, here::here("data", "crim_just_job.rds")),
   tar_file(exceptius_file, here::here("data", "indicateurs exceptius paper01.xlsx")),
   tar_file(apple_file, here::here("data", "apple.rds")),
   tar_file(fariss_file, here::here("data", "HumanRightsProtectionScores_v4.01.csv")),
+  
+  # Font Family-----
+  
+  geom_fontfamily = "Helvetica",
   
   # Dates--------
   
@@ -32,7 +36,7 @@ tar_plan(
   
   # Natural Earth ----------
   
-  world_sf = ne_countries(type = "countries", returnclass = "sf") |>
+  world_sf = rnaturalearth::ne_countries(type = "countries", returnclass = "sf") |>
     select(admin, continent) |>
     mutate(wb = countrycode(admin, origin = "country.name", destination = "wb")) |>
     select(-admin),
@@ -64,12 +68,12 @@ tar_plan(
   # Exceptius---------
   
   exceptius_decreter = read_excel(exceptius_file, range = "A136:B159") |>
-    clean_names() |>
+    janitor::clean_names() |>
     rename(pays = indice_de_severite_des_mesures,
            score_decrets = x2),
   
   exceptius_controler = read_excel(exceptius_file, range = "C136:D159") |>
-    clean_names() |>
+    janitor::clean_names() |>
     rename(pays = score_de_controle_policier,
            score_controle = x2) |>
     mutate(pays = if_else(pays == "Irelande", "Irlande", pays)),
@@ -92,11 +96,12 @@ tar_plan(
   
   # Google ------
   
-  google = read_rds(google_file) |>
-    mutate(date = ymd(date),
-           wb = countrycode(country_region, origin = "country.name.en", destination = "wb")) |>
+  google = arrow::open_dataset(google_file) |>
     filter(is.na(sub_region_1),
            is.na(sub_region_2)) |>
+    collect() |> 
+    mutate(date = ymd(date),
+           wb = countrycode(country_region, origin = "country.name", destination = "wb")) |>
     select(wb, date, ends_with("_baseline")),
   
   # Excess mortality------
@@ -115,7 +120,7 @@ tar_plan(
   
   police_europe = read_rds(police_europe_file) |>
     pivot_wider(names_from = c(sex, isco08, unit), values_from = "values",
-                names_repair = make_clean_names) |>
+                names_repair = make_janitor::clean_names) |>
     complete(geo, time) |>
     mutate(geo = if_else(geo %in% c("Scotland", "England and Wales", "Northern Ireland (UK)"),
                          "United Kingdom", geo)) |>
@@ -266,11 +271,8 @@ tar_plan(
   ## Exceptius----------
   
   exceptius_plot = world_summarise |>
-    
     ggplot2::ggplot(aes(x = score_decrets, y = score_controle)) +
-    
     geom_point(alpha = 0.6) +
-    
     geom_text_repel(aes(label = pays),
                     size = 3, 
                     family = geom_fontfamily,
