@@ -14,7 +14,9 @@ library(targets)
 library(ggplot2)
 tar_load(geom_fontfamily)
 theme_set(theme_minimal(base_family = geom_fontfamily) +
-            theme(plot.title = element_text(face = "bold")))
+            theme(plot.title = element_text(face = "bold"),
+                  plot.subtitle = ggtext::element_markdown())
+          )
 ```
 
 ----
@@ -82,7 +84,6 @@ tar_read(prevalence_verbalisation_map)
 ----
 
 ```{r taux_verbalisation}
-#| eval: false
 tar_read(taux_verbalisation_plot)
 ```
 
