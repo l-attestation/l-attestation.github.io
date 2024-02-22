@@ -9,7 +9,7 @@ options(tidyverse.quiet = TRUE)
 
 tar_option_set(packages = c("tidyverse", "readxl",
                             "lubridate", "ggrepel",
-                            "sf", "countrycode"))
+                            "sf", "countrycode", "tmap"))
 
 tar_plan(
   
@@ -28,6 +28,7 @@ tar_plan(
   tar_file(antai_file, here::here("data", "verbalisations_departement.xlsx")),
   tar_file(controles_file, here::here("data", "controles_medias.ods")),
   tar_file(population_file, here::here("data", "population_departement.xls")),
+  tar_file(departements_sf_file, "data/DEP_2020_CARTElette.shp"),
   
   
   # Font Family-----
@@ -318,9 +319,7 @@ tar_plan(
          y = "",
          title = "Européens à l'air libre au Nord, enfermés au Sud et à l'Est",
          subtitle = "La fréquentation des espaces verts *baisse* de 50% en Italie et *augmente* de 80% au Danemark",
-         caption = "Données : Google Mobility Reports") +
-
-    theme(plot.subtitle = ggtext::element_markdown()),
+         caption = "Données : Google Mobility Reports"),
   
   ## Parks evolution-------
   
@@ -423,13 +422,25 @@ tar_plan(
          y = "Excès de mortalité en % de la mortalité attendue (p-score)",
          caption = "Données : Oxford Covid19 Government Response Tracker, Google Mobility Reports, Apple Mobility Reports\nHuman Mortality Database, World Mortality Dataset, World Health Organization (via Our World in Data)"),
   
-  # ANTAI----
+  # Verbalisations----
   
   verbalisations_departement = read_excel(antai_file, skip = 2) |> 
     rename(code_departement = "Département d'infraction",
            verbalisations = "Nombre de dossiers d'infraction"),
   
-  # Population départements----
+  # Contrôles ----
+  
+  controles = rio::import(controles_file) |> 
+    filter(zone == "Toutes",
+           jours > 20,
+           !is.na(controles)) |> 
+    group_by(nom_departement) |> 
+    slice_max(jours) |> 
+    ungroup() |> 
+    mutate(controles = controles / jours * 54) |>
+    select(nom_departement, controles),
+  
+  # Population----
   
   population_departement = read_excel(population_file,
                                       sheet = "2020",
@@ -444,10 +455,63 @@ tar_plan(
     filter(!str_detect(code_departement, "France"),
            !str_detect(code_departement, "DOM")),
   
+  # Dep sf----
+  
+  departements_sf = st_read(departements_sf_file, quiet = T) |> 
+    rename(code_departement = "DEP",
+           nom_departement = "nom"),
+  
+  outre_mer = c("Guyane", "Martinique", "Guadeloupe", "La Réunion", "Mayotte"),
+  outre_mer_sf = departements_sf |> filter(nom_departement %in% outre_mer),
+  
   # Départements-----
   
   departements = population_departement |>
     left_join(verbalisations_departement, by = "code_departement") |> 
-    mutate(verbalisations_pmla = verbalisations / population_plus_de_15_ans * 1000)
+    left_join(controles, by = "nom_departement") |> 
+    mutate(verbalisations_pmla = verbalisations / population_plus_de_15_ans * 1000,
+           controles_pmla = controles / population_plus_de_15_ans * 1000),
+  
+  # Prévalence verbalisation----
+  
+  breaks_verbalisations_antai_pmla = c(9, 15, 22, 30, 50),
+  
+  # prevalence_verbalisation_map = departements_sf |> 
+  #   left_join(departements) |> 
+  #   tm_shape() +
+  #   tm_polygons("verbalisations_pmla",
+  #               # palette = carto_pal(n = 4, name = "Sunset"),
+  #               breaks = breaks_verbalisations_antai_pmla,
+  #               title = "Verbalisations\npour 1000 adultes",
+  #               legend.format = list(digits = 0, text.separator = "-")) +
+  #   tm_shape(outre_mer_sf) +
+  #   tm_text(text = "nom_departement", size = .7) +
+  #   tm_compass(type = "8star",
+  #              position = c("RIGHT", "TOP"),
+  #              size = 2) +
+  #   tm_credits(text = "Données :\nANTAI\nDiscrétisation :\nquartiles",
+  #              position = c("right", "bottom")) +
+  #   tm_style("bw") +
+  #   tm_layout(main.title = "L'inégale distribution des amendes",
+  #             main.title.position = "center",
+  #             main.title.fontface = "bold",
+  #             legend.position = c("LEFT", "BOTTOM"),
+  #             fontfamily = geom_fontfamily,
+  #             frame.lwd = 5),
+  
+  # Taux verbalisation----
+  
+  taux_verbalisation_plot = departements |>
+    ggplot(aes(x = controles_pmla,
+               y = verbalisations_pmla)) +
+    geom_point() +
+    geom_text_repel(aes(label = nom_departement),
+                    size = 3,
+                    family = geom_fontfamily) +
+    labs(title = "Quadriller et punir",
+         subtitle = str_wrap("Le *taux de verbalisation* de chaque département correspond à la pente de la droite qui le relie à l'origine", 90),
+         x = "Contrôles pour 1000 adultes",
+         y = "Verbalisations pour 1000 adultes",
+         caption = "Données : Presse (pour les contrôles), ANTAI (pour les verbalisations)")
   
   )
