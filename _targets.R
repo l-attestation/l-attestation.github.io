@@ -25,6 +25,11 @@ tar_plan(
   tar_file(apple_file, here::here("data", "apple.rds")),
   tar_file(fariss_file, here::here("data", "HumanRightsProtectionScores_v4.01.csv")),
   
+  tar_file(antai_file, here::here("data", "verbalisations_departement.xlsx")),
+  tar_file(controles_file, here::here("data", "controles_medias.ods")),
+  tar_file(population_file, here::here("data", "population_departement.xls")),
+  
+  
   # Font Family-----
   
   geom_fontfamily = "Serif",
@@ -416,5 +421,33 @@ tar_plan(
          subtitle = "Dans les pays qui n'ont connu ni restriction de la liberté d'aller et venir,\nni augmentation de la mortalité",
          x = "Indice synthétique d'enfermement",
          y = "Excès de mortalité en % de la mortalité attendue (p-score)",
-         caption = "Données : Oxford Covid19 Government Response Tracker, Google Mobility Reports, Apple Mobility Reports\nHuman Mortality Database, World Mortality Dataset, World Health Organization (via Our World in Data)")
+         caption = "Données : Oxford Covid19 Government Response Tracker, Google Mobility Reports, Apple Mobility Reports\nHuman Mortality Database, World Mortality Dataset, World Health Organization (via Our World in Data)"),
+  
+  # ANTAI----
+  
+  verbalisations_departement = read_excel(antai_file, skip = 2) |> 
+    rename(code_departement = "Département d'infraction",
+           verbalisations = "Nombre de dossiers d'infraction"),
+  
+  # Population départements----
+  
+  population_departement = read_excel(population_file,
+                                      sheet = "2020",
+                                      range = "A5:W109") |>
+    rename(code_departement = "...1",
+           nom_departement = "...2",
+           population_totale = Total) |> 
+    rowwise() |> 
+    mutate(population_plus_de_15_ans = sum(c_across("15 à 19 ans":"95 ans et plus"))) |>
+    ungroup() |> 
+    select(code_departement, nom_departement, population_plus_de_15_ans, population_totale) |> 
+    filter(!str_detect(code_departement, "France"),
+           !str_detect(code_departement, "DOM")),
+  
+  # Départements-----
+  
+  departements = population_departement |>
+    left_join(verbalisations_departement, by = "code_departement") |> 
+    mutate(verbalisations_pmla = verbalisations / population_plus_de_15_ans * 1000)
+  
   )
