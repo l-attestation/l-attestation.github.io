@@ -28,7 +28,9 @@ tar_plan(
   tar_file(antai_file, here::here("data", "verbalisations_departement.xlsx")),
   tar_file(controles_file, here::here("data", "controles_medias.ods")),
   tar_file(population_file, here::here("data", "population_departement.xls")),
-  tar_file(departements_sf_file, "data/DEP_2020_CARTElette.shp"),
+  tar_file(departements_sf_file, "~/geo/frdep2020.gpkg"),
+  tar_file(pm_file, here::here("data", "polices_municipales.ods")),
+  tar_file(communes_sf_file, "~/geo/frcom2020.gpkg"),
   
   
   # Font Family-----
@@ -176,7 +178,7 @@ tar_plan(
     mutate(date = ymd(date),
            wb = countrycode(iso3c, origin = "iso3c", destination = "wb")) |>
     select(-iso3c),
-
+  
   # Join--------
   
   ## Country-Date-----------
@@ -238,39 +240,39 @@ tar_plan(
   ## Stringency Index-------
   
   stringency_index_plot = world_summarise |>
-
+    
     filter(continent == "Europe",
            !is.na(stringency_index_average)) |>
-
+    
     mutate(pays = str_wrap(pays, 5, whitespace_only = F),
            pays = fct_reorder(pays, stringency_index_average)) |>
-
+    
     ggplot2::ggplot(aes(y = stringency_index_average, x = pays)) +
-
+    
     geom_hline(
       aes(yintercept = y),
       data.frame(y = c(0:9) * 10),
       color = "lightgrey"
     ) +
-
+    
     geom_bar(stat = "identity",
              # colour = "red"
     ) +
-
+    
     scale_y_continuous(
       limits = c(-10, 110),
       expand = c(0, 0),
       breaks = NULL) +
-
+    
     coord_polar(start = 0) +
-
+    
     labs(x = "",
          y = "",
          title = "Ampleur des restrictions dans les États européens,\nentre le 1er mars et le 1er juin 2020",
          subtitle = "Maximale en Italie, au Kosovo et en France,\nminimale en Biélorussie, en Islande et en Lettonie",
          # subtitle = str_glue("Entre le {format(date_beginn, '%d %B %Y')} et le {format(date_end, '%d %B %Y')}"),
          caption = "Données : Stringency Index, Oxford Covid-19 Government Response Tracker (OxCGRT)") +
-
+    
     theme(axis.text = element_text(size = 7),
           legend.position = "none"),
   
@@ -304,17 +306,17 @@ tar_plan(
   ## Parks average------------
   
   parks_average_plot = world_summarise |>
-
+    
     filter(continent == "Europe",
            !is.na(parks_percent_change_from_baseline)) |>
-
+    
     mutate(pays = fct_reorder(pays, desc(parks_percent_change_from_baseline))) |>
-
+    
     ggplot2::ggplot(aes(y = pays, x = parks_percent_change_from_baseline)) +
-
+    
     geom_bar(stat="identity",
              alpha = 1) +
-
+    
     labs(x = "Fréquentation des espaces verts du 1er mars au 1er juin par rapport à janvier 2020 (%)",
          y = "",
          title = "Européens à l'air libre au Nord, enfermés au Sud et à l'Est",
@@ -348,14 +350,14 @@ tar_plan(
   ## Police Europe---------
   
   police_europe_plot = world_summarise |>
-
+    
     filter(continent == "Europe",
            !is.na(policiers_pcm_habitants)) |>
-
+    
     mutate(pays = fct_reorder(pays, policiers_pcm_habitants)) |>
-
+    
     ggplot2::ggplot(aes(y = pays, x = policiers_pcm_habitants)) +
-
+    
     geom_bar(stat = "identity"),
   
   ## Fariss & Parks--------
@@ -440,7 +442,7 @@ tar_plan(
     mutate(controles = controles / jours * 54) |>
     select(nom_departement, controles),
   
-  # Population----
+  # Plus de 15 ans----
   
   population_departement = read_excel(population_file,
                                       sheet = "2020",
@@ -455,49 +457,89 @@ tar_plan(
     filter(!str_detect(code_departement, "France"),
            !str_detect(code_departement, "DOM")),
   
+  # Residential----
+  
   # Dep sf----
   
-  departements_sf = st_read(departements_sf_file, quiet = T) |> 
-    rename(code_departement = "DEP",
-           nom_departement = "nom"),
-  
   outre_mer = c("Guyane", "Martinique", "Guadeloupe", "La Réunion", "Mayotte"),
-  outre_mer_sf = departements_sf |> filter(nom_departement %in% outre_mer),
   
   # Départements-----
+  
+  chop_ci = function(x, style, n = 4) {
+    santoku::chop(x,
+                  classInt::classIntervals(x, n = n, style = style)$brks,
+                  labels = santoku::lbl_dash("-", fmt = round))
+  },
   
   departements = population_departement |>
     left_join(verbalisations_departement, by = "code_departement") |> 
     left_join(controles, by = "nom_departement") |> 
     mutate(verbalisations_pmla = verbalisations / population_plus_de_15_ans * 1000,
-           controles_pmla = controles / population_plus_de_15_ans * 1000),
+           controles_pmla = controles / population_plus_de_15_ans * 1000,
+           v_headtails = chop_ci(verbalisations_pmla, "headtails"),
+           v_fisher = chop_ci(verbalisations_pmla, "fisher")),
+  
+  # Polices municipales-----
+  
+  pm = readODS::read_ods(pm_file,
+                         skip = 8,
+                         col_names = FALSE,
+                         .name_repair = janitor::make_clean_names) |> 
+    select(x, x_2, x_4:x_10) |> 
+    rename(code_departement = x,
+           nom_departement = x_2,
+           nom_commune = x_4,
+           population = x_5,
+           municipaux = x_6,
+           asvp = x_7,
+           gardes_champetres = x_8,
+           maitres_chiens = x_9,
+           chiens_patrouille = x_10) |> 
+    mutate(total = municipaux + gardes_champetres + asvp) |> 
+    filter(!is.na(code_departement)),
+  
+  pm_com = pm |> 
+    filter(!str_detect(code_departement, "TOTAL")) |> 
+    mutate(code_departement = if_else(code_departement %in% as.character(1:9),
+                                      str_c("0", code_departement),
+                                      code_departement),
+           nom_commune_clean = stringi::stri_trans_general(nom_commune, "Latin-ASCII"),
+           nom_commune_clean = fedmatch::clean_strings(nom_commune_clean),
+           population = as.numeric(population)) |>
+    select(code_departement, nom_commune_clean, total),
+  
+  pm_dep = pm |> 
+    filter(str_detect(code_departement, "TOTAL"),
+           !str_detect(code_departement, "NATIONAL")) |> 
+    mutate(total = municipaux + gardes_champetres + asvp,
+           departement = str_remove(code_departement, "^TOTAL ")) |>
+    select(departement, total) |> 
+    arrange(desc(total)),
+  
+  # Communes sécuritaires----
+  
+  communes_securitaires_map = st_read(communes_sf_file, quiet = T) |> 
+    inner_join(pm_com, by = join_by(code_departement, nom_commune_clean)) |> 
+    mutate(policiers_pml = total / population_2017 * 1000,
+           p2 = santoku::chop_quantiles(policiers_pml, c(0.8))) |>
+    ggplot() +
+    geom_sf(aes(fill = p2), color = NA) +
+    coord_sf(datum = NA) +
+    scale_fill_manual(values = c("black", "red")) +
+    labs(title = "Densité de policiers municipaux") +
+    guides(fill = "none"),
   
   # Prévalence verbalisation----
   
-  breaks_verbalisations_antai_pmla = c(9, 15, 22, 30, 50),
-  
-  # prevalence_verbalisation_map = departements_sf |> 
-  #   left_join(departements) |> 
-  #   tm_shape() +
-  #   tm_polygons("verbalisations_pmla",
-  #               # palette = carto_pal(n = 4, name = "Sunset"),
-  #               breaks = breaks_verbalisations_antai_pmla,
-  #               title = "Verbalisations\npour 1000 adultes",
-  #               legend.format = list(digits = 0, text.separator = "-")) +
-  #   tm_shape(outre_mer_sf) +
-  #   tm_text(text = "nom_departement", size = .7) +
-  #   tm_compass(type = "8star",
-  #              position = c("RIGHT", "TOP"),
-  #              size = 2) +
-  #   tm_credits(text = "Données :\nANTAI\nDiscrétisation :\nquartiles",
-  #              position = c("right", "bottom")) +
-  #   tm_style("bw") +
-  #   tm_layout(main.title = "L'inégale distribution des amendes",
-  #             main.title.position = "center",
-  #             main.title.fontface = "bold",
-  #             legend.position = c("LEFT", "BOTTOM"),
-  #             fontfamily = geom_fontfamily,
-  #             frame.lwd = 5),
+  prevalence_verbalisation_map = st_read(departements_sf_file, quiet = T) |> 
+    left_join(departements, by = c("code_departement", "nom_departement")) |> 
+    ggplot() +
+    geom_sf(aes(fill = v_headtails), color = NA) +
+    coord_sf(datum = NA) +
+    viridis::scale_fill_viridis(discrete = T) +
+    labs(title = "Prévalence de la verbalisation",
+         fill = "Pour 1000 adultes",
+         caption = "Sources : ANTAI, INSEE"),
   
   # Taux verbalisation----
   
@@ -514,4 +556,4 @@ tar_plan(
          y = "Verbalisations pour 1000 adultes",
          caption = "Données : Presse (pour les contrôles), ANTAI (pour les verbalisations)")
   
-  )
+)
