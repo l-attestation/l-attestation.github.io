@@ -77,7 +77,7 @@ tar_read(couvre_feux_map)
 ----
 
 ```{r prevalence_verbalisation}
-#| eval: false
+#| eval: true
 tar_read(prevalence_verbalisation_map)
 ```
 
@@ -97,7 +97,7 @@ tar_read(residential_verbalisation_plot)
 ----
 
 ```{r communes_securitaires}
-#| eval: false
+#| eval: true
 tar_read(communes_securitaires_map)
 ```
 
