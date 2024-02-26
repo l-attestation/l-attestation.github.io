@@ -2,7 +2,7 @@
 title: "L'Attestation"
 subtitle: "Une expérience d'obéissance de masse, printemps 2020"
 author: "Théo Boulakia & Nicolas Mariot"
-date: 2024-02-29
+date: today
 date-format: long
 format: revealjs
 editor: source
