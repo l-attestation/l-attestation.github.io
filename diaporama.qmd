@@ -169,6 +169,12 @@ tar_read(communes_securitaires_map)
 
 ::::
 
+## Données utilisées
+
+```{r visnetwork}
+tar_visnetwork()
+```
+
 ```{r cameras_paris}
 #| eval: false
 tar_read(cameras_paris_map2)
