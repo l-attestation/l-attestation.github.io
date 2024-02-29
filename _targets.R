@@ -31,6 +31,7 @@ tar_plan(
   tar_file(departements_sf_file, "~/geo/frdep2020.gpkg"),
   tar_file(pm_file, here::here("data", "polices_municipales.ods")),
   tar_file(communes_sf_file, "~/geo/frcom2020.gpkg"),
+  tar_file(vigilants_file, here::here("data", "2020-05-09_vigilants.rds")),
   
   
   # Font Family-----
@@ -269,7 +270,7 @@ tar_plan(
     labs(x = "",
          y = "",
          title = "Ampleur des restrictions dans les États européens,\nentre le 1er mars et le 1er juin 2020",
-         subtitle = "Maximale en Italie, au Kosovo et en France,\nminimale en Biélorussie, en Islande et en Lettonie",
+         # subtitle = "Maximale en Italie, au Kosovo et en France,\nminimale en Biélorussie, en Islande et en Lettonie",
          # subtitle = str_glue("Entre le {format(date_beginn, '%d %B %Y')} et le {format(date_end, '%d %B %Y')}"),
          caption = "Données : Stringency Index, Oxford Covid-19 Government Response Tracker (OxCGRT)") +
     
@@ -479,7 +480,7 @@ tar_plan(
            v_headtails = chop_ci(verbalisations_pmla, "headtails"),
            v_fisher = chop_ci(verbalisations_pmla, "fisher")),
   
-  # Polices municipales-----
+  # Municipaux-----
   
   pm = readODS::read_ods(pm_file,
                          skip = 8,
@@ -516,17 +517,55 @@ tar_plan(
     select(departement, total) |> 
     arrange(desc(total)),
   
-  # Communes sécuritaires----
-  
   communes_securitaires_map = st_read(communes_sf_file, quiet = T) |> 
     inner_join(pm_com, by = join_by(code_departement, nom_commune_clean)) |> 
     mutate(policiers_pml = total / population_2017 * 1000,
-           p2 = santoku::chop_quantiles(policiers_pml, c(0.8))) |>
+           p2 = santoku::chop_quantiles(policiers_pml, c(0.7))) |>
     ggplot() +
     geom_sf(aes(fill = p2), color = NA) +
     coord_sf(datum = NA) +
     scale_fill_manual(values = c("black", "red")) +
     labs(title = "Densité de policiers municipaux") +
+    guides(fill = "none"),
+  
+  # Vigilants----
+  
+  vigilants = read_rds(vigilants_file) |> 
+    mutate(nom_departement = if_else(str_detect(A, "[A-Z]{3,}"), A, NA_character_),
+           nom_departement_clean = stringi::stri_trans_general(nom_departement, "Latin-ASCII"),
+           nom_departement_clean = fedmatch::clean_strings(nom_departement_clean),
+           nom_commune = str_remove(A, "\\(.+\\)"),
+           nom_commune = str_squish(nom_commune),
+           nom_commune_clean = stringi::stri_trans_general(nom_commune, "Latin-ASCII"),
+           nom_commune_clean = fedmatch::clean_strings(nom_commune_clean),
+           nb_communautes = str_extract(A, "\\(.+\\)"),
+           nb_communautes = parse_number(nb_communautes)) |> 
+    fill(nom_departement, .direction = "down") |> 
+    drop_na(nb_communautes) |> 
+    select(-A),
+  
+  vigilants_plm = vigilants |> 
+    mutate(nom_commune_clean = if_else(str_detect(nom_commune_clean, "arrondissement"),
+                         str_extract(nom_commune_clean, "paris|lyon|marseille"),
+                         nom_commune_clean)) |> 
+    group_by(nom_departement_clean, nom_commune_clean) |> 
+    summarise(nb_communautes = sum(nb_communautes)) |> 
+    ungroup(),
+  
+  vigilants_departements = vigilants |> 
+    group_by(nom_departement_clean) |> 
+    summarise(nb_communautes = sum(nb_communautes)) |> 
+    select(nom_departement_clean, nb_communautes),
+  
+  vigilants_map = st_read(communes_sf_file, quiet = T) |>  
+    inner_join(vigilants_plm, by = join_by(nom_commune_clean)) |> 
+    mutate(vigilants_pml = nb_communautes / population_2017 * 1000,
+           p2 = santoku::chop_quantiles(vigilants_pml, c(0.7))) |>
+    ggplot() +
+    geom_sf(aes(fill = p2), color = NA) +
+    coord_sf(datum = NA) +
+    scale_fill_manual(values = c("black", "red")) +
+    labs(title = "Densité de voisins vigilants") +
     guides(fill = "none"),
   
   # Prévalence verbalisation----

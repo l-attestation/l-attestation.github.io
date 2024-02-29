@@ -19,6 +19,30 @@ theme_set(theme_minimal(base_family = geom_fontfamily) +
           )
 ```
 
+## Wuhan, 3 février 2020
+
+![](images/2020-02-03_wuhan.jpg)
+
+## Rome, 2 avril 2020
+
+![](images/2020-04-02_roma.jpg)
+
+## Lima, 5 avril 2020
+
+![](images/2020-04-05-lima.jpg)
+
+## Lima, 31 mars 2020
+
+![](images/2020-03-31_lima.jpg)
+
+## Philippines, 13 mai 2020
+
+![](images/2020-05-13_philipines.jpg)
+
+## Tamil Nadu, 28 mars 2020
+
+![](images/rajesh_babu_helmet.jpg)
+
 ----
 
 ```{r fariss_parks}
@@ -55,6 +79,14 @@ tar_read(exceptius_plot)
 tar_read(parks_average_plot)
 ```
 
+## Berlin, 18 avril 2020
+
+![](images/2020-04-18_berlin.jpeg)
+
+## Paris, 21 mai 2020
+
+![](images/parc_buttes_chaumont_2020-05-21.jpg)
+
 ----
 
 ```{r parks_evolution}
@@ -67,7 +99,21 @@ tar_read(parks_evolution_plot)
 tar_read(indice_p_score_plot)
 ```
 
+## France
+
+![](images/AYA00118050.JPG)
+
 ----
+
+![](images/AYA00127048.JPG)
+
+----
+
+![](images/CC0480004.jpg)
+
+----
+
+![](images/JCC1185071.jpg)
 
 ```{r couvre_feux}
 #| eval: false
@@ -87,8 +133,6 @@ tar_read(prevalence_verbalisation_map)
 tar_read(taux_verbalisation_plot)
 ```
 
-----
-
 ```{r residential_verbalisation}
 #| eval: false
 tar_read(residential_verbalisation_plot)
@@ -101,21 +145,39 @@ tar_read(residential_verbalisation_plot)
 tar_read(communes_securitaires_map)
 ```
 
------
+----
+
+```{r vigilants}
+tar_read(vigilants_map)
+```
+
+----
+
+:::: {.columns}
+
+::: {.column width="50%"}
+```{r prevalence_verbalisation_c}
+tar_read(prevalence_verbalisation_map)
+```
+:::
+
+::: {.column width="50%"}
+```{r communes_securitaires_c}
+tar_read(communes_securitaires_map)
+```
+:::
+
+::::
 
 ```{r cameras_paris}
 #| eval: false
 tar_read(cameras_paris_map2)
 ```
 
-----
-
 ```{r dendrogram}
 #| eval: false
 tar_read(vico_dendrogram)
 ```
-
-----
 
 ```{r sortie_correlations}
 #| eval: false
