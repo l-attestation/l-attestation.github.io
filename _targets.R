@@ -9,7 +9,10 @@ options(tidyverse.quiet = TRUE)
 
 tar_option_set(packages = c("tidyverse", "readxl",
                             "lubridate", "ggrepel",
-                            "sf", "countrycode", "tmap"))
+                            "sf", "countrycode"))
+# Functions ----
+
+source("functions.R")
 
 tar_plan(
   
@@ -593,6 +596,284 @@ tar_plan(
          subtitle = str_wrap("Le *taux de verbalisation* de chaque département correspond à la pente de la droite qui le relie à l'origine", 90),
          x = "Contrôles pour 1000 adultes",
          y = "Verbalisations pour 1000 adultes",
-         caption = "Données : Presse (pour les contrôles), ANTAI (pour les verbalisations)")
+         caption = "Données : Presse (pour les contrôles), ANTAI (pour les verbalisations)"),
+  
+  # Lignes ----
+  
+  ## Variables-------
+  
+  ### Vécu ---------
+  
+  v_emotions = list(senti_1 = "Fatigué",
+                    senti_2 = "Irrité",
+                    senti_3 = "Détendu",
+                    senti_4 = "En forme",
+                    senti_5 = "Stressé",
+                    senti_6 = "Triste",
+                    senti_7 = "Heureux",
+                    senti_8 = "Inquiet"),
+  
+  v_travail = list(trav_1 = "Licenciement",
+                   trav_2 = "Mise en congé",
+                   trav_3 = "Chômage technique partiel ou total",
+                   trav_4 = "Baisse du temps de travail",
+                   trav_5 = "Reprise du travail",
+                   trav_6 = "Hausse du temps de travail obligatoire",
+                   trav_7 = "Horaires inhabituels",
+                   trav_8 = "Dégradation conditions de travail",
+                   trav_9 = "Diminution du revenu"),
+  
+  v_remarques = list(remarq_1 = "Remarques agréables",
+                     remarq_2 = "Remarques hostiles"),
+  
+  v_nuisances = list(logprob_1 = "Pollution",
+                     logprob_2 = "Insécurité",
+                     logprob_3 = "Saleté",
+                     logprob_4 = "Pénurie",
+                     logprob_5 = "Bruits extérieurs",
+                     logprob_6 = "Conflits de voisinage",
+                     logprob_7 = "Bruits domestiques",
+                     logprob_8 = "Conflits domestiques",
+                     logprob_9 = "Exiguïté"),
+  
+  v_habitat_tc = list(logtaille = "Taille du logement",
+                      logquartier = "Type de quartier", # tc : to coalesce
+                      logtype = "Type de logement",
+                      logext_1 = "Balcon",
+                      logext_2 = "Jardin",
+                      logext_3 = "Cour ou terrasse",
+                      logext_4 = "Cour d'immeuble"),
+  
+  v_habitat = c(v_habitat_tc,
+                v_nuisances,
+                lognb = "Nombre de cohabitants"),
+  
+  v_police = list(control = "Contrôle",
+                  controlamende = "Verbalisation"),
+  
+  v_vecu = c(v_emotions,
+             v_travail,
+             v_remarques,
+             v_nuisances,
+             v_habitat,
+             v_police,
+             tele = "Lieu de travail",
+             ecole = "Aide aux devoirs",
+             temps = "Manquer de temps libre",
+             courses = "Fréquence des courses",
+             activ = "Temps consacré au sport",
+             lognb = "Nombre de cohabitants"),
+  
+  ### Caractéristiques--------
+  
+  v_demo = list(sexe = "Sexe",
+                diploniv_rec = "Diplôme",
+                pcs_rec9 = "PCS",
+                sitconj = "Situation conjugale",
+                natioparents = "Nationalité des parents",
+                rev = "Revenu",
+                pol = "Préférences partisanes"),
+  
+  v_age = list(age = "Âge",
+               anais = "Année de naissance"),
+  
+  v_politisation = list(polpart_1 = "Manifesté",
+                        polpart_2 = "Fait grève",
+                        polpart_3 = "Pétitionné",
+                        polpart_4 = "Assisté à un débat",
+                        polpart_5 = "Milité"),
+  
+  v_religion = list(relig = "Religion",
+                    religimport = "Importance de la religion",
+                    relprat = "Pratique religieuse"),
+  
+  v_nuisances_avant = list(resprob_1 = "Pollution",
+                           resprob_2 = "Insécurité",
+                           resprob_3 = "Saleté",
+                           resprob_4 = "Bruits extérieurs",
+                           resprob_5 = "Conflits de voisinage",
+                           resprob_6 = "Bruits domestiques",
+                           resprob_7 = "Conflits avec cohabitants",
+                           resprob_8 = "Exiguïté"),
+  
+  v_habitat_tc_root = names(v_habitat_tc) |> str_remove("^log"),
+  
+  v_habitat_avant_tc_names = str_c("res", v_habitat_tc_root) |> syms(),
+  
+  v_habitat_avant_tc = v_habitat_tc |> as.list() |> set_names(v_habitat_avant_tc_names),
+  
+  v_habitat_avant = c(v_nuisances_avant,
+                      v_habitat_avant_tc,
+                      resnb = "Nombre de cohabitants"),
+  
+  v_caract = c(v_demo,
+               v_age,
+               v_religion,
+               v_politisation,
+               v_habitat_avant),
+  
+  ### Pratiques-------
+  
+  # Ce sont les 15 variables actives de l'ACM
+  
+  v_participation = list(confin_1 = "Applaudir les soignants",
+                         confin_2 = "Huer le gouvernement", 
+                         confin_7 = "S'informer sur l'épidémie"),
+  
+  v_precautions = list(protecdom_1 = "Porter des gants",
+                       protecdom_2 = "Porter un masque",
+                       protecdom_4 = "S'écarter de 1 m",
+                       protecdom_6 = "Se désinfecter les mains",
+                       protecdom_8 = "Désinfecter les surfaces"),
+  
+  v_interdits = list(att = "Sortir avec l'attestation",
+                     atttype = "Type d'attestation",
+                     attheure = "Ruser avec l'attestation",
+                     dist = "Dépasser le rayon",
+                     sortie = "Fréquence des promenades",
+                     sortiequi = "Sortir le plus souvent"),
+  
+  v_pratiques = c(v_interdits,
+                  v_precautions,
+                  v_participation,
+                  vote = "Élections municipales"),
+  
+  ## Data---------
+  
+  vico_read =  vroom::vroom(here::here("data","VICO1-DATA-SOURCE.csv"),
+                            locale = vroom::locale(decimal_mark = ",")) |> 
+    janitor::clean_names() |> 
+    filter(poids_init != 0) |> 
+    rename(resquartier = resquart) |>
+    select(id, poids_init,
+           all_of(c(names(v_pratiques),
+                    names(v_vecu),
+                    names(v_caract))),
+    ) |> 
+    mutate(across(c(ends_with(paste("_", 1:9, sep = ""))),
+                  ~ if_else(str_detect(.x, "^Oui"), TRUE, FALSE)),
+           across(all_of(names(v_habitat_tc)),
+                  ~ coalesce(., get(str_c("res", cur_column()) |> str_remove("log"))))
+    ) |> 
+    mutate(sortie = case_match(sortie,
+                               c("Moins d'une fois par semaine",
+                                 "Une fois par semaine environ",
+                                 "Plusieurs fois par semaine, mais pas tous les jours",
+                                 "Une seule fois par jour, tous les jours ou presque") 
+                               ~ "Une fois par jour au plus",
+                               "Plusieurs fois par jour, et cela tous les jours ou presque" 
+                               ~ "Plusieurs fois par jour",
+                               .default = sortie),
+           vote = case_match(vote,
+                             c("Oui, à mon bureau de vote",
+                               "Oui, par procuration")
+                             ~ "Voter",
+                             "Non, principalement parce que je craignais pour ma santé et celle des autres en raison de l'épidémie"
+                             ~ "S'abstenir (raisons sanitaires)",
+                             "Non, principalement pour une ou plusieurs autres raisons"
+                             ~ "S'abstenir (raisons diverses)",
+                             .default = vote),
+           sortiequi = case_match(sortiequi,
+                                  "Seul(e) le plus souvent" 
+                                  ~ "Seul(e)",
+                                  "Avec une ou plusieurs autres personnes avec laquel(le) ou lesquel(le)s vous êtes confiné(e)"
+                                  ~ "Avec cohabitant(s)",
+                                  "Avec une ou plusieurs autres personnes que vous retrouvez à l'extérieur"
+                                  ~ "Avec personnes de l'extérieur",
+                                  "C'est variable, parfois seul(e) et parfois avec une ou plusieurs autres personnes" 
+                                  ~ "C'est variable",
+                                  .default = sortiequi)) |>
+    mutate(temps = case_match(temps,
+                              "Oui, je manque vraiment de temps libre"
+                              ~ "Vraiment",
+                              "Oui, je manque un peu de temps libre"
+                              ~ "Un peu",
+                              "Non, je ne manque pas vraiment de temps libre"
+                              ~ "Pas vraiment",
+                              "Non, je ne manque pas du tout de temps libre"
+                              ~ "Pas du tout",
+                              .default = temps),
+           tele = case_match(tele,
+                             "Entièrement sur un ou des lieux de travail ou d'études qui se situent à l'extérieur du logement où vous êtes confiné(e)"
+                             ~ "Entièrement à l'extérieur",
+                             "Principalement sur un ou des lieux de travail ou d'études à l'extérieur, mais en partie aussi dans le logement où vous ê"
+                             ~ "Principalement à l'extérieur",
+                             "Principalement dans le logement où vous êtes confiné(e), mais en partie aussi sur un ou des lieux de travail ou d'études"
+                             ~ "Principalement à domicile",
+                             "Entièrement dans le logement où vous êtes confiné(e)"
+                             ~ "Entièrement à domicile",
+                             c("Je ne travaille pas", NA)
+                             ~ "Ne travaille pas",
+                             .default = tele),
+           control = case_match(control,
+                                "Non, jamais" ~ "Jamais",
+                                "Oui, une seule fois" ~ "Une fois",
+                                "Oui, plusieurs fois" ~ "Plusieurs fois",
+                                .default = control),
+           control = fct_relevel(control, "Jamais", "Une fois", "Plusieurs fois"),
+           control_binaire = case_match(control,
+                                        c("Une fois", "Plusieurs fois") ~ TRUE,
+                                        "Jamais" ~ FALSE,
+                                        NA ~ NA)) |>
+    mutate(sexe = str_remove(sexe, "[A-z]{2,} "),
+           sexe = str_to_sentence(sexe),
+           pcs_rec9 = str_remove_all(pcs_rec9, "\\(.{1,2}\\)s"),
+           pcs_rec9 = case_match(pcs_rec9,
+                                 "Agriculteurs, agricultrices" 
+                                 ~ "Agriculteur",
+                                 "Elèves, étudiant" 
+                                 ~ "Étudiant",
+                                 "Professions intermédiaires" 
+                                 ~ "Profession intermédiaire",
+                                 "Cadres et professions intellectuelles supérieures"
+                                 ~ "Cadre ou intellectuel",
+                                 "Autres inactif"
+                                 ~ "Autre inactif",
+                                 .default = pcs_rec9),
+           pcs_rec9 = fct_relevel(pcs_rec9, "Cadre ou intellectuel"),
+           pcs_rec9 = fct_relevel(pcs_rec9, "Autre inactif", after = Inf)) |>
+    labelled::set_variable_labels(.labels = c(v_pratiques, v_vecu, v_caract)),
+  
+  ## CAH------
+  
+  ### Vico ACM-----------
+  
+  vico_acm = vico_read |> 
+    column_to_rownames("id") |>
+    select(all_of(names(v_pratiques))) |>
+    mutate(across(everything(), ~ paste(cur_column(), .x))),
+  
+  ### Fréquences----------
+  
+  frequences = vico_acm |>
+    map_df(~  questionr::wtd.table(.x, weights = vico_read$poids_init) |>
+             questionr::freq(sort = "", digits = 0, valid = FALSE), .id = "variable") |>
+    rownames_to_column("modalite") |>
+    rename(effectif = n,
+           pourcentage = "%") |>
+    relocate(variable),
+  
+  ### Modalités à exclure-------
+  
+  to_exclude = frequences |>
+    filter(pourcentage < 2.2 | str_detect(modalite, " NA$") == TRUE),
+  
+  ### ACM & CAH-------
+  
+  cah_vico = vico_acm |>
+    FactoMineR::MCA(excl = to_exclude$modalite,
+        ncp = 6,
+        row.w = vico_read$poids_init,
+        graph = FALSE) |>
+    FactoMineR::HCPC(nb.clust = 6, nb.par = 50, graph = FALSE),
+  
+  vico_clust = cah_vico[["data.clust"]] |>
+    rownames_to_column(var = "id") |>
+    mutate(id = as.numeric(id)) |>
+    select(id, clust),
+  
+  # Jointure -----
+  
+  vico = left_join(vico_read, vico_clust, by = "id")
   
 )
