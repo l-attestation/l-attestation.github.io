@@ -1,23 +1,42 @@
 ---
 title: "L'Attestation"
-subtitle: "Une expérience d'obéissance de masse, printemps 2020"
+subtitle: "Présentation au CRAPUL"
 author: "Théo Boulakia & Nicolas Mariot"
-date: today
+date: 2024-05-30
 date-format: long
-format: revealjs
+format: 
+  revealjs:
+    smaller: true
+    scrollable: true
 editor: source
 lang: fr
 ---
 
-```{r theming}
+```{r packages}
 library(targets)
-library(ggplot2)
+library(tidyverse)
+library(huxtable)
+```
+
+```{r functions}
+source(here::here("functions.R"))
+```
+
+```{r targets}
 tar_load(geom_fontfamily)
+tar_load(starts_with("v_"))
+tar_load(starts_with("vico"))
+tar_load(cah_vico)
+```
+
+```{r theming}
 theme_set(theme_minimal(base_family = geom_fontfamily) +
             theme(plot.title = element_text(face = "bold"),
                   plot.subtitle = ggtext::element_markdown())
           )
 ```
+
+# FAQ
 
 ## Wuhan, 3 février 2020
 
@@ -99,7 +118,7 @@ tar_read(parks_evolution_plot)
 tar_read(indice_p_score_plot)
 ```
 
-## France
+# La police des sorties
 
 ![](images/AYA00118050.JPG)
 
@@ -169,7 +188,211 @@ tar_read(communes_securitaires_map)
 
 ::::
 
-## Données utilisées
+# Lignes de conduite
+
+```{r ordered_clust}
+
+ordered_clust = order_groups(cah_vico)
+
+```
+
+## Variables actives
+
+```{r variables}
+#| results: asis
+
+walk(v_pratiques, ~ cat(paste("-", .x, "\n")))
+
+```
+
+
+## Interdits
+
+```{r hux_interdits1}
+
+v_interdits[1:3] |> 
+  map_chi_prop() |> 
+  shape_hux() |> 
+  set_font_size(12) |>
+  theme_bright()
+
+```
+
+## Interdits (suite)
+
+```{r}
+
+v_interdits[4:6] |> 
+  map_chi_prop() |> 
+  shape_hux() |> 
+  set_font_size(13) |> 
+  theme_bright()
+
+```
+
+## Précautions & Participation
+
+```{r hux_precautions}
+
+c(v_precautions, v_participation, list(vote = "Élections municipales")) |> 
+  map_chi_prop() |> 
+  shape_hux() |> 
+  set_font_size(13) |> 
+  theme_bright()
+
+```
+
+## Poids des groupes
+
+```{r frequence_groupes}
+
+questionr::wtd.table(vico$clust, weights = vico_read$poids_init) |> 
+  questionr::freq(digits = 0, total = F) |> 
+  rownames_to_column(var = "Groupe") |> 
+  mutate(Groupe = name_clust(Groupe)) |> 
+  rename(Fréquence = "%") |> 
+  select(Groupe, Fréquence) |> 
+  pivot_wider(names_from = Groupe, values_from = Fréquence) |> 
+  relocate(all_of(ordered_clust)) |>
+  as_huxtable() |> 
+  theme_bright()
+
+```
+
+## Genre, diplôme
+
+```{r}
+
+v_demo[1:2] |> 
+  map_chi_prop() |> 
+  shape_hux() |> 
+  set_font_size(12) |> 
+  theme_bright()
+
+```
+
+## Genre, diplôme (suite)
+
+```{r}
+
+vico_summarised = vico |> 
+  mutate(clust = name_clust(clust)) |>
+  group_by(clust) |> 
+  summarise(poids_groupe = sum(poids_init),
+            pct_hommes = sum((sexe == "Homme") * poids_init),
+            pct_dip_sup = sum((diploniv_rec == "Supérieur au baccalauréat") * poids_init, na.rm = T)) |> 
+  mutate(across(where(is.numeric) & !poids_groupe, ~ round(.x / poids_groupe * 100, 1)))
+
+# Visualisations----
+
+vico_summarised %>%
+  
+  ggplot(aes(x = pct_hommes, y = pct_dip_sup)) +
+  
+  geom_point() +
+  
+  ggrepel::geom_text_repel(aes(label = clust),
+                  size = 4,
+                  family = "serif") +
+  
+  geom_vline(xintercept = 48.5, linetype = 3) +
+  
+  geom_hline(yintercept = 60, linetype = 3) +
+  
+  xlab("Hommes (%)") +
+  
+  ylab("Diplôme supérieur au baccalauréat (%)") +
+  
+  theme_classic() +
+  
+  theme(text = element_text(family = "serif"))
+
+```
+
+
+## Âge
+
+```{r}
+
+vico |> 
+  
+  mutate(clust = name_clust(clust)) |> 
+  
+  ggplot(aes(x = age)) +
+  
+  geom_density() +
+  
+  facet_wrap(~ clust) +
+  
+  theme_minimal() +
+  
+  xlab("Âge")
+
+```
+
+## Préférences partisanes
+
+```{r}
+
+tail(v_demo, n = 1) |> 
+  map_chi_prop() |> 
+  shape_hux() |> 
+  set_font_size(12) |> 
+  theme_bright()
+
+```
+
+
+## Politisation
+
+```{r}
+
+v_politisation |> 
+  map_chi_prop() |> 
+  shape_hux() |> 
+  set_font_size(12) |> 
+  theme_bright()
+
+```
+
+## Travail et emploi
+
+```{r}
+
+v_travail |> 
+  map_chi_prop() |> 
+  shape_hux() |> 
+  set_font_size(12) |> 
+  theme_bright()
+
+```
+
+## Nuisances dans le logement
+
+```{r}
+
+v_nuisances |> 
+  map_chi_prop() |> 
+  shape_hux() |> 
+  set_font_size(12) |> 
+  theme_bright()
+
+```
+
+## Émotions déclarées
+
+```{r}
+
+v_emotions |> 
+  map_chi_prop() |> 
+  shape_hux() |> 
+  set_font_size(12) |> 
+  theme_bright()
+
+```
+
+
+# Données utilisées
 
 ```{r visnetwork}
 tar_visnetwork()
