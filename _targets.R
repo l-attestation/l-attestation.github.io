@@ -157,6 +157,7 @@ tar_plan(
   # AGR-------
   
   agr = read_rds(agr_file) |>
+    filter(country != "Northern Cyprus") |>
     mutate(date = ymd(date),
            wb = countrycode(country, origin = "country.name", destination = "wb")) |>
     select(-country),
