@@ -66,6 +66,12 @@ theme_set(theme_minimal(base_family = geom_fontfamily) +
 
 ---
 
+```{r stringency_index_plot}
+tar_read(stringency_index_plot)
+```
+
+---
+
 ```{r agr_mode}
 tar_read(agr_mode_plot)
 ```

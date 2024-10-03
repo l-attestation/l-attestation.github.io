@@ -244,7 +244,7 @@ tar_plan(
   
   ## Stringency Index-------
   
-  stringency_index_plot = world_summarise |>
+  stringency_index_polar_plot = world_summarise |>
     
     filter(continent == "Europe",
            !is.na(stringency_index_average)) |>
@@ -280,6 +280,20 @@ tar_plan(
     
     theme(axis.text = element_text(size = 7),
           legend.position = "none"),
+  
+  stringency_index_plot = world_summarise |>
+    filter(continent == "Europe",
+           pays != "Biélorussie",
+           !is.na(stringency_index_average)) |>
+    mutate(
+      # pays = str_wrap(pays, 5, whitespace_only = F),
+           pays = fct_reorder(pays, stringency_index_average)) |>
+    ggplot(aes(x = stringency_index_average, y = pays)) +
+    geom_point() +
+    coord_cartesian(xlim = c(40, NA)) +
+    labs(x = "Stringency Index moyen (01/03 au 01/06)",
+         y = "",
+         caption = "Données : Stringency Index, Oxford Covid-19 Government Response Tracker (OxCGRT)"),
   
   ## Exceptius----------
   
