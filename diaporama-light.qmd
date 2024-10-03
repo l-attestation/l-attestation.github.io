@@ -1,0 +1,317 @@
+---
+title: "L'Attestation"
+subtitle: "Présentation à Sciences Po Strasbourg"
+author: "Théo Boulakia & Nicolas Mariot"
+date: 2024-10-03
+date-format: long
+format: revealjs
+editor: source
+lang: fr
+---
+
+```{r packages}
+library(targets)
+library(tidyverse)
+library(huxtable)
+library(ggridges)
+```
+
+```{r functions}
+source(here::here("functions.R"))
+```
+
+```{r targets}
+tar_load(geom_fontfamily)
+tar_load(starts_with("v_"))
+tar_load(starts_with("vico"))
+tar_load(cah_vico)
+```
+
+```{r theming}
+theme_set(theme_minimal(base_family = geom_fontfamily) +
+            theme(plot.title = element_text(face = "bold"),
+                  plot.subtitle = ggtext::element_markdown())
+          )
+```
+
+# La diffusion des confinements
+
+## Wuhan, 3 février 2020
+
+![](images/2020-02-03_wuhan.jpg)
+
+## Rome, 2 avril 2020
+
+![](images/2020-04-02_roma.jpg)
+
+## Lima, 5 avril 2020
+
+![](images/2020-04-05-lima.jpg)
+
+# Une absence remarquable
+
+## Lima, 31 mars 2020
+
+![](images/2020-03-31_lima.jpg)
+
+## Philippines, 13 mai 2020
+
+![](images/2020-05-13_philipines.jpg)
+
+## Tamil Nadu, 28 mars 2020
+
+![](images/rajesh_babu_helmet.jpg)
+
+# Des expériences bien différentes
+
+---
+
+```{r agr_mode}
+tar_read(agr_mode_plot)
+```
+
+--- 
+
+```{r parks_average}
+tar_read(parks_average_plot)
+```
+
+## Berlin, 18 avril 2020
+
+![](images/2020-04-18_berlin.jpeg)
+
+## Paris, 21 mai 2020
+
+![](images/parc_buttes_chaumont_2020-05-21.jpg)
+
+----
+
+```{r parks_evolution}
+tar_read(parks_evolution_plot)
+```
+
+# Choc moral
+
+---
+
+![](images/AYA00118050.JPG)
+
+----
+
+![](images/AYA00127048.JPG)
+
+----
+
+![](images/CC0480004.jpg)
+
+# Retour de bâton
+
+---
+
+```{r prevalence_verbalisation}
+tar_read(prevalence_verbalisation_map)
+```
+
+----
+
+```{r taux_verbalisation}
+tar_read(taux_verbalisation_plot)
+```
+
+```{r residential_verbalisation}
+#| eval: false
+tar_read(residential_verbalisation_plot)
+```
+
+----
+
+```{r communes_securitaires}
+#| eval: true
+tar_read(communes_securitaires_map)
+```
+
+# Inquiètement
+
+# Lignes de conduite
+
+```{r ordered_clust}
+ordered_clust = order_groups(cah_vico)
+```
+
+## Pratiques {.scrollable}
+
+```{r variables}
+#| results: asis
+walk(v_pratiques, ~ cat(paste("-", .x, "\n")))
+```
+
+## Interdits {.smaller .scrollable}
+
+```{r hux_interdits1}
+v_interdits[1:3] |> 
+  map_chi_prop() |> 
+  shape_hux() |> 
+  set_font_size(12) |>
+  theme_bright()
+```
+
+## Interdits (suite) {.smaller .scrollable}
+
+```{r}
+
+v_interdits[4:6] |> 
+  map_chi_prop() |> 
+  shape_hux() |> 
+  set_font_size(13) |> 
+  theme_bright()
+
+```
+
+## Précautions & Participation {.smaller .scrollable}
+
+```{r hux_precautions}
+c(v_precautions, v_participation, list(vote = "Élections municipales")) |> 
+  map_chi_prop() |> 
+  shape_hux() |> 
+  set_font_size(13) |> 
+  theme_bright()
+```
+
+## Poids des groupes
+
+```{r frequence_groupes}
+questionr::wtd.table(vico$clust, weights = vico_read$poids_init) |>
+  questionr::freq(digits = 0, total = F) |> 
+  rownames_to_column(var = "Groupe") |> 
+  mutate(Groupe = name_clust(Groupe)) |> 
+  rename(Fréquence = "%") |> 
+  select(Groupe, Fréquence) |> 
+  pivot_wider(names_from = Groupe, values_from = Fréquence) |> 
+  relocate(all_of(ordered_clust)) |>
+  as_huxtable() |> 
+  theme_bright()
+```
+
+## Genre, diplôme
+
+```{r}
+
+vico_summarised = vico |> 
+  mutate(clust = name_clust(clust)) |>
+  group_by(clust) |> 
+  summarise(poids_groupe = sum(poids_init),
+            pct_hommes = sum((sexe == "Homme") * poids_init),
+            pct_dip_sup = sum((diploniv_rec == "Supérieur au baccalauréat") * poids_init, na.rm = T)) |> 
+  mutate(across(where(is.numeric) & !poids_groupe, ~ round(.x / poids_groupe * 100, 1)))
+
+# Visualisations----
+
+vico_summarised %>%
+  ggplot(aes(x = pct_hommes, y = pct_dip_sup)) +
+  geom_point() +
+  ggrepel::geom_text_repel(aes(label = clust),
+                  size = 4,
+                  family = "serif") +
+  geom_vline(xintercept = 48.5, linetype = 3) +
+  geom_hline(yintercept = 60, linetype = 3) +
+  xlab("Hommes (%)") +
+  ylab("Diplôme supérieur au baccalauréat (%)") +
+  theme_classic() +
+  theme(text = element_text(family = "serif"))
+
+```
+
+## Âge
+
+```{r}
+vico |> 
+  mutate(clust = name_clust(clust)) |> 
+  ggplot(aes(x = age, y = clust)) +
+  geom_density_ridges() +
+  theme_minimal() +
+  labs(x = "Âge",
+       y = "")
+```
+
+## Préférences partisanes
+
+```{r}
+
+tail(v_demo, n = 1) |> 
+  map_chi_prop() |> 
+  shape_hux() |> 
+  set_font_size(12) |> 
+  theme_bright()
+
+```
+
+
+## Politisation
+
+```{r}
+
+v_politisation |> 
+  map_chi_prop() |> 
+  shape_hux() |> 
+  set_font_size(12) |> 
+  theme_bright()
+
+```
+
+## Travail et emploi
+
+```{r}
+
+v_travail |> 
+  map_chi_prop() |> 
+  shape_hux() |> 
+  set_font_size(12) |> 
+  theme_bright()
+
+```
+
+## Nuisances dans le logement
+
+```{r}
+v_nuisances |> 
+  map_chi_prop() |> 
+  shape_hux() |> 
+  set_font_size(12) |> 
+  theme_bright()
+```
+
+## Émotions déclarées
+
+```{r}
+v_emotions |> 
+  map_chi_prop() |> 
+  shape_hux() |> 
+  set_font_size(12) |> 
+  theme_bright()
+```
+
+# Les attraits de l'enfermement
+
+# L'enfermement des femmes
+
+# Merci !
+
+```{r visnetwork}
+#| eval: false
+tar_visnetwork()
+```
+
+```{r cameras_paris}
+#| eval: false
+tar_read(cameras_paris_map2)
+```
+
+```{r dendrogram}
+#| eval: false
+tar_read(vico_dendrogram)
+```
+
+```{r sortie_correlations}
+#| eval: false
+tar_read(sortie_correlations_graph)
+```

@@ -397,6 +397,28 @@ tar_plan(
          y = "Fréquentation des espaces verts du 1er mars au 1er juin\npar rapport à janvier 2020 (%)",
          caption = "Données : Eurostat & Google Mobility Reports"),
   
+  ## AGR mode ----
+  
+  agr_mode_plot = world_summarise |>
+    filter(!is.na(mode_least_strict_day_april)) |>
+    mutate(mode_least_strict_day_april = fct_reorder(mode_least_strict_day_april,
+                                                     policiers_pcm_habitants)) |> 
+    select(pays, mode_least_strict_day_april) |> 
+    mutate(x = 1) |> 
+    ggplot() +
+    ggrepel::geom_text_repel(aes(x = x, y = x, label = pays),
+                             position = position_jitter(seed = 1),
+                             family = geom_fontfamily, size = 3) +
+    facet_wrap(~mode_least_strict_day_april) +
+    theme_minimal() +
+    theme(axis.line = element_blank(),
+          axis.text = element_blank(),
+          axis.title = element_blank(),
+          axis.ticks = element_blank(),
+          panel.grid = element_blank(),
+          panel.background = element_rect(linewidth = 2),
+          ),
+  
   ## AGR & Police-----------
   
   agr_police_plot = world_summarise |>
@@ -580,9 +602,24 @@ tar_plan(
     geom_sf(aes(fill = v_headtails), color = NA) +
     coord_sf(datum = NA) +
     viridis::scale_fill_viridis(discrete = T) +
-    labs(title = "Prévalence de la verbalisation",
+    labs(
+      title = "Prévalence de la verbalisation",
          fill = "Pour 1000 adultes",
          caption = "Sources : ANTAI, INSEE"),
+  
+  # Prevalence shadow ----
+  
+  prevalence_classint = classInt::classIntervals(departements$verbalisations_pmla,
+                                               style = "headtails"),
+  prevalence_verbalisation_shadow = st_read(departements_sf_file, quiet = T) |> 
+    left_join(departements,
+              by = c("code_departement", "nom_departement")) |>
+    ggplot(aes(fill = verbalisations_pmla)) +
+    ggfx::with_shadow(geom_sf(color = NA)) +
+    scale_fill_viridis_b(breaks = prevalence_classint$brks,
+                         labels = round) +
+    labs(fill = "Pour 1000 adultes",
+         caption = "Source : ANTAI"),
   
   # Taux verbalisation----
   

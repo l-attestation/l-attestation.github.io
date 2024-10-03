@@ -1,0 +1,6 @@
+---
+title: "Présentations"
+---
+
+- [Version longue](diaporama.qmd)
+- [Version compacte](diaporama-light.qmd)
