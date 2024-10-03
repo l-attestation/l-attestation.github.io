@@ -90,6 +90,20 @@ tar_read(parks_average_plot)
 tar_read(parks_evolution_plot)
 ```
 
+# Continuités
+
+----
+
+```{r agr_police}
+tar_read(agr_police_plot)
+```
+
+---
+
+```{r fariss_parks}
+tar_read(fariss_parks_plot)
+```
+
 # Choc moral
 
 ---
@@ -104,18 +118,18 @@ tar_read(parks_evolution_plot)
 
 ![](images/CC0480004.jpg)
 
+---
+
+```{r taux_verbalisation}
+tar_read(taux_verbalisation_plot)
+```
+
 # Retour de bâton
 
 ---
 
 ```{r prevalence_verbalisation}
 tar_read(prevalence_verbalisation_map)
-```
-
-----
-
-```{r taux_verbalisation}
-tar_read(taux_verbalisation_plot)
 ```
 
 ```{r residential_verbalisation}

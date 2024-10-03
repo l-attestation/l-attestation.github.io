@@ -483,6 +483,167 @@
     "text": "Palmarès\n\nTableau\n\npolice_europe_pcm |&gt;\n  select(pays, policiers_pcm) |&gt; \n  rename(Pays = pays,\n         \"Policiers pour 100 000 habitants\" = policiers_pcm) |&gt; \n  as_huxtable() |&gt; \n  set_number_format(NA) |&gt; \n  huxtable::theme_blue()\n\n\n\n\nPays\nPoliciers pour 100 000 habitants\n\n\nMonténégro\n680\n\n\nTurquie\n530\n\n\nGrèce\n506\n\n\nCroatie\n504\n\n\nKosovo\n495\n\n\nMacédoine du Nord\n467\n\n\nBosnie-Herzégovine\n464\n\n\nMalte\n457\n\n\nPortugal\n446\n\n\nItalie\n422\n\n\nBulgarie\n415\n\n\nChypre\n401\n\n\nSlovaquie\n397\n\n\nHongrie\n392\n\n\nTchéquie\n379\n\n\nAlbanie\n374\n\n\nEspagne\n366\n\n\nIrlande\n351\n\n\nAutriche\n346\n\n\nSlovénie\n345\n\n\nBelgique\n339\n\n\nFrance\n321\n\n\nLuxembourg\n321\n\n\nLiechtenstein\n319\n\n\nLettonie\n301\n\n\nAllemagne\n299\n\n\nEstonie\n299\n\n\nPays-Bas\n293\n\n\nLituanie\n287\n\n\nPologne\n261\n\n\nRoumanie\n252\n\n\nRoyaume-Uni\n224\n\n\nSuède\n221\n\n\nSuisse\n217\n\n\nDanemark\n191\n\n\nIslande\n180\n\n\nFinlande\n135\n\n\n\n\n\n\n\n\n\nGraphique\n\npolice_europe_pcm |&gt; \n  mutate(pays = fct_reorder(pays, policiers_pcm)) |&gt; \n  ggplot(aes(x = policiers_pcm, y = pays)) +\n  geom_bar(stat = \"identity\") +\n  labs(x = \"Policiers pour 100 000 habitants\",\n       y = \"\",\n       title = \"Les Européens mieux protégés (?) au Sud et à l'Est\") +\n  theme_minimal()"
   },
   {
+    "objectID": "presentations.html",
+    "href": "presentations.html",
+    "title": "Présentations",
+    "section": "",
+    "text": "Version longue\nVersion compacte"
+  },
+  {
+    "objectID": "images.html",
+    "href": "images.html",
+    "title": "Philippines",
+    "section": "",
+    "text": "Philippines\n\n\n\nUn poste de contrôle de la police le long de l’autoroute Marcos, à la limite de Metro Manila et de Rizal, pendant le confinement du COVID-19, 15 mai 2020\n\n\n\n\nIndia\n\n\n\nBangalore, Inde, 27 mars 2020, Nicolas Mirguet\n\n\n\n\n\n\n\n\nImportant\n\n\n\nQuelle case de l’attestation dérogatoire cocher pour récupérer un livre ?"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "L’Attestation",
+    "section": "",
+    "text": "Du printemps 2020, chacun d’entre nous garde le souvenir des attestations à remplir, des limites qu’elles imposaient et des vérifications policières qu’elles autorisaient. Pourtant, rares sont les bilans consacrés à ce versant coercitif de l’enfermement national. C’est tout l’enjeu de cette enquête. Pendant 55 jours, les forces de l’ordre firent le vide sur l’ensemble du territoire, y compris dans les espaces naturels que survolaient des drones et des hélicoptères. Assistées par d’improbables auxiliaires et de nombreuses délations, elles procédèrent à 21 millions de contrôles et infligèrent 1,1 million d’amendes. Cette situation où tout le monde, aisé ou pauvre, habitué à donner des ordres ou à en recevoir, était soumis aux mêmes interdits et aux mêmes vérifications, apparaît historiquement singulière. Elle offre l’opportunité d’étudier grandeur nature la production du conformisme (qu’est-ce qu’obéir à l’État ?) et son ancrage social. De la claustration totale au refus des règles, cet ouvrage suit les lignes de conduite qu’empruntèrent les confinés, soumis à une surveillance massive dont on trouvait alors, en Europe et dans le monde, bien peu d’équivalents.\nCe site présente l’enquête, ses sources, ses méthodes et le code informatique des analyses statistiques. Une sélection de courtes vidéos permet de retrouver l’atmosphère de la période."
+  },
+  {
+    "objectID": "diaporama-light.html#wuhan-3-février-2020",
+    "href": "diaporama-light.html#wuhan-3-février-2020",
+    "title": "L’Attestation",
+    "section": "Wuhan, 3 février 2020",
+    "text": "Wuhan, 3 février 2020"
+  },
+  {
+    "objectID": "diaporama-light.html#rome-2-avril-2020",
+    "href": "diaporama-light.html#rome-2-avril-2020",
+    "title": "L’Attestation",
+    "section": "Rome, 2 avril 2020",
+    "text": "Rome, 2 avril 2020"
+  },
+  {
+    "objectID": "diaporama-light.html#lima-5-avril-2020",
+    "href": "diaporama-light.html#lima-5-avril-2020",
+    "title": "L’Attestation",
+    "section": "Lima, 5 avril 2020",
+    "text": "Lima, 5 avril 2020"
+  },
+  {
+    "objectID": "diaporama-light.html#lima-31-mars-2020",
+    "href": "diaporama-light.html#lima-31-mars-2020",
+    "title": "L’Attestation",
+    "section": "Lima, 31 mars 2020",
+    "text": "Lima, 31 mars 2020"
+  },
+  {
+    "objectID": "diaporama-light.html#philippines-13-mai-2020",
+    "href": "diaporama-light.html#philippines-13-mai-2020",
+    "title": "L’Attestation",
+    "section": "Philippines, 13 mai 2020",
+    "text": "Philippines, 13 mai 2020"
+  },
+  {
+    "objectID": "diaporama-light.html#tamil-nadu-28-mars-2020",
+    "href": "diaporama-light.html#tamil-nadu-28-mars-2020",
+    "title": "L’Attestation",
+    "section": "Tamil Nadu, 28 mars 2020",
+    "text": "Tamil Nadu, 28 mars 2020"
+  },
+  {
+    "objectID": "diaporama-light.html#berlin-18-avril-2020",
+    "href": "diaporama-light.html#berlin-18-avril-2020",
+    "title": "L’Attestation",
+    "section": "Berlin, 18 avril 2020",
+    "text": "Berlin, 18 avril 2020"
+  },
+  {
+    "objectID": "diaporama-light.html#paris-21-mai-2020",
+    "href": "diaporama-light.html#paris-21-mai-2020",
+    "title": "L’Attestation",
+    "section": "Paris, 21 mai 2020",
+    "text": "Paris, 21 mai 2020"
+  },
+  {
+    "objectID": "diaporama-light.html#pratiques",
+    "href": "diaporama-light.html#pratiques",
+    "title": "L’Attestation",
+    "section": "Pratiques",
+    "text": "Pratiques\n\nSortir avec l’attestation\nType d’attestation\nRuser avec l’attestation\nDépasser le rayon\nFréquence des promenades\nSortir le plus souvent\nPorter des gants\nPorter un masque\nS’écarter de 1 m\nSe désinfecter les mains\nDésinfecter les surfaces\nApplaudir les soignants\nHuer le gouvernement\nS’informer sur l’épidémie\nÉlections municipales"
+  },
+  {
+    "objectID": "diaporama-light.html#interdits",
+    "href": "diaporama-light.html#interdits",
+    "title": "L’Attestation",
+    "section": "Interdits",
+    "text": "Interdits\n\n\n\n\n  EnsembleClaustrésExemplairesInsouciantsLégalistesProtestatairesRéfractaires\n\nSortir avec l'attestation\n\nToujours9298987995 78\n\nLe plus souvent611182 16\n\nJamais ou presque jamais1 0   2\n\nParfois1112 34\n\nType d'attestation\n\nImprimée555959 493961\n\nNumérique32  28431524\n\nC'est variable8  1455 \n\nManuscrite54122417\n\nRuser avec l'attestation\n\nJamais7687893696 31\n\nParfois144658316 \n\nToujours7 531532\n\nLe plus souvent421 0824"
+  },
+  {
+    "objectID": "diaporama-light.html#interdits-suite",
+    "href": "diaporama-light.html#interdits-suite",
+    "title": "L’Attestation",
+    "section": "Interdits (suite)",
+    "text": "Interdits (suite)\n\n\n\n\n  EnsembleClaustrésExemplairesInsouciantsLégalistesProtestatairesRéfractaires\n\nDépasser le rayon\n\nJamais57 7714795022\n\nRarement18  25 249\n\nParfois13 2580 5\n\nSouvent9 110662\n\nJe ne sais pas3532  62\n\nFréquence des promenades\n\nUne fois par jour au plus66188858872 \n\nJamais2499221 2\n\nPlusieurs fois par jour110 12 833\n\nSortir le plus souvent\n\nSeul(e)5990544653 53\n\nAvec cohabitant(s)34842454226 \n\nC'est variable624951113\n\nAvec personnes de l'extérieur10   22"
+  },
+  {
+    "objectID": "diaporama-light.html#précautions-participation",
+    "href": "diaporama-light.html#précautions-participation",
+    "title": "L’Attestation",
+    "section": "Précautions & Participation",
+    "text": "Précautions & Participation\n\n\n\n\n  EnsembleClaustrésExemplairesInsouciantsLégalistesProtestatairesRéfractaires\n\nPrécautions\n\nS'écarter de 1 m858097 809172\n\nPorter un masque474382 225434\n\nSe désinfecter les mains44 73 263631\n\nDésinfecter les surfaces3538692414 18\n\nPorter des gants27 552453324\n\nParticipation\n\nS'informer sur l'épidémie77 8568  69\n\nApplaudir les soignants33284331277318\n\nHuer le gouvernement50120704\n\nÉlections municipales\n\nVoter5644 6563 49\n\nS'abstenir (raisons diverses)243013   36\n\nS'abstenir (raisons sanitaires)2026301213 15"
+  },
+  {
+    "objectID": "diaporama-light.html#poids-des-groupes",
+    "href": "diaporama-light.html#poids-des-groupes",
+    "title": "L’Attestation",
+    "section": "Poids des groupes",
+    "text": "Poids des groupes\n\n\n\n\nClaustrésExemplairesInsouciantsLégalistesProtestatairesRéfractaires\n\n21221425610"
+  },
+  {
+    "objectID": "diaporama-light.html#genre-diplôme",
+    "href": "diaporama-light.html#genre-diplôme",
+    "title": "L’Attestation",
+    "section": "Genre, diplôme",
+    "text": "Genre, diplôme"
+  },
+  {
+    "objectID": "diaporama-light.html#âge",
+    "href": "diaporama-light.html#âge",
+    "title": "L’Attestation",
+    "section": "Âge",
+    "text": "Âge"
+  },
+  {
+    "objectID": "diaporama-light.html#préférences-partisanes",
+    "href": "diaporama-light.html#préférences-partisanes",
+    "title": "L’Attestation",
+    "section": "Préférences partisanes",
+    "text": "Préférences partisanes\n\n\n\n\n  EnsembleClaustrésExemplairesInsouciantsLégalistesProtestatairesRéfractaires\n\nPréférences partisanes\n\nA gauche2925 33  25\n\nJe ne me retrouve pas dans ces catégories2430 20 16 \n\nAu centre141216 17411\n\nTrès à gauche1296 84217\n\nA droite11 139 4 \n\nNi à gauche ni à droite899  4 \n\nTrès à droite3 3   6"
+  },
+  {
+    "objectID": "diaporama-light.html#politisation",
+    "href": "diaporama-light.html#politisation",
+    "title": "L’Attestation",
+    "section": "Politisation",
+    "text": "Politisation\n\n\n\n\n  EnsembleClaustrésExemplairesInsouciantsLégalistesProtestatairesRéfractaires\n\nPolitisation\n\nPétitionné5247 554777 \n\nManifesté27212133246133\n\nAssisté à un débat25192329224529\n\nMilité16101419 3619\n\nFait grève14 12 1231"
+  },
+  {
+    "objectID": "diaporama-light.html#travail-et-emploi",
+    "href": "diaporama-light.html#travail-et-emploi",
+    "title": "L’Attestation",
+    "section": "Travail et emploi",
+    "text": "Travail et emploi\n\n\n\n\n  EnsembleClaustrésExemplairesInsouciantsLégalistesProtestatairesRéfractaires\n\nTravail\n\nChômage technique partiel ou total17      \n\nMise en congé1113   8 \n\nBaisse du temps de travail1112    12\n\nDégradation conditions de travail9108 81111\n\nDiminution du revenu9   81310\n\nHoraires inhabituels45     \n\nHausse du temps de travail obligatoire33     \n\nLicenciement1      \n\nReprise du travail1 1 1"
+  },
+  {
+    "objectID": "diaporama-light.html#nuisances-dans-le-logement",
+    "href": "diaporama-light.html#nuisances-dans-le-logement",
+    "title": "L’Attestation",
+    "section": "Nuisances dans le logement",
+    "text": "Nuisances dans le logement\n\n\n\n\n  EnsembleClaustrésExemplairesInsouciantsLégalistesProtestatairesRéfractaires\n\nNuisances\n\nBruits extérieurs1519 12132111\n\nPénurie1013 7 148\n\nExiguïté89   13 \n\nSaleté7  5514 \n\nBruits domestiques78   105\n\nConflits domestiques6    10 \n\nPollution5 64211 \n\nConflits de voisinage5  3 8 \n\nInsécurité23  14"
+  },
+  {
+    "objectID": "diaporama-light.html#émotions-déclarées",
+    "href": "diaporama-light.html#émotions-déclarées",
+    "title": "L’Attestation",
+    "section": "Émotions déclarées",
+    "text": "Émotions déclarées\n\n\n\n\n  EnsembleClaustrésExemplairesInsouciantsLégalistesProtestatairesRéfractaires\n\nÉmotions\n\nInquiet59 6954536750\n\nFatigué5662   6348\n\nStressé47515342425539\n\nIrrité45    55 \n\nTriste42 45 395536\n\nDétendu37 33  45 \n\nEn forme35333338 40 \n\nHeureux31 28 3436"
+  },
+  {
     "objectID": "tables.html",
     "href": "tables.html",
     "title": "Tables",
@@ -502,20 +663,6 @@
     "title": "Tables",
     "section": "Table des graphiques, tableaux, documents et cartes",
     "text": "Table des graphiques, tableaux, documents et cartes\n\nPlus les États européens respectaient le droit à l’intégrité physique, moins ils ont enfermé leur population (graphique)\nPlus les États européens comptaient de policiers par habitant, plus ils ont enfermé leur population (graphique)\nLes États européens les plus hostiles aux promenades sont les plus pourvus en policiers (graphique)\nAmpleur des restrictions dans les États européens entre le 1er mars et le 1er juin 2020 (graphique)\nUne minorité d’États européens ont mis en place des mesures de surveillance draconiennes (graphique)\nParc Kralingse Bos, Rotterdam (Pays-Bas), le 23 avril 2020 (document)\nEuropéens à l’air libre au nord, enfermés au sud et à l’est (graphique)\nLa signature des confinements latins (graphique)\nAmpleur et prévalence de la verbalisation dans quelques pays européens (printemps 2020) (tableau)\nOù passer le prochain ? (graphique)\nPremier modèle d’attestation française, 16 mars 2020 (document)\nDeuxième modèle d’attestation française, 23 mars 2020 (document)\nCouvre-feux municipaux au 25 mars 2020 (carte)\nL’inégale distribution des amendes (carte)\nQuadriller et punir (graphique)\nLes variations de sévérité ne sont pas imputables aux différences d’enfermement (graphique)\nConcentrations policières sur la façade méditerranéenne et en Île-de-France (carte)\nExpliquer les variations départementales de la verbalisation au printemps 2020 (tableau)\nUne partie des caméras de surveillance actives à Paris au printemps 2020 (carte)\nClassification des confinés (graphique)\nLes lignes de conduite en fonction des pratiques de confinement (tableau)\nComparaison des pratiques sociales et émotions des exemplaires et des légalistes (tableau)\nMots associés à « Dehors », « Sortir » et « Sortie » (graphique)"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "L’Attestation",
-    "section": "",
-    "text": "Du printemps 2020, chacun d’entre nous garde le souvenir des attestations à remplir, des limites qu’elles imposaient et des vérifications policières qu’elles autorisaient. Pourtant, rares sont les bilans consacrés à ce versant coercitif de l’enfermement national. C’est tout l’enjeu de cette enquête. Pendant 55 jours, les forces de l’ordre firent le vide sur l’ensemble du territoire, y compris dans les espaces naturels que survolaient des drones et des hélicoptères. Assistées par d’improbables auxiliaires et de nombreuses délations, elles procédèrent à 21 millions de contrôles et infligèrent 1,1 million d’amendes. Cette situation où tout le monde, aisé ou pauvre, habitué à donner des ordres ou à en recevoir, était soumis aux mêmes interdits et aux mêmes vérifications, apparaît historiquement singulière. Elle offre l’opportunité d’étudier grandeur nature la production du conformisme (qu’est-ce qu’obéir à l’État ?) et son ancrage social. De la claustration totale au refus des règles, cet ouvrage suit les lignes de conduite qu’empruntèrent les confinés, soumis à une surveillance massive dont on trouvait alors, en Europe et dans le monde, bien peu d’équivalents.\nCe site présente l’enquête, ses sources, ses méthodes et le code informatique des analyses statistiques. Une sélection de courtes vidéos permet de retrouver l’atmosphère de la période. Voir également le diaporama correspondant à la présentation la plus récente du livre."
-  },
-  {
-    "objectID": "images.html",
-    "href": "images.html",
-    "title": "Philippines",
-    "section": "",
-    "text": "Philippines\n\n\n\nUn poste de contrôle de la police le long de l’autoroute Marcos, à la limite de Metro Manila et de Rizal, pendant le confinement du COVID-19, 15 mai 2020\n\n\n\n\nIndia\n\n\n\nBangalore, Inde, 27 mars 2020, Nicolas Mirguet\n\n\n\n\n\n\n\n\nImportant\n\n\n\nQuelle case de l’attestation dérogatoire cocher pour récupérer un livre ?"
   },
   {
     "objectID": "exercices/stringency-index/index.html",
@@ -767,7 +914,7 @@
     "href": "exercices.html",
     "title": "Exercices",
     "section": "",
-    "text": "Quels ont été les pays les plus touchés par la pandémie ?\n\n\n\nFAQ\n\n\n\nCalculer l’excès de mortalité sur différentes périodes\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n3 sept. 2024\n\n\n\n\n\n\n\n\n\n\n\n\nMortalité dans les maisons de retraite\n\n\n\nFAQ\n\n\n\nLes données internationales sur le sujet sont rares et très mal distribuées.\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n2 oct. 2023\n\n\n\n\n\n\n\n\n\n\n\n\nL’Europe des promenades surveillées\n\n\n\nFAQ\n\n\n\nIntroduction à la base de données A Good Reason\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n29 sept. 2023\n\n\n\n\n\n\n\n\n\n\n\n\nLes États les plus sévères du monde\n\n\n\nFAQ\n\n\n\nQue montre l’Oxford Covid 19 Government Response Tracker ?\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\nOù y a-t-il le plus de policiers en Europe ?\n\n\n\nFAQ\n\n\n\nCalculer la concentration policière dans chaque pays, grâce aux données d’eurostat et de la banque mondiale\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\nLa France des polices municipales\n\n\n\nLa Police des sorties\n\n\n\nCartographier les initiatives sécuritaires locales\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\nDes verbalisations très inégalement distribuées\n\n\n\nLa Police des sorties\n\n\n\nCartographier la prévalence de la verbalisation\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\nParisiens, ouvrez l’oeil !\n\n\n\nInquiètement\n\n\n\nCartographier les caméras de surveillance à Paris\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\nLa signature des confinements latins\n\n\n\nFAQ\n\n\n\nMontrer la spécificité des pays du Sud de l’Europe à l’aide de Google Mobility\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\nÀ quoi pense-t-on quand on s’enferme ?\n\n\n\nLignes de conduite\n\n\n\nReprésenter graphiquement des associations d’idées\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\nAucun article correspondant"
+    "text": "Quels ont été les pays les plus touchés par la pandémie ?\n\n\n\nFAQ\n\n\n\nCalculer l’excès de mortalité sur différentes périodes\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n3 oct. 2024\n\n\n\n\n\n\n\n\n\n\n\n\nMortalité dans les maisons de retraite\n\n\n\nFAQ\n\n\n\nLes données internationales sur le sujet sont rares et très mal distribuées.\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n2 oct. 2023\n\n\n\n\n\n\n\n\n\n\n\n\nL’Europe des promenades surveillées\n\n\n\nFAQ\n\n\n\nIntroduction à la base de données A Good Reason\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n29 sept. 2023\n\n\n\n\n\n\n\n\n\n\n\n\nLes États les plus sévères du monde\n\n\n\nFAQ\n\n\n\nQue montre l’Oxford Covid 19 Government Response Tracker ?\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\nOù y a-t-il le plus de policiers en Europe ?\n\n\n\nFAQ\n\n\n\nCalculer la concentration policière dans chaque pays, grâce aux données d’eurostat et de la banque mondiale\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\nLa France des polices municipales\n\n\n\nLa Police des sorties\n\n\n\nCartographier les initiatives sécuritaires locales\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\nDes verbalisations très inégalement distribuées\n\n\n\nLa Police des sorties\n\n\n\nCartographier la prévalence de la verbalisation\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\nParisiens, ouvrez l’oeil !\n\n\n\nInquiètement\n\n\n\nCartographier les caméras de surveillance à Paris\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\nLa signature des confinements latins\n\n\n\nFAQ\n\n\n\nMontrer la spécificité des pays du Sud de l’Europe à l’aide de Google Mobility\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\n\n\n\n\nÀ quoi pense-t-on quand on s’enferme ?\n\n\n\nLignes de conduite\n\n\n\nReprésenter graphiquement des associations d’idées\n\n\n\nThéo Boulakia, Nicolas Mariot\n\n\n25 juin 2023\n\n\n\n\n\n\n\n\nAucun article correspondant"
   },
   {
     "objectID": "donnees-mondiales.html",

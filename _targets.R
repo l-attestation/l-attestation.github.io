@@ -380,7 +380,8 @@ tar_plan(
     
     scale_x_continuous(limits = c(1, 4)) +
     
-    labs(title = "Plus les Étas européens respectaient le droit à l'intégrité physique,\nmoins ils ont enfermé leur population",
+    labs(
+      # title = "Plus les Étas européens respectaient le droit à l'intégrité physique,\nmoins ils ont enfermé leur population",
          x = "Droit à l'intégrité physique 2019 (Indice synthétique)",
          y = "Fréquentation des espaces verts du 1er mars au 1er juin\npar rapport à janvier 2020 (%)",
          caption = "Données : Latent Human Rights Protection Scores Version 4 & Google Mobility Reports"),
@@ -421,7 +422,7 @@ tar_plan(
   
   ## AGR & Police-----------
   
-  agr_police_plot = world_summarise |>
+  agr_police_boxplot = world_summarise |>
     filter(!is.na(mode_least_strict_day_april),
            !is.na(policiers_pcm_habitants)) |>
     mutate(mode_least_strict_day_april = str_wrap(mode_least_strict_day_april, 5),
@@ -433,6 +434,24 @@ tar_plan(
     geom_label_repel(aes(label = pays), family = geom_fontfamily, size = 2.5) +
     labs(title = "La concentration policière augmente avec le niveau des restrictions",
          subtitle = "La France est dans le petit groupe des pays à attestation",
+         y = "Policiers et assimilés pour 100 000 habitants",
+         x = "",
+         caption = "Données : A Good Reason & Eurostat") +
+    theme(axis.text.x = element_text(face= "bold")),
+  
+  agr_police_plot = world_summarise |>
+    filter(!is.na(mode_least_strict_day_april),
+           !is.na(policiers_pcm_habitants)) |>
+    mutate(mode_least_strict_day_april = str_wrap(mode_least_strict_day_april, 5),
+           mode_least_strict_day_april = fct_reorder(mode_least_strict_day_april,
+                                                     policiers_pcm_habitants)) |>
+    ggplot(aes(x = mode_least_strict_day_april,
+               y = policiers_pcm_habitants)) +
+    geom_label_repel(aes(label = pays), family = geom_fontfamily, size = 2.5) +
+    stat_summary(fun = "mean", geom = "point", size = 2, color = "red") +
+    labs(
+      # title = "La concentration policière augmente avec le niveau des restrictions",
+         # subtitle = "La France est dans le petit groupe des pays à attestation",
          y = "Policiers et assimilés pour 100 000 habitants",
          x = "",
          caption = "Données : A Good Reason & Eurostat") +
@@ -551,7 +570,8 @@ tar_plan(
     geom_sf(aes(fill = p2), color = NA) +
     coord_sf(datum = NA) +
     scale_fill_manual(values = c("black", "red")) +
-    labs(title = "Densité de policiers municipaux") +
+    labs(title = "Densité de policiers municipaux",
+         caption = "Source : Enquête 2020 sur les polices municipales") +
     guides(fill = "none"),
   
   # Vigilants----
