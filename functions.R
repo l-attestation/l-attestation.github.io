@@ -60,7 +60,7 @@ visualize_dendrogram <- function(x) {
     
     # set("branches_lwd", 2) %>%
     
-    set("labels", NULL)
+    dendextend::set("labels", NULL)
   
   # plot(horiz = FALSE,
   #      main = "",
