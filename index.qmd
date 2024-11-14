@@ -5,10 +5,10 @@ sidebar: false
 about:
   image: COUV_ATTESTATION_PROMO_VOLUME.jpg
   template: broadside
-  links:
-    - icon: envelope
-      text: Email
-      href: mailto:attestation.contact@gmail.com
+  # links:
+    # - icon: envelope
+      # text: Email
+      # href: mailto:attestation.contact@gmail.com
     # - icon: book
     #   text: Anamosa
     #   href: https://anamosa.fr/livre/lattestation-une-experience-dobeissance-de-masse-printemps-2020/
@@ -17,3 +17,7 @@ about:
 Du printemps 2020, chacun d'entre nous garde le souvenir des attestations à remplir, des limites qu'elles imposaient et des vérifications policières qu'elles autorisaient. Pourtant, rares sont les bilans consacrés à ce versant coercitif de l'enfermement national. C'est tout l'enjeu de cette enquête. Pendant 55 jours, les forces de l'ordre firent le vide sur l'ensemble du territoire, y compris dans les espaces naturels que survolaient des drones et des hélicoptères. Assistées par d'improbables auxiliaires et de nombreuses délations, elles procédèrent à 21 millions de contrôles et infligèrent 1,1 million d'amendes. Cette situation où tout le monde, aisé ou pauvre, habitué à donner des ordres ou à en recevoir, était soumis aux mêmes interdits et aux mêmes vérifications, apparaît historiquement singulière. Elle offre l'opportunité d'étudier grandeur nature la production du conformisme (qu'est-ce qu'obéir à l'État ?) et son ancrage social. De la claustration totale au refus des règles, cet ouvrage suit les lignes de conduite qu'empruntèrent les confinés, soumis à une surveillance massive dont on trouvait alors, en Europe et dans le monde, bien peu d'équivalents.
 
 Ce site présente l'enquête, ses sources, ses méthodes et le [**code informatique**](https://l-attestation.github.io/exercices.html) des analyses statistiques. Une sélection de courtes vidéos permet de retrouver l'atmosphère de la période.
+
+## Réceptions | Interventions
+
+[Mediapart](https://www.mediapart.fr/journal/culture-et-idees/071023/pourquoi-avons-nous-obei-des-chercheurs-decryptent-le-confinement) (Joseph Confavreux) -- [Médecins Sans Frontières](https://www.youtube.com/watch?v=zJgCCR6QdiQ) (Conférence CRASH) -- [Au Poste](https://www.auposte.fr/lattestation-une-experience-dobeissance-de-masse-printemps-2020-avec-theo-boulakia-nicolas-mariot/) (David Dufresne) -- [Le Monde](https://www.lemonde.fr/idees/article/2023/11/06/le-covid-19-trois-ans-apres-avec-l-attestation-de-sortie-en-france-il-y-a-eu-une-forme-de-suivisme_6198467_3232.html) (Marion Dupont) -- [Libération](https://www.liberation.fr/idees-et-debats/nicolas-mariot-pendant-le-confinement-lattestation-a-ete-le-debut-dune-experience-siderante-la-police-pour-tous-20231117_CIRB54R2WJDHZGDI65TWTEEASM/) (Thibaut Sardier) -- [Paroles d'Histoire](https://www.youtube.com/watch?v=8-mpQUmO2Rg) (André Loez) -- [Lectures](https://journals.openedition.org/lectures/64676) (Olivier Martin) -- [Collateral](https://www.collateral.media/post/th%C3%A9o-boulakia-et-nicolas-mariot-l-etat-policier-en-temps-de-confinement-l-attestation) (Luis Teixeira) -- [France Culture](https://www.radiofrance.fr/franceculture/podcasts/france-culture-va-plus-loin-l-invite-e-des-matins/il-y-a-quatre-ans-le-confinement-et-si-c-etait-a-refaire-9406078) (Guillaume Ener)-- [La Vie des Idées](https://laviedesidees.fr/Un-printemps-sous-cloche) (Valérie Icard) -- [Politix](https://shs.cairn.info/revue-politix-2024-1-page-199?lang=fr) (Pierre-Yves Baudot, Amélie Carrier, Marion Clerc) -- L'Histoire : [article](https://www.lhistoire.fr/pourquoi-ob%C3%A9it-on%C2%A0) et [recension](https://www.lhistoire.fr/livres/%C2%AB-l%E2%80%99art-fran%C3%A7ais-du-confinement%C2%A0%C2%BB)

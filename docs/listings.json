@@ -2,16 +2,16 @@
   {
     "listing": "/exercices.html",
     "items": [
-      "/exercices/exces-mortalite/index.html",
-      "/exercices/maisons-de-retraite/index.html",
-      "/exercices/promenades-surveillees-europe/index.html",
       "/exercices/stringency-index/index.html",
       "/exercices/policiers-europe/index.html",
       "/exercices/polices-municipales/index.html",
       "/exercices/verbalisations-departement/index.html",
       "/exercices/cameras-paris/index.html",
       "/exercices/signature-confinements-latins/index.html",
-      "/exercices/mots-des-confines/index.html"
+      "/exercices/mots-des-confines/index.html",
+      "/exercices/promenades-surveillees-europe/index.html",
+      "/exercices/maisons-de-retraite/index.html",
+      "/exercices/exces-mortalite/index.html"
     ]
   }
 ]

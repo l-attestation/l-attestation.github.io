@@ -22,7 +22,7 @@ website:
       - exercices.qmd
       - bibliographie.qmd
       - presentations.qmd
-      - a-propos.qmd
+      - auteurs.qmd
 
 format:
   html:
