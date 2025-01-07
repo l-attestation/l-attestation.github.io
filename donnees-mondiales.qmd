@@ -37,7 +37,11 @@ Nous montrons comment utiliser ces données dans [L'Europe des promenades survei
 
 ## Mobility data
 
-Les indicateurs journaliers de *Google* sur la fréquentation de différents espaces et l'évolution du temps passé au domicile, que nous avons utilisés à plusieurs reprises dans ce livre, mais encore ceux d'*Apple*, que nous avons très brièvement mobilisés pour construire, dans la *FAQ*, un indicateur synthétique d'enfermement, ne représentent qu'une partie des données de mobilité utilisables [@hu2021].
+Les indicateurs journaliers de [Google](https://www.google.com/covid19/mobility/) sur la fréquentation de différents espaces et l'évolution du temps passé au domicile, que nous avons utilisés à plusieurs reprises dans ce livre, ou encore ceux d'*Apple*, que nous avons très brièvement mobilisés pour construire, dans la *FAQ*, un indicateur synthétique d'enfermement, ne représentent qu'une partie des données de mobilité utilisables [@hu2021].
+
+:::{.callout-note}
+Un article méthodologique antérieur à la pandémie évalue la robustesse des données issues de l'historique des positions de Google [@ruktanonchai2018]. À partir de 2025, l'historique des positions, aussi appelé "Mes Trajets" ou "Timeline", ne sera plus stocké que localement sur l'appareil.
+:::
 
 Les [données de mobilité de Facebook](https://dataforgood.facebook.com/dfg/tools/movement-range-maps) sont présentées sur le site web [Data for Good](https://dataforgood.facebook.com/dfg/tools) et téléchargeables sur le site web [Humanitarian Data Exchange](https://data.humdata.org/dataset/movement-range-maps?fbclid=IwAR3aqGcuREdFSTjMyCtaKDCobWwkPrs6MucY3Lqfg1pJUFqJfVlJGzN6fSE). Elles ont été mises à jour pour la dernière fois en mai 2022.
 
