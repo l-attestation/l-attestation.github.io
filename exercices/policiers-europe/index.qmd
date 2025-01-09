@@ -37,10 +37,10 @@ eurostat::get_eurostat("crim_just_job", type = "label", cache_dir = here("data")
 crim_just_job = read_rds(crim_just_job_path)
 ```
 
-## Les inspecter
+Une rapide inspection :
 
 ```{r check_raw_eurostat}
-crim_just_job
+glimpse(crim_just_job)
 ```
 
 ## Les recoder
@@ -75,7 +75,7 @@ questionr::freq.na(police_europe)
 Maintenant les données ressemblent à ceci :
 
 ```{r check_eurostat_recoded}
-police_europe
+glimpse(police_europe)
 ```
 
 ## Calculer le nombre de policiers par habitant
@@ -110,7 +110,7 @@ wb = read_rds(wb_path) |>
   select(-iso2c, -iso3c, -country)
 ```
 
-```{r divide}
+```{r join_and_divide}
 police_europe_pcm = police_europe |>
     filter(!is.na(total_police_officers_number),
            year <= 2020) |> 
