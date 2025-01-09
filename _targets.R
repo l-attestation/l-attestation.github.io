@@ -130,29 +130,27 @@ tar_plan(
   
   # Police Europe--------
   
-  police_europe = read_rds(police_europe_file) |>
-    pivot_wider(names_from = c(sex, isco08, unit), values_from = "values",
-                names_repair = janitor::make_clean_names) |>
-    complete(geo, time) |>
+  police_europe = read_rds(police_europe_file)  |> 
+    pivot_wider(names_from = c(sex, isco08, unit),
+                values_from = "values",
+                names_repair = janitor::make_clean_names) |> 
+    complete(geo, time) |> 
     mutate(geo = if_else(geo %in% c("Scotland", "England and Wales", "Northern Ireland (UK)"),
                          "United Kingdom", geo)) |>
-    group_by(geo, time) |>
-    summarise(across(ends_with("number"), ~ sum(.x, na.rm = F)), .groups = "drop") |>
+    summarise(across(ends_with("number"), ~ sum(.x, na.rm = F)), .by = c(geo, time)) |> 
     mutate(geo = str_replace(geo, "Türkiye", "Turkey"),
            geo = if_else(str_detect(geo, "Germany"), "Germany", geo),
            geo = if_else(str_detect(geo, "Kosovo"), "Republic of Kosovo", geo),
            year = year(time),
            wb = countrycode(geo, origin = "country.name", destination = "wb")) |>
-    select(wb, year,
-           ends_with("number") &
-             contains("police")),
+    select(wb, year, total_police_officers_number),
   
-  wb_police_europe_pcmh = wb |>
-    left_join(police_europe) |>
-    mutate(policiers_pcm_habitants = total_police_officers_number / population * 100000) |>
-    group_by(wb) |>
-    mutate(policiers_pcm_habitants = mean(policiers_pcm_habitants, na.rm = TRUE)) |>
-    filter(year == 2020),
+  wb_police_europe_pcmh = police_europe |>
+    filter(!is.na(total_police_officers_number),
+           year <= 2020) |> 
+    filter(year == max(year, na.rm = TRUE), .by = wb) |> 
+    left_join(wb, by = join_by(wb, year)) |>
+    mutate(policiers_pcm = total_police_officers_number / population * 100000),
   
   # AGR-------
   
@@ -371,11 +369,11 @@ tar_plan(
   police_europe_plot = world_summarise |>
     
     filter(continent == "Europe",
-           !is.na(policiers_pcm_habitants)) |>
+           !is.na(policiers_pcm)) |>
     
-    mutate(pays = fct_reorder(pays, policiers_pcm_habitants)) |>
+    mutate(pays = fct_reorder(pays, policiers_pcm)) |>
     
-    ggplot2::ggplot(aes(y = pays, x = policiers_pcm_habitants)) +
+    ggplot2::ggplot(aes(y = pays, x = policiers_pcm)) +
     
     geom_bar(stat = "identity"),
   
@@ -383,7 +381,7 @@ tar_plan(
   
   fariss_parks_plot = world_summarise |>
     
-    filter(!is.na(policiers_pcm_habitants),
+    filter(!is.na(policiers_pcm),
            !pays %in% c("Turquie", "Luxembourg")) |>
     
     ggplot(aes(x = hr_fariss, y = parks_percent_change_from_baseline)) +
@@ -403,7 +401,7 @@ tar_plan(
   ## Police & Parks---------
   
   police_parks_plot = world_summarise |>
-    ggplot(aes(x = policiers_pcm_habitants, y = parks_percent_change_from_baseline)) +
+    ggplot(aes(x = policiers_pcm, y = parks_percent_change_from_baseline)) +
     geom_point() +
     geom_text_repel(aes(label = pays), family = geom_fontfamily, size = 3) +
     scale_x_continuous(limits = c(130, 510)) +
@@ -417,7 +415,7 @@ tar_plan(
   agr_mode_plot = world_summarise |>
     filter(!is.na(mode_least_strict_day_april)) |>
     mutate(mode_least_strict_day_april = fct_reorder(mode_least_strict_day_april,
-                                                     policiers_pcm_habitants)) |> 
+                                                     policiers_pcm)) |> 
     select(pays, mode_least_strict_day_april) |> 
     mutate(x = 1) |> 
     ggplot() +
@@ -438,12 +436,12 @@ tar_plan(
   
   agr_police_boxplot = world_summarise |>
     filter(!is.na(mode_least_strict_day_april),
-           !is.na(policiers_pcm_habitants)) |>
+           !is.na(policiers_pcm)) |>
     mutate(mode_least_strict_day_april = str_wrap(mode_least_strict_day_april, 5),
            mode_least_strict_day_april = fct_reorder(mode_least_strict_day_april,
-                                                     policiers_pcm_habitants)) |>
+                                                     policiers_pcm)) |>
     ggplot(aes(x = mode_least_strict_day_april,
-               y = policiers_pcm_habitants)) +
+               y = policiers_pcm)) +
     geom_boxplot(varwidth = TRUE) +
     geom_label_repel(aes(label = pays), family = geom_fontfamily, size = 2.5) +
     labs(title = "La concentration policière augmente avec le niveau des restrictions",
@@ -455,12 +453,12 @@ tar_plan(
   
   agr_police_plot = world_summarise |>
     filter(!is.na(mode_least_strict_day_april),
-           !is.na(policiers_pcm_habitants)) |>
+           !is.na(policiers_pcm)) |>
     mutate(mode_least_strict_day_april = str_wrap(mode_least_strict_day_april, 5),
            mode_least_strict_day_april = fct_reorder(mode_least_strict_day_april,
-                                                     policiers_pcm_habitants)) |>
+                                                     policiers_pcm)) |>
     ggplot(aes(x = mode_least_strict_day_april,
-               y = policiers_pcm_habitants)) +
+               y = policiers_pcm)) +
     geom_label_repel(aes(label = pays), family = geom_fontfamily, size = 2.5) +
     stat_summary(fun = "mean", geom = "point", size = 2, color = "red") +
     labs(

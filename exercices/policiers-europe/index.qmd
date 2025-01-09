@@ -13,7 +13,6 @@ draft: false
 ```{r packages}
 library(here)
 library(tidyverse)
-library(janitor)
 library(countrycode)
 library(huxtable)
 ```
@@ -41,10 +40,7 @@ crim_just_job = read_rds(crim_just_job_path)
 ## Les inspecter
 
 ```{r check_raw_eurostat}
-slice_sample(crim_just_job, n = 20) |> 
-  as_huxtable() |> 
-  set_number_format(NA) |> 
-  huxtable::theme_grey()
+crim_just_job
 ```
 
 ## Les recoder
@@ -55,30 +51,31 @@ Dès que vous devez manipuler des noms et codes de pays, pensez au package [coun
 
 ```{r recode_eurostat}
 police_europe = crim_just_job  |> 
-  pivot_wider(names_from = c(sex, isco08, unit), values_from = "values",
-              names_repair = make_clean_names) |>
-  complete(geo, time) |>
+  pivot_wider(names_from = c(sex, isco08, unit),
+              values_from = "values",
+              names_repair = janitor::make_clean_names) |> 
+  complete(geo, time) |> 
   mutate(geo = if_else(geo %in% c("Scotland", "England and Wales", "Northern Ireland (UK)"),
                        "United Kingdom", geo)) |>
-  group_by(geo, time) |>
-  summarise(across(ends_with("number"), ~ sum(.x, na.rm = F)), .groups = "drop") |>
+  summarise(across(ends_with("number"), ~ sum(.x, na.rm = F)), .by = c(geo, time)) |> 
   mutate(geo = str_replace(geo, "Türkiye", "Turkey"),
          geo = if_else(str_detect(geo, "Germany"), "Germany", geo),
          geo = if_else(str_detect(geo, "Kosovo"), "Republic of Kosovo", geo),
          year = year(time),
          wb = countrycode(geo, origin = "country.name", destination = "wb")) |>
-  select(wb, year,
-         ends_with("number") &
-           contains("police"))
+  select(wb, year, total_police_officers_number)
 ```
 
-Maintenant elles ressemblent à ceci :
+On manque de données pour certaines années, pour certains pays :
+
+```{r}
+questionr::freq.na(police_europe)
+```
+
+Maintenant les données ressemblent à ceci :
 
 ```{r check_eurostat_recoded}
-slice_head(police_europe, n = 20) |> 
-  as_huxtable() |> 
-  set_number_format(NA) |> 
-  huxtable::theme_bright()
+police_europe
 ```
 
 ## Calculer le nombre de policiers par habitant
@@ -93,12 +90,14 @@ Le package [wbstats](https://cran.r-project.org/web/packages/wbstats/vignettes/w
 wb_path = here("data", "wb.rds")
 ```
 
+L'argument `mrv` donne le nombre de *most recent values* à requérir. L'argument `gapfill = TRUE` remplace les valeurs manquantes éventuelles par la valeur précédente la plus récente.
+
 ```{r download_wb}
 #| eval: false
 wbstats::wb_data(country = "countries_only",
                  indicator = c("gdp_per_capita" = "NY.GDP.PCAP.CD",
                                "population" = "SP.POP.TOTL"),
-                 mrv = 7,
+                 mrv = 15,
                  gapfill = TRUE) |>
   write_rds(wb_path)
 ```
@@ -112,12 +111,12 @@ wb = read_rds(wb_path) |>
 ```
 
 ```{r divide}
-police_europe_pcm = wb |> 
-  left_join(police_europe) |> 
-  mutate(policiers_pcm = total_police_officers_number / population * 100000) |> 
-  group_by(wb) |> 
-  summarise(policiers_pcm = mean(policiers_pcm, na.rm = TRUE)) |> 
-  filter(!is.nan(policiers_pcm)) |> 
+police_europe_pcm = police_europe |>
+    filter(!is.na(total_police_officers_number),
+           year <= 2020) |> 
+    filter(year == max(year, na.rm = TRUE), .by = wb) |> 
+    left_join(wb, by = join_by(wb, year)) |>
+    mutate(policiers_pcm = total_police_officers_number / population * 100000) |>
   mutate(pays = countrycode(wb, origin = "wb", destination = "country.name.fr"),
          pays = if_else(wb == "MNE", "Monténégro", pays),
          pays = if_else(wb == "MKD", "Macédoine du Nord", pays),
@@ -129,10 +128,15 @@ police_europe_pcm = wb |>
 
 ### Tableau
 
+:::{.callout-note}
+La colonne "Année" indique la dernière année pour laquelle des données sont disponibles.
+:::
+
 ```{r palmares_huxtable}
-police_europe_pcm |>
-  select(pays, policiers_pcm) |> 
+police_europe_pcm |>  
+  select(pays, year, policiers_pcm) |> 
   rename(Pays = pays,
+         "Année" = year,
          "Policiers pour 100 000 habitants" = policiers_pcm) |> 
   as_huxtable() |> 
   set_number_format(NA) |> 
