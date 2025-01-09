@@ -390,7 +390,7 @@ tar_plan(
     
     geom_text_repel(aes(label = pays), family = geom_fontfamily, size = 3) +
     
-    scale_x_continuous(limits = c(1, 4)) +
+    # scale_x_continuous(limits = c(1, 4)) +
     
     labs(
       # title = "Plus les Étas européens respectaient le droit à l'intégrité physique,\nmoins ils ont enfermé leur population",
