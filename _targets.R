@@ -110,7 +110,9 @@ tar_plan(
   
   google = arrow::open_dataset(google_file) |>
     filter(is.na(sub_region_1),
-           is.na(sub_region_2)) |>
+           is.na(sub_region_2),
+           is.na(metro_area),
+           country_region != "Réunion") |>
     collect() |> 
     mutate(date = ymd(date),
            wb = countrycode(country_region, origin = "country.name", destination = "wb")) |>
@@ -119,11 +121,18 @@ tar_plan(
   # Excess mortality------
   
   excess_mortality = read_rds(excess_mortality_file) |>
-    mutate(date = ymd(date),
-           wb = countrycode(location, origin = "country.name.en", destination = "wb")) |>
+    filter(!(location %in% c("Scotland",
+                             "England & Wales",
+                             "Northern Ireland",
+                             "French Guiana",
+                             "Guadeloupe",
+                             "Mayotte",
+                             "Martinique",
+                             "Reunion",
+                             "Transnistria"))) |> 
+    mutate(wb = countrycode(location, origin = "country.name.en", destination = "wb")) |>
     select(wb,
            date,
-           p_scores_all_ages,
            deaths_2020_all_ages,
            projected_deaths_since_2020_all_ages,
            excess_proj_all_ages),
@@ -187,13 +196,12 @@ tar_plan(
   ## Country-Date-----------
   
   world_country_date = oxcgrt |>
-    left_join(agr) |>
-    left_join(google) |>
-    left_join(apple) |>
-    left_join(excess_mortality) |>
-    filter(between(date, date_beginn, date_end),
-           !is.na(wb)) |>
-    distinct(wb, date, .keep_all = TRUE) |>
+    full_join(agr, by = join_by(wb, date)) |>
+    full_join(google, by = join_by(wb, date)) |>
+    full_join(apple, by = join_by(wb, date)) |>
+    full_join(excess_mortality, by = join_by(wb, date)) |>
+    filter(between(date, date_beginn, date_end)) |> 
+    # distinct(wb, date, .keep_all = TRUE) |>
     relocate(wb, date),
   
   ## Summarise---------
@@ -285,7 +293,7 @@ tar_plan(
            !is.na(stringency_index_average)) |>
     mutate(
       # pays = str_wrap(pays, 5, whitespace_only = F),
-           pays = fct_reorder(pays, stringency_index_average)) |>
+      pays = fct_reorder(pays, stringency_index_average)) |>
     ggplot(aes(x = stringency_index_average, y = pays)) +
     geom_point() +
     coord_cartesian(xlim = c(40, NA)) +
@@ -394,9 +402,9 @@ tar_plan(
     
     labs(
       # title = "Plus les Étas européens respectaient le droit à l'intégrité physique,\nmoins ils ont enfermé leur population",
-         x = "Droit à l'intégrité physique 2019 (Indice synthétique)",
-         y = "Fréquentation des espaces verts du 1er mars au 1er juin\npar rapport à janvier 2020 (%)",
-         caption = "Données : Latent Human Rights Protection Scores Version 4 & Google Mobility Reports"),
+      x = "Droit à l'intégrité physique 2019 (Indice synthétique)",
+      y = "Fréquentation des espaces verts du 1er mars au 1er juin\npar rapport à janvier 2020 (%)",
+      caption = "Données : Latent Human Rights Protection Scores Version 4 & Google Mobility Reports"),
   
   ## Police & Parks---------
   
@@ -430,7 +438,7 @@ tar_plan(
           axis.ticks = element_blank(),
           panel.grid = element_blank(),
           panel.background = element_rect(linewidth = 2),
-          ),
+    ),
   
   ## AGR & Police-----------
   
@@ -463,10 +471,10 @@ tar_plan(
     stat_summary(fun = "mean", geom = "point", size = 2, color = "red") +
     labs(
       # title = "La concentration policière augmente avec le niveau des restrictions",
-         # subtitle = "La France est dans le petit groupe des pays à attestation",
-         y = "Policiers et assimilés pour 100 000 habitants",
-         x = "",
-         caption = "Données : A Good Reason & Eurostat") +
+      # subtitle = "La France est dans le petit groupe des pays à attestation",
+      y = "Policiers et assimilés pour 100 000 habitants",
+      x = "",
+      caption = "Données : A Good Reason & Eurostat") +
     theme(axis.text.x = element_text(face= "bold")),
   
   ## Indice and p_score--------
@@ -604,8 +612,8 @@ tar_plan(
   
   vigilants_plm = vigilants |> 
     mutate(nom_commune_clean = if_else(str_detect(nom_commune_clean, "arrondissement"),
-                         str_extract(nom_commune_clean, "paris|lyon|marseille"),
-                         nom_commune_clean)) |> 
+                                       str_extract(nom_commune_clean, "paris|lyon|marseille"),
+                                       nom_commune_clean)) |> 
     group_by(nom_departement_clean, nom_commune_clean) |> 
     summarise(nb_communautes = sum(nb_communautes)) |> 
     ungroup(),
@@ -636,13 +644,13 @@ tar_plan(
     viridis::scale_fill_viridis(discrete = T) +
     labs(
       title = "Prévalence de la verbalisation",
-         fill = "Pour 1000 adultes",
-         caption = "Sources : ANTAI, INSEE"),
+      fill = "Pour 1000 adultes",
+      caption = "Sources : ANTAI, INSEE"),
   
   # Prevalence shadow ----
   
   prevalence_classint = classInt::classIntervals(departements$verbalisations_pmla,
-                                               style = "headtails"),
+                                                 style = "headtails"),
   prevalence_verbalisation_shadow = st_read(departements_sf_file, quiet = T) |> 
     left_join(departements,
               by = c("code_departement", "nom_departement")) |>
@@ -932,9 +940,9 @@ tar_plan(
   
   cah_vico = vico_acm |>
     FactoMineR::MCA(excl = to_exclude$modalite,
-        ncp = 6,
-        row.w = vico_read$poids_init,
-        graph = FALSE) |>
+                    ncp = 6,
+                    row.w = vico_read$poids_init,
+                    graph = FALSE) |>
     FactoMineR::HCPC(nb.clust = 6, nb.par = 50, graph = FALSE),
   
   vico_clust = cah_vico[["data.clust"]] |>
