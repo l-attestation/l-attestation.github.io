@@ -48,9 +48,12 @@ tar_plan(
   
   # Natural Earth ----------
   
-  world_sf = rnaturalearth::ne_countries(type = "countries", returnclass = "sf") |>
+  continents = rnaturalearth::ne_countries(type = "countries", returnclass = "sf") |>
+    st_set_geometry(NULL) |> 
     select(admin, continent) |>
     mutate(wb = countrycode(admin, origin = "country.name", destination = "wb")) |>
+    filter(!is.na(wb),
+           admin != "Northern Cyprus") |>
     select(-admin),
   
   # World Bank----------
@@ -200,16 +203,13 @@ tar_plan(
     full_join(google, by = join_by(wb, date)) |>
     full_join(apple, by = join_by(wb, date)) |>
     full_join(excess_mortality, by = join_by(wb, date)) |>
-    filter(between(date, date_beginn, date_end)) |> 
-    # distinct(wb, date, .keep_all = TRUE) |>
+    filter(between(date, date_beginn, date_end)) |>
     relocate(wb, date),
   
   ## Summarise---------
   
-  world_summarise = world_sf |>
-    st_set_geometry(NULL) |>
-    left_join(world_country_date) |>
-    group_by(wb, continent) |>
+  world_summarise = world_country_date |>
+    group_by(wb) |>
     summarise(stringency_index_average = mean(stringency_index_average, na.rm = T), # oxcgrt
               across(ends_with("saho"), ~ sum(.x, na.rm = T)),
               across(starts_with("stayhome"), ~ sum(.x == "yes")), # agr
@@ -218,14 +218,14 @@ tar_plan(
               across(c("driving", "walking", "transit"), ~ mean(.x, na.rm = T)), # apple
               p_score = sum(excess_proj_all_ages, na.rm = T) / sum(projected_deaths_since_2020_all_ages, na.rm = T) * 100,
               .groups = "drop") |>
-    left_join(wb_police_europe_pcmh) |>
-    left_join(agr_mode) |>
-    left_join(exceptius) |>
-    left_join(fariss) |>
+    full_join(continents, by = join_by(wb)) |>
+    full_join(wb_police_europe_pcmh, by = join_by(wb)) |>
+    full_join(agr_mode, by = join_by(wb)) |>
+    full_join(exceptius, by = join_by(wb)) |>
+    full_join(fariss, by = join_by(wb)) |>
     mutate(pays = countrycode(wb, origin = "wb", destination = "country.name.fr"),
            pays = if_else(wb == "MNE", "Monténégro", pays),
            pays = if_else(wb == "MKD", "Macédoine du Nord", pays)) |>
-    distinct(wb, .keep_all = T) |>
     relocate(pays, wb, continent),
   
   ## Composite score--------
