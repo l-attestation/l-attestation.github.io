@@ -388,18 +388,12 @@ tar_plan(
   ## Fariss & Parks--------
   
   fariss_parks_plot = world_summarise |>
-    
     filter(!is.na(policiers_pcm),
            !pays %in% c("Turquie", "Luxembourg")) |>
-    
     ggplot(aes(x = hr_fariss, y = parks_percent_change_from_baseline)) +
-    
     geom_point() +
-    
     geom_text_repel(aes(label = pays), family = geom_fontfamily, size = 3) +
-    
-    # scale_x_continuous(limits = c(1, 4)) +
-    
+    scale_x_continuous(limits = c(1, 4)) +
     labs(
       # title = "Plus les Étas européens respectaient le droit à l'intégrité physique,\nmoins ils ont enfermé leur population",
       x = "Droit à l'intégrité physique 2019 (Indice synthétique)",
