@@ -1,8 +1,7 @@
 ---
 title: "L'Attestation"
-subtitle: "Présentation à Sciences Po Strasbourg"
 author: "Théo Boulakia & Nicolas Mariot"
-date: 2024-10-03
+date: 2025-03-26
 date-format: long
 format: revealjs
 editor: source

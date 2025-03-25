@@ -114,7 +114,15 @@ tar_load(world_country_date)
 tar_load(wb_police_europe_pcmh)
 tar_load(excess_mortality)
 tar_load(world_summarise)
+tar_load(world_composite_score)
 x = filter(world_summarise, n() > 1, .by = wb)
+freq.na(world_composite_score)
+arrange(world_composite_score, desc(indice_enfermement))
+
+world = world_summarise |> 
+  left_join(world_composite_score, by = join_by(pays))
+write_csv(world, "attestation-world.csv")
+read_csv("attestation-world.csv")
 # Count duplicates ----
 
 duplicates = world_country_date |>
